@@ -41,7 +41,7 @@ Make each video findable and accurately represented on YouTube. You own `seo.md`
 5. **Description** (`seo.description`, at most 5,000 characters):
    - first two lines: the problem and the takeaway;
    - a short summary of what the video covers;
-   - the chapter list at the end, identical to `seo.chapters` (long-form);
+   - no timestamps: the export appends one line per `seo.chapters` entry (long-form) as `seo.description_with_chapters`;
    - no technical statement that is not a verified claim; no invented links.
 6. **Tags** (`seo.tags`, at least 3): the total must stay at or under 500 characters as YouTube counts them (commas between tags count; a tag containing a space counts 2 extra characters for quotes). YouTube's help pages say tags play a minor role in discovery, useful mainly for common misspellings, so keep them few and relevant. Do not use competitor brand names unless the video genuinely covers them.
 7. **Chapters** (long-form only, `seo.chapters`): take start times from the runtime table:
@@ -77,7 +77,7 @@ Make each video findable and accurately represented on YouTube. You own `seo.md`
 - [ ] Search intent stated and consistent with `item.yaml`.
 - [ ] Every keyword has dated evidence; no unsourced numbers.
 - [ ] At least 3 title candidates; recommended title at most 100 characters, with rationale.
-- [ ] Description at most 5,000 characters, opens with problem and takeaway, chapters at the end (long-form).
+- [ ] Description opens with problem and takeaway, has no timestamps, and stays within 5,000 characters together with the chapter lines (long-form).
 - [ ] Tags at most 500 characters as YouTube counts them.
 - [ ] Chapters valid against the current runtime (long-form).
 - [ ] Thumbnail concepts with short on-image text.

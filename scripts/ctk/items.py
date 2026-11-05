@@ -8,6 +8,7 @@ content: QC approvals are only valid for the fingerprint they were recorded on.
 from __future__ import annotations
 
 import copy
+import hashlib
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
@@ -48,10 +49,15 @@ def today() -> str:
     return date.today().isoformat()
 
 
+class ConcurrentEditError(RuntimeError):
+    """item.yaml changed on disk between reading and writing it."""
+
+
 @dataclass
 class Item:
     path: Path
     data: dict[str, Any]
+    loaded_sha256: str | None = None  # hash of item.yaml as read; None for a new workspace
 
     @property
     def id(self) -> str:
@@ -100,7 +106,16 @@ class Item:
         return "sha256:" + fileio.sha256_obj({"item": record, "files": files})
 
     def save(self) -> None:
-        fileio.write_text(self.path / "item.yaml", fileio.dumps_yaml(self.data, header=ITEM_HEADER))
+        """Write item.yaml, refusing if someone else changed it since it was read."""
+        target = self.path / "item.yaml"
+        if self.loaded_sha256 is not None and target.exists() and fileio.sha256_file(target) != self.loaded_sha256:
+            raise ConcurrentEditError(
+                f"{target} changed on disk after this command read it (another session or editor?). "
+                "Nothing was written: re-run the command on the current file."
+            )
+        text = fileio.dumps_yaml(self.data, header=ITEM_HEADER)
+        fileio.write_text(target, text)
+        self.loaded_sha256 = fileio.sha256_text(text)
 
     def add_history(self, stage: str, by: str, note: str, on_hold: bool | None = None) -> None:
         history = self.data.setdefault("history", [])
@@ -112,7 +127,8 @@ class Item:
 
 
 def load_item(workspace: Path) -> Item:
-    return Item(workspace, fileio.load_yaml(workspace / "item.yaml") or {})
+    raw = (workspace / "item.yaml").read_bytes()  # hash the bytes: CRLF files must not look "changed"
+    return Item(workspace, fileio.loads_yaml(raw.decode("utf-8")) or {}, hashlib.sha256(raw).hexdigest())
 
 
 def find_items(repo: Repo) -> list[Item]:

@@ -31,7 +31,7 @@ Chọn phương án 1: từ khóa chính "Lỗi P0300" đứng đầu, nêu đú
 ## Thumbnail concepts (Ý tưởng thumbnail)
 
 1. Màn hình máy đọc hiện "P0300" phóng to, bên cạnh bugi có dấu hỏi; chữ trên ảnh: "P0300: thay gì trước?"
-2. Sơ đồ 4 xi-lanh, cả bốn nhấp nháy đỏ; chữ trên ảnh: "Bỏ máy ở đâu?"
+2. Sơ đồ 4 xi-lanh, mỗi xi-lanh một dấu hỏi; chữ trên ảnh: "Bỏ máy ở đâu?" (không ngụ ý cả bốn xi-lanh đều bỏ máy)
 
 ## Related internal content (Nội dung liên quan)
 
@@ -40,12 +40,14 @@ Chọn phương án 1: từ khóa chính "Lỗi P0300" đứng đầu, nêu đú
 
 ## Publishing checklist (Checklist xuất bản)
 
-<!-- QC G8 yêu cầu mọi ô được đánh dấu [x] trước khi xuất bản. -->
+<!-- Kiểm trước khi duyệt: QC G8 yêu cầu mọi ô được đánh dấu [x] trước khi approve.
+     Các bước làm trong YouTube Studio lúc đăng (end screen, phụ đề, lịch đăng...) nằm trong
+     item.yaml -> publication.upload_checklist, không nằm ở đây. -->
 - [ ] Final title is item.yaml seo.recommended_title and is at most 100 characters
 - [ ] The first two description lines state the problem and the takeaway
 - [ ] Chapters start at 00:00, have at least 3 entries, each at least 10 s (long-form)
+- [ ] Description plus chapter lines stay within 5000 characters
 - [ ] Tags total at most 500 characters
 - [ ] Thumbnail text is readable on a phone screen
-- [ ] End screen and cards point to related Cartek content
-- [ ] Pinned comment drafted
-- [ ] Vietnamese captions checked against the final voice-over
+- [ ] Pinned comment drafted in item.yaml seo.pinned_comment
+- [ ] Related content IDs listed for end screen and cards

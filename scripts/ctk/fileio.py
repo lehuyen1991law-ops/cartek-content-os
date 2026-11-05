@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 from pathlib import Path
 from typing import Any
 
@@ -91,10 +92,21 @@ def read_text(path: Path) -> str:
 
 
 def write_text(path: Path, text: str) -> bool:
-    """Write text (UTF-8, LF). Returns True when the file content changed."""
+    """Write text (UTF-8, LF) atomically. Returns True when the file content changed.
+
+    The text goes to a temporary file in the same folder, then replaces the target in
+    one step, so a crash or a concurrent reader never sees a half-written file.
+    """
+    path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
     if path.exists() and path.read_text(encoding="utf-8") == text:
         return False
-    with open(path, "w", encoding="utf-8", newline="\n") as handle:
-        handle.write(text)
+    tmp = path.with_name(f".{path.name}.{os.getpid()}.tmp")
+    try:
+        with open(tmp, "w", encoding="utf-8", newline="\n") as handle:
+            handle.write(text)
+        os.replace(tmp, path)
+    finally:
+        if tmp.exists():
+            tmp.unlink()
     return True

@@ -69,6 +69,8 @@ python3 scripts/set_status.py <ID> --stage PRODUCTION_PACKAGE --note "SEO packag
 [scripts/ctk/qc.py](../scripts/ctk/qc.py) → `gate_g6`:
 
 - `seo.md` exists (else BLOCKED), has "Search intent", "Keyword notes", "Title rationale", "Publishing checklist" (else FAIL), and no `[TODO]` markers (else BLOCKED).
+- The public SEO fields in `item.yaml` (titles, description, tags, thumbnail text, pinned comment) contain no placeholder wording (`draft_markers`, including `[TODO`) (else BLOCKED).
+- Missing or invalid chapters are BLOCKED while the narration is unfinished (no timing exists yet) and FAIL once it is finished.
 - At least 3 title candidates; a recommended title of at most 100 characters; a title rationale (else FAIL). Over 70 characters: warning.
 - A description of at most 5,000 characters (else FAIL).
 - At least 3 tags within 500 characters as YouTube counts them (else FAIL).

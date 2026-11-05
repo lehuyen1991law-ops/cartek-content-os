@@ -105,4 +105,4 @@ Guidance only. "High" means the pillar directly answers a pain point listed in t
 1. Pick one primary persona per item. A video written for everyone serves no one.
 2. Record it in `item.yaml` (`audience.primary`, `audience.secondary`, `audience.technical_depth`).
 3. Name the persona's pain point in the brief (`## Audience` in `brief.md`), quoting the sheet where possible.
-4. The independent QC review (gate G2) checks that the hook, depth and CTA match the persona. See [content-qc-inspector](../skills/content-qc-inspector/SKILL.md).
+4. The independent QC review checks persona fit twice: gate G2 for the topic, problem and depth in the brief, gate G4 for the hook, wording and CTA in the script. See [content-qc-inspector](../skills/content-qc-inspector/SKILL.md).

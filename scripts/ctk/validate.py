@@ -107,6 +107,7 @@ def check_items(repo: Repo) -> list[Finding]:
         reviews = [r["id"] for r in item.data["reviews"]]
         if len(reviews) != len(set(reviews)):
             out.append(Finding("error", where, "Duplicate review IDs in reviews."))
+        out += _checklist_drift(repo, ctx)
         history = item.data["history"]
         if history and history[-1]["stage"] != item.stage:
             out.append(Finding("warning", where, f"Stage is {item.stage} but the last history entry says {history[-1]['stage']}; use scripts/set_status.py so changes are recorded."))
@@ -144,6 +145,24 @@ def _stage_rules(repo: Repo, ctx) -> list[Finding]:
         if stage_ids.index(stage) > stage_ids.index(done_stage) and mdparse.todo_count(ctx.texts[key]):
             out.append(Finding("warning", where, f"Stage {stage} is past {done_stage} but {key}.md still has [TODO] markers."))
     return out
+
+
+def _checklist_drift(repo: Repo, ctx) -> list[Finding]:
+    """Warn when an item's pre-approval checklist no longer matches the template."""
+    template = mdparse.checkboxes(mdparse.find_section(fileio.read_text(repo.templates_dir / "seo-package.md"), "Publishing checklist"))
+    current = mdparse.checkboxes(mdparse.find_section(ctx.texts["seo"], "Publishing checklist"))
+    if not current or not template:
+        return []
+    missing = [label for _, label in template if label not in {l for _, l in current}]
+    extra = [label for _, label in current if label not in {l for _, l in template}]
+    if not missing and not extra:
+        return []
+    detail = []
+    if missing:
+        detail.append(f"missing {len(missing)} template item(s)")
+    if extra:
+        detail.append(f"{len(extra)} item(s) not in the template (upload steps belong in publication.upload_checklist)")
+    return [Finding("warning", repo.rel(ctx.item.path) + "/seo.md", "Publishing checklist differs from templates/seo-package.md: " + "; ".join(detail) + ".")]
 
 
 def _exports_and_performance(repo: Repo, ctx) -> list[Finding]:

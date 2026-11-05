@@ -39,7 +39,7 @@ Rules enforced by [scripts/ctk/mdparse.py](../scripts/ctk/mdparse.py):
 | `NOTES` | Production notes, not exported as narration |
 
 5. `## Selected hook` uses two fields: `- **HOOK:**` and `- **RATIONALE:**`.
-6. `[TODO ...]` marks unfinished text. Any marker outside an HTML comment keeps G4 BLOCKED.
+6. `[TODO ...]` marks unfinished text. Any marker outside an HTML comment keeps G4 BLOCKED. Other placeholder wording in narration, on-screen or safety lines ("chờ xác minh", "bản nháp", "TBD", "XXX", "lorem ipsum", "placeholder"; `draft_markers` in [config/qc-policy.yaml](../config/qc-policy.yaml)) also keeps G4 BLOCKED, so it never reaches the export.
 7. HTML comments (`<!-- ... -->`) are guidance. QC ignores them and they are not part of the content fingerprint.
 
 Example segment:

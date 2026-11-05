@@ -100,6 +100,34 @@ def _public_seo_text(ctx: Context) -> str:
     return "\n".join(p for p in parts if p)
 
 
+_DTC_RANGE = re.compile(r"\b([PBCU][0-3])([0-9A-F]{3})\s*(?:-|–|—|to|đến|den)\s*([PBCU][0-3])([0-9A-F]{3})\b", re.IGNORECASE)
+
+
+def codes_covered(text: str, dtc_pattern: str) -> set[str]:
+    """DTCs a claim text covers: single codes plus expanded ranges ("P0301-P0312")."""
+    covered = {m.upper() for m in re.findall(dtc_pattern, text, flags=re.IGNORECASE)}
+    for match in _DTC_RANGE.finditer(text):
+        prefix, start, prefix_end, end = (g.upper() for g in match.groups())
+        if prefix != prefix_end:
+            continue
+        base = 10 if (start + end).isdigit() else 16
+        low, high = int(start, base), int(end, base)
+        if 0 <= high - low <= 512:
+            width = "03d" if base == 10 else "03X"
+            covered.update(f"{prefix}{format(n, width)}" for n in range(low, high + 1))
+    return covered
+
+
+def draft_marker_hits(text: str, markers: list[str]) -> list[str]:
+    """Sentences of ``text`` that contain placeholder wording."""
+    hits = []
+    for sentence in _sentences(text):
+        plain = tu.match_text(sentence)
+        if any(re.search(marker, plain) for marker in markers):
+            hits.append(sentence)
+    return hits
+
+
 def _snippet(text: str, limit: int = 90) -> str:
     text = tu.clean(text)
     return text if len(text) <= limit else text[: limit - 1] + "…"
@@ -370,6 +398,8 @@ def gate_g4(ctx: Context) -> GateResult:
         hook_limit = ctx.production["hook_max_seconds"][fmt]
         if ctx.timing and ctx.timing[0]["seconds"] > hook_limit:
             g.warn(f"Hook segment runs about {ctx.timing[0]['seconds']} s (guide: ≤ {hook_limit} s).", "Tighten the hook.")
+    for sentence in draft_marker_hits(mdparse.without_todos(_public_script_text(ctx)), policy.get("draft_markers", [])):
+        g.block(f"Placeholder wording in narration or on-screen text: \"{_snippet(sentence)}\"", "Replace the placeholder with final wording before review.")
     if not doc.retention_notes or all(mdparse.TODO.search(n) for n in doc.retention_notes):
         g.warn("No retention notes.", "List open loops, pattern changes and payoffs under '## Retention notes'.")
     if not g.problems:
@@ -401,16 +431,21 @@ def gate_g5(ctx: Context) -> GateResult:
         for sentence in _sentences(public):
             if pattern.search(tu.match_text(sentence)):
                 g.warn(f"{rule['reason']} \"{_snippet(sentence)}\"", "Reviewer: confirm this wording is supported by a verified claim.")
-    vo_text = tu.match_text("\n".join(s.get("VO") for s in ctx.script.segments))
+    vo_text = tu.match_text(mdparse.without_todos("\n".join(s.get("VO") for s in ctx.script.segments)))
     if any(re.search(p, vo_text) for p in policy["clear_codes_mentions"]):
         if not any(re.search(p, vo_text) for p in policy["clear_codes_caveat_markers"]):
             g.fail("The narration mentions clearing codes/resetting the lamp without saying it does not fix the cause.", "Add a caveat: clearing removes the code and the lamp; the fault returns if the cause is not repaired.")
-    claims_text = " ".join(c["text"] for c in data["claims"] if c["status"] != "removed").upper()
-    codes = sorted({m.upper() for m in re.findall(policy["dtc_pattern"], public, flags=re.IGNORECASE)})
+    covered: set[str] = set()
+    for claim in data["claims"]:
+        if claim["status"] != "removed":
+            covered |= codes_covered(claim["text"], policy["dtc_pattern"])
+    # Codes shown on screen count too: VISUAL and B-ROLL describe what the camera shows.
+    shown = "\n".join(s.get(field) for s in ctx.script.segments for field in ("VISUAL", "B-ROLL"))
+    codes = sorted({m.upper() for m in re.findall(policy["dtc_pattern"], public + "\n" + mdparse.without_todos(shown), flags=re.IGNORECASE)})
     manufacturer = [re.compile(p) for p in policy["manufacturer_specific_dtc_patterns"]]
     for code in codes:
-        if code not in claims_text:
-            g.fail(f"DTC {code} appears in public text but no claim defines it.", f"Register a claim stating what {code} means, with a standard or OEM source.")
+        if code not in covered:
+            g.fail(f"DTC {code} appears in public text or on screen but no claim defines it.", f"Register a claim stating what {code} means, with a standard or OEM source.")
         if any(p.search(code) for p in manufacturer) and (data["vehicle"]["scope"] != "specific" or not data["vehicle"]["brands"]):
             g.fail(f"{code} is a manufacturer-controlled code range but the item is not vehicle-specific.", "Name the make/model/year whose service information defines this code.")
     corpus = tu.match_text(" ".join([data.get("working_title", ""), *(mdparse.without_todos(ctx.texts[k]) for k in ("brief", "research", "script"))]))
@@ -477,11 +512,18 @@ def gate_g6(ctx: Context) -> GateResult:
     tag_length = youtube_tags_length(tags)
     if tag_length > limits["tags"]["max_chars_total"]:
         g.fail(f"Tags total {tag_length} characters as YouTube counts them; limit {limits['tags']['max_chars_total']}.", "Remove or shorten tags.")
+    for sentence in draft_marker_hits(_public_seo_text(ctx), policy.get("draft_markers", [])):
+        g.block(f"Placeholder wording in the SEO metadata (item.yaml seo): \"{_snippet(sentence)}\"", "Replace the placeholder with final wording.")
     if fmt == "long-form":
         chapters = seo["chapters"]
-        runtime = ctx.total_seconds if ctx.script.segments and not ctx.script.todo_count else None
-        for problem in chapter_problems(chapters, limits["chapters"]["min_count"], limits["chapters"]["min_chapter_seconds"], runtime):
-            g.fail(f"Chapters: {problem}", "Build chapters from `python3 scripts/qc_content.py runtime <ID>` timings.")
+        narration_done = bool(ctx.script.segments) and not ctx.script.todo_count
+        runtime = ctx.total_seconds if narration_done else None
+        problems = chapter_problems(chapters, limits["chapters"]["min_count"], limits["chapters"]["min_chapter_seconds"], runtime)
+        if problems and not narration_done:
+            g.block("Chapters cannot be set yet: they need the timing of the finished narration.", "Finish script.md, then build chapters from `python3 scripts/qc_content.py runtime <ID>`.")
+        else:
+            for problem in problems:
+                g.fail(f"Chapters: {problem}", "Build chapters from `python3 scripts/qc_content.py runtime <ID>` timings.")
     thumbnails = seo["thumbnail_concepts"]
     needed = policy["min_thumbnail_concepts"][fmt]
     if len(thumbnails) < needed:
@@ -563,8 +605,11 @@ def gate_g8(ctx: Context) -> GateResult:
     else:
         unchecked = [label for done, label in boxes if not done]
         if unchecked:
-            g.block(f"{len(unchecked)} of {len(boxes)} publishing checklist item(s) in seo.md are not ticked.", "Complete each item and tick it ([x]) before publishing.")
+            g.block(f"{len(unchecked)} of {len(boxes)} publishing checklist item(s) in seo.md are not ticked.", "Complete each item and tick it ([x]) before approval.")
     published = stage in ("PUBLISHED", "PERFORMANCE_REVIEW")
+    unpublished = [cid for cid in data["seo"]["related_content"] if not _is_published(ctx, cid)]
+    if unpublished:
+        g.warn(f"Related content not yet published: {', '.join(unpublished)}; YouTube end screens and cards can only link published videos.", "Link only published videos at upload; keep the others for later updates.")
     if published:
         if not publication.get("url") or not is_youtube_url(publication["url"]):
             g.fail("Stage is published but publication.url is not a YouTube URL.", "Record the real video URL with scripts/set_status.py.")
@@ -578,6 +623,17 @@ def gate_g8(ctx: Context) -> GateResult:
     if not g.problems:
         g.ok("Publishing metadata complete" + (" and publication recorded." if published else "; checklist ticked."))
     return g
+
+
+def _is_published(ctx: Context, content_id: str) -> bool:
+    """A related item counts as published when its workspace or a sheet tracker row says so."""
+    from .items import workspace_for, load_item  # local import: avoids a cycle at module load
+
+    workspace = workspace_for(ctx.repo, content_id)
+    if workspace is not None and (workspace / "item.yaml").exists():
+        return load_item(workspace).stage in ("PUBLISHED", "PERFORMANCE_REVIEW")
+    tracker = ctx.repo.normalized("tracker") or {}
+    return any(r.get("id") == content_id and r.get("stage_hint") == "PUBLISHED" for r in tracker.get("records", []))
 
 
 # ---------------------------------------------------------------------------

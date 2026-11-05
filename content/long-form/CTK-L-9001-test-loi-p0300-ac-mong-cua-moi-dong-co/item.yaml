@@ -132,11 +132,11 @@ claims:
   text: Cartek 2 đọc được mã P0300 và dữ liệu đóng băng.
   category: cartek-feature
   sources: []
-  status: unverified
+  status: removed
   feature_id: null
   verified_by: ''
   verified_on: null
-  notes: Không có trong sổ đăng ký tính năng (đang trống); cần đội sản phẩm xác nhận.
+  notes: 'Removed from the script on 2026-11-05 after reviews R003/R004: the Cartek 2 feature register is empty. Re-add only with a verified feature_id.'
 seo:
   title_candidates:
   - 'Lỗi P0300: Khoanh vùng nguyên nhân bỏ máy trước khi thay linh kiện'
@@ -146,8 +146,6 @@ seo:
   title_rationale: Từ khóa chính đứng đầu; nêu đúng lời hứa của video; hợp với kỹ thuật viên. Cụm 'bỏ máy' phụ thuộc C01 (chưa kiểm chứng).
   description: |-
     Máy đọc báo P0300 thì nên kiểm tra gì trước khi thay bugi hay bô-bin? Video này đi qua quy trình khoanh vùng nguyên nhân bỏ máy cho kỹ thuật viên.
-
-    [Bản nháp kiểm thử: phần nội dung chi tiết sẽ viết sau khi các claim được kiểm chứng.]
 
     Cartek - Check your car
   tags:
@@ -165,7 +163,7 @@ seo:
   thumbnail_concepts:
   - concept: Màn hình máy đọc hiện P0300 phóng to, bên cạnh bugi có dấu hỏi
     on_image_text: 'P0300: thay gì trước?'
-  - concept: Sơ đồ 4 xi-lanh, cả bốn nhấp nháy đỏ
+  - concept: Sơ đồ 4 xi-lanh, mỗi xi-lanh một dấu hỏi
     on_image_text: Bỏ máy ở đâu?
   related_content:
   - CTK-L-0014
@@ -173,10 +171,10 @@ seo:
   pinned_comment: ''
 production:
   assets_required:
-  - item: Thiết bị Cartek 2 (tính năng cần xác nhận trong sổ đăng ký)
+  - item: Máy chẩn đoán dùng để quay demo (trung tính; Cartek 2 chỉ khi tính năng được xác minh)
     type: tool
     status: needed
-    notes: Demo S04 bị chặn cho đến khi có feature ID đã xác minh.
+    notes: 'Correction after review R003/R004: no Cartek 2 capability is shown until the feature register verifies it.'
   - item: Xe thử có mã P0300 thật
     type: vehicle
     status: needed
@@ -236,6 +234,11 @@ history:
   stage: RESEARCH
   by: Claude Code (acceptance test)
   note: 'Returned to RESEARCH: claims C01-C07 are unverified; script and SEO are skeletons.'
+- version: 4
+  date: '2026-11-05'
+  stage: RESEARCH
+  by: Claude Code (acceptance test)
+  note: 'Writer corrections after independent reviews R003/R004 (no research added): placeholders removed, invented sample data removed, neutral scan tool, C07 removed, SAFETY lines placed, checklist synced with template.'
 reviews:
 - id: R001
   date: '2026-11-05'
@@ -421,6 +424,176 @@ reviews:
       - Set item.yaml -> target_publish_date.
       - Set publication.visibility_plan (public, scheduled, unlisted or private).
       - Complete each item and tick it ([x]) before publishing.
+  decision: FAIL
+  notes: Automated structural checks. Judgment gates also need independent reviews.
+- id: R003
+  date: '2026-11-05'
+  reviewer: content-qc-inspector (agent)
+  reviewer_type: agent
+  role: qc
+  qualified: false
+  fingerprint: sha256:e4ab245a848cf2a7b0542cfbbf41665b3b7ed0a525f51e27520134cca6007207
+  gates:
+    G2:
+      result: BLOCKED
+      evidence: 'Automated G2 is PASS (R002) but it only checks that brief sections exist. Fit is supported: brief.md table ''P4 — Kiến thức chuyên sâu về hệ thống OBD2''; strategy/content-pillars.md names CTK-L-0015 the recommended first item; technician x P4 is ''High'' (pillar default) in strategy/audience-personas.md; brief.md Audience quotes the pain point ''Cập nhật kiến thức, tìm kiếm thông tin , xử lý sự cố phức tạp'' (''Khán giả''!C4), which I checked verbatim in data/normalized/personas.json. It cannot pass yet: (1) brief.md Problem is explicitly unconfirmed: ''Giả định cần xác nhận với kỹ thuật viên Cartek: khi máy đọc báo P0300, thợ thường thay bugi hoặc bô-bin theo kinh nghiệm...'' (item.yaml problem ends ''(giả định cần xác nhận)''); (2) brief.md Takeaway is conditional: ''Quy trình chỉ được trình bày sau khi các claim C01-C05 được kiểm chứng'', and C05, the cause groups and confirming tests the takeaway rests on, has ''sources: []''; (3) brief.md ''Technical depth: intermediate to advanced'' contradicts item.yaml audience.technical_depth ''advanced'', and the in-scope list (what P0300 means, why clearing does not fix) is basic for a persona that ''Expects real data, test steps and edge cases'' and should not be talked down to (audience-personas.md, technician); (4) script.md S08 persona line is still ''[TODO: câu kết cho kỹ thuật viên.]'', and the selected hook (Phương án 2, a definitional question) matches the technician hook guidance ''a concrete case that resists the obvious fix'' less well than Phương án 1; (5) brief.md Angle cites the video-quality weakness (''Đối thủ''!B6:F6: correct, 4 of 5, though F6 reads ''chưa được cao'') but answers it with sourced procedure, which strategy/channel-positioning.md maps to a different gap (depth, ''Đối thủ''!E5); the notes are not labelled as historical.'
+      corrections:
+      - 'cartek-content-strategist, brief.md ''## Problem'' and item.yaml problem: confirm the assumption with a named Cartek technician (record who and when in the brief), or reword it as a hypothesis without the frequency word ''thường''. G2 stays BLOCKED until the problem is evidenced.'
+      - 'cartek-content-strategist, brief.md ''## Audience'' and item.yaml audience.technical_depth: make them agree. Either keep ''advanced'' and add technician-level material the persona guidance names (for example misfire counters or fuel trim), each registered as a researched claim, or set the depth to intermediate and write why in the brief.'
+      - 'cartek-content-strategist, brief.md ''## Angle'': tie each difference to the matching sheet note (video quality B6/D6/E6/F6 -> storyboard, readable scan-tool screens, clean audio; depth E5 -> traceable sources) and label them as the sheet''s historical notes (strategist skill step 7).'
+      - 'youtube-scriptwriter, script.md S08 VO: replace ''[TODO: câu kết cho kỹ thuật viên.]'' with a technician line that asks for their hardest P0300 cases (audience-personas.md CTA guidance), before the sheet CTA. Reconsider ''## Selected hook'': Phương án 1 or another concrete case fits the technician persona better.'
+      - 'content-qc-inspector (re-review): judge whether the takeaway is achievable in 5-8 minutes only after C01-C05 are verified and S05 narration exists.'
+    G4:
+      result: FAIL
+      evidence: 'Automated G4 is BLOCKED (R002): ''script.md still has 9 [TODO] marker(s)''. Every VO is unwritten; qc_content.py runtime gives 0 syllables for S01-S08 and 00:07 in total against 05:00-08:00 (S08 also counts 0 because its VO contains a [TODO]). The structure is sound: 3 hook candidates, a selected hook with rationale, a 7-item outline, S01 TYPE hook, S08 TYPE cta with ''Cartek - Check your car'' in VO and ON-SCREEN, retention notes with an open loop from S01 paid off in S05, and S07 ON-SCREEN ''1. Đọc mã + dữ liệu  2. Khoanh vùng  3. Thử xác nhận'' matches item.yaml takeaway. Text that is already written breaks rules: (1) S03 VISUAL ''Bảng dữ liệu đóng băng mẫu (đồ họa, không phải ảnh chụp số liệu thật)'' asks for freeze-frame values not captured on a vehicle (strategy/editorial-guidelines.md, ''Never invent'': freeze frame values); (2) S02 ON-SCREEN ''P0300 = bỏ máy nhiều xi-lanh (chờ xác minh)'' holds a placeholder outside the [TODO] convention (it counts as 0 TODOs, so G4 would not catch it) and drops ''ngẫu nhiên'' from the text of the cited claim C01; (3) the only safety slot is S06, after S04 (demo on the test vehicle) and S05 (tests), yet its SAFETY TODO names ''đo áp suất nhiên liệu và làm việc gần động cơ đang chạy'', risks that occur in S05/S04 (workflows/script-production.md step 8 ''where the risk occurs''; strategy/brand-voice.md ''not buried at the end''). Also: S07 states the procedure with an empty CLAIMS line; the hook RATIONALE names the persona but not the search intent (script-production.md step 3); S03 ON-SCREEN starts with the English ''Freeze frame'' (brand-voice.md style rule 3); S04 VISUAL relies on the unverified Cartek 2 claim C07, with DEMO-SECONDS 0 and an empty ON-SCREEN.'
+      corrections:
+      - 'youtube-scriptwriter, script.md S01-S08 VO: write the narration once the cited claims are verified, then bring `qc_content.py runtime CTK-L-9001` inside 300-480 s with the hook at or under 30 s, or record production.runtime_exception with a rationale.'
+      - 'youtube-scriptwriter, script.md S03 VISUAL (and storyboard.md shot 4 / Graphics line): replace the sample freeze-frame table with a graphic that lists parameter names only, without values, or with the freeze frame actually captured on the named test vehicle.'
+      - 'youtube-scriptwriter, script.md S02 ON-SCREEN: remove ''(chờ xác minh)''; while pending use ''[TODO: ...]'' so QC blocks it, and finally use the verified wording of C01, including ''ngẫu nhiên''.'
+      - 'youtube-scriptwriter, script.md S04/S05/S06: put SAFETY lines where the risks occur (S05 where the fuel-pressure and running-engine tests are named; S04 if the demo runs the engine) and move the C06 flashing-lamp warning next to where P0300 and the lamp are introduced (S01/S02), keeping S06 for the clearing caveat.'
+      - 'youtube-scriptwriter, script.md S07: add CLAIMS C03, C05 for the on-screen procedure. Selected hook RATIONALE: name the search intent (troubleshooting). S03 ON-SCREEN: ''Dữ liệu đóng băng (freeze frame) = ...'' (Vietnamese term first).'
+      - 'youtube-scriptwriter, script.md S04: unless C07 becomes verified in the feature register, show the data with a neutral scan tool and neutral wording or drop the demo (strategy/content-pillars.md CTK-L-0015 note); give it narration or DEMO-SECONDS above 0.'
+    G6:
+      result: FAIL
+      evidence: 'Automated G6 is FAIL (R002): ''Chapters: 0 chapter(s); YouTube needs at least 3'', plus 3 [TODO] in seo.md; chapters cannot be built while the runtime is 00:07. Parts that hold: recommended title ''Lỗi P0300: Khoanh vùng nguyên nhân bỏ máy trước khi thay linh kiện'' is 66 characters with the primary keyword first; the description opens with the problem and the takeaway; 3 title candidates; 6 relevant tags; no performance wording. Defects: (1) item.yaml seo.description contains the public placeholder ''[Bản nháp kiểm thử: phần nội dung chi tiết sẽ viết sau khi các claim được kiểm chứng.]'', which no gate detects (G6 counts [TODO] only in seo.md); (2) seo.md Keyword notes: all 3 rows have Evidence ''[TODO]'' and an empty ''Observed on'', and ''chẩn đoán bỏ máy'' and ''mã lỗi OBD2'' (item.yaml keywords.secondary) have no row; (3) the title''s promise depends on C01 and C05, both unverified (seo.title_rationale says so); (4) thumbnail concept 2 ''Sơ đồ 4 xi-lanh, cả bốn nhấp nháy đỏ'' shows every cylinder misfiring, while C01 says ''ngẫu nhiên/nhiều xi-lanh''; (5) seo.related_content CTK-L-0014 and CTK-L-0009 are unproduced sheet ideas (no workspace; data/normalized/tracker.json has 0 records), so they cannot be the S08 end-screen target yet; (6) seo.pinned_comment is empty; (7) the seo.md Publishing checklist differs from templates/seo-package.md: it lacks ''Description plus chapter lines stay within 5000 characters'' and contains upload-time items (''Vietnamese captions checked against the final voice-over'', ''End screen and cards point to related Cartek content'') that cannot be true before approval.'
+      corrections:
+      - 'youtube-seo-specialist, item.yaml seo.description: delete the ''[Bản nháp kiểm thử: ...]'' line; after the claims are verified, add a short summary of what the video covers (no unverified technical statement).'
+      - 'youtube-seo-specialist, seo.md ''## Keyword notes'': record observed evidence and the date for each of the 5 keywords in item.yaml, adding rows for ''chẩn đoán bỏ máy'' and ''mã lỗi OBD2''.'
+      - 'youtube-seo-specialist, item.yaml seo.chapters: build at least 3 chapters from `qc_content.py runtime CTK-L-9001` once the narration exists (00:00 first, each at least 10 s).'
+      - 'youtube-seo-specialist, item.yaml seo.thumbnail_concepts[1]: depict the verified meaning of P0300 (random or multiple cylinders, not all four flashing).'
+      - 'youtube-seo-specialist, item.yaml seo.related_content and script.md S08 VISUAL: point the end screen and cards to videos that will be published first, or note in seo.md that they wait for CTK-L-0014; draft seo.pinned_comment as a question inviting technicians'' P0300 cases.'
+      - 'youtube-seo-specialist, seo.md ''## Publishing checklist'': replace it with the current templates/seo-package.md checklist (upload-time steps live in item.yaml publication.upload_checklist). Re-check the title once C01 and C05 are verified.'
+    G7:
+      result: FAIL
+      evidence: 'Automated G7 is FAIL (R002): ''Demo segments exist but production.demo_setup lacks the tool and vehicle/location'', ''No responsible person (owner)'', ''No target publish date''; also BLOCKED by G4, 5 storyboard [TODO] markers and 4 unconfirmed assets (3 needed, 1 requested). A crew could not shoot from script plus storyboard: no narration exists; storyboard.md ''Seconds'' is empty for all 8 shots; there is no shot for S07 (recap list graphic) and the S06 ''biểu tượng cảnh báo an toàn'' graphic is not in the shot list or Graphics section; shot 1 (S01) lists asset ''Cartek 2 (chưa xác nhận tính năng)'' while script.md S01 cites only C01, so the hook would show an unverified Cartek 2 capability (C07); shot 5 (S04) is a Cartek 2 screen capture of the same unverified feature; shot 2 films ''Khoang máy đang rung'' but Filming notes are ''[TODO: an toàn khi quay gần động cơ đang chạy; ...]''; nothing records whether the test vehicle''s P0300 will be a genuine fault (channel-positioning.md: ''every demonstration is real''). The draft export validates as DRAFT_NOT_APPROVED with 8 segments and 31 blocking issues, timing.within_target false and demo_setup null.'
+      corrections:
+      - 'Production owner, item.yaml production.demo_setup: record tool, tool_version, vehicle (make/model/year/engine) and location; set owner and target_publish_date (for a test item, a rehearsal owner, or accept the FAIL).'
+      - 'Production owner, item.yaml production.assets_required: confirm the vehicle with a real P0300, the graphics and the qualified technician, then set each status to confirmed.'
+      - 'Production owner, storyboard.md: fill Vehicle / location for shots 1, 2, 5 and 7; fill Seconds from the runtime table; add a shot for S07 and the S06 safety-icon graphic; write Filming notes for crew safety near the running engine (and the fuel-pressure test if filmed), with the qualified technician present.'
+      - 'Production owner, storyboard.md shots 1 and 5: use a neutral scan tool, or cite C07 in S01 and keep both shots blocked until a verified feature-register entry exists.'
+      - 'cartek-content-strategist, brief.md ''## Demonstration plan'' and production.demo_setup: state that the P0300 is a naturally occurring fault on the test vehicle; a staged or induced misfire would need on-screen disclosure and the qualified safety review.'
+  decision: FAIL
+  notes: 'Rehearsal on TEST ITEM CTK-L-9001: test items can never be approved. The skill''s step 1 `set_status.py --stage QC` was skipped by instruction, so the stage stays RESEARCH. This reviewer did not write, research or edit any deliverable of this item. Approval would still need: automated G1-G8 PASS, a qc review with G2/G4/G6/G7 PASS and a technical review with G3/G5 PASS on the current fingerprint, a qualified human technical review (flags fuel-system, hot-or-moving-parts), a human editorial sign-off, and a non-test ID (the real item is CTK-L-0015).'
+- id: R004
+  date: '2026-11-05'
+  reviewer: technical-fact-checker (agent)
+  reviewer_type: agent
+  role: technical
+  qualified: false
+  fingerprint: sha256:d57844630d9fb5fd7482a17cc55f8523b7ab8c9224cddf8e9f0a3c9d09bd8cef
+  gates:
+    G3:
+      result: BLOCKED
+      evidence: 'Automated G3 is BLOCKED (R002). I could open no cited source: SRC01 (SAE J2012), SRC02 (SAE J1979) and SRC03 (13 CCR § 1968.2) are each noted ''Candidate source. Not yet consulted'' and are not available to this reviewer. Their types are accepted for C01-C04 (standard) and C06 (regulation), but no citation names an edition (''current revision''). Decisions, reported but not written per the rehearsal rules: C01 stays unverified (SRC01 unread; the selected hook sentence ''P0300 không chỉ ra xi-lanh nào đang bỏ máy'' is not in C01''s text, and S02 ON-SCREEN ''bỏ máy nhiều xi-lanh'' drops ''ngẫu nhiên''). C02 stays unverified (SRC01 unread). C03 stays unverified (SRC02 unread). C04 stays unverified and should be split: it bundles what clearing erases (''chỉ xóa mã và dữ liệu chẩn đoán liên quan''), the readiness reset, and ''lỗi sẽ quay lại nếu nguyên nhân còn''. C05 cannot be verified: ''sources: []'' for a diagnostic-procedure claim, and research.md ''Codes vs root causes'' is ''[TODO]''. C06 stays unverified: SRC03 is a California regulation, so its scope for vehicles sold in Vietnam is unproven (skills/automotive-researcher/reference.md), and the driver instruction ''cần giảm tải và dừng xe an toàn'' needs its own source. C07 is blocked: no feature_id, no source, and the register has ''features: []''. research.md still has 5 [TODO] markers (Findings, Codes vs root causes x2, Vehicle and model-year differences, Safety notes), and its Fact-check log has one row, ''C01-C07 | Not checked''. script.md S07 ON-SCREEN states the procedure with an empty CLAIMS line. item.yaml vehicle.powertrains is [] although the content assumes spark ignition (bugi, bô-bin).'
+      corrections:
+      - 'automotive-researcher, item.yaml SRC01 / C01 / C02: obtain and read SAE J2012 or ISO 15031-6 (or OEM service information), record the edition and section in SRC01 notes, and register the hook''s ''P0300 không chỉ ra xi-lanh nào'' statement in C01 or a new claim.'
+      - 'automotive-researcher, item.yaml SRC02 / C03 / C04: read SAE J1979 (freeze frame and clearing services); split C04 into (a) what clearing erases, (b) readiness reset, (c) clearing is not a repair and the code can return while the cause remains; check whether ''chỉ xóa'' holds for permanent DTCs (Service $0A in reference.md).'
+      - 'automotive-researcher, item.yaml C05 and research.md ''## Codes vs root causes'': add OEM service information or a textbook, with one claim per cause group and its confirming test (reference.md: ''every row needs its own verified claim'').'
+      - 'automotive-researcher, item.yaml C06: add a source valid for the vehicles in scope or narrow the claim to vehicles certified to that regulation; move ''giảm tải và dừng xe an toàn'' into a separate safety claim backed by OEM information.'
+      - 'Cartek product team / youtube-scriptwriter, item.yaml C07 and script.md S04: add a verified feature-register entry with product-team evidence and set feature_id, or mark C07 removed and take Cartek 2 out of S04 VISUAL and storyboard.md shots 1 and 5.'
+      - 'youtube-scriptwriter, script.md S07 CLAIMS: add C03, C05; S02 ON-SCREEN: use C01''s verified wording.'
+      - 'automotive-researcher, research.md ''## Vehicle and model-year differences'' and item.yaml vehicle.powertrains: state the engine types covered and whether the OBD-II/EOBD statements apply to vehicles sold in Vietnam. technical-fact-checker (next run): replace the log row with one row per claim (decision, source and section, checked by, date).'
+    G5:
+      result: FAIL
+      evidence: 'Automated G5 is BLOCKED (R002) with no automated FAIL: no banned wording, P0300 covered by C01, P0301-P0312 by C02, no manufacturer-controlled code, every detected term flagged or dismissed. Safety decisions: keep fuel-system flagged (brief.md Risks ''phép thử áp suất nhiên liệu''), because S05 VO is unwritten and a ''named but not performed'' dismissal cannot be confirmed (the storyboard has no fuel-pressure shot); keep hot-or-moving-parts flagged (storyboard.md shot 2 ''Khoang máy đang rung'', brief.md ''kiểm tra khi động cơ đang chạy''); the high-voltage dismissal is correct (brief.md Out of scope ''xe hybrid/điện''). Rule breaks: (1) script.md S03 VISUAL ''Bảng dữ liệu đóng băng mẫu (đồ họa, không phải ảnh chụp số liệu thật)'' plans freeze-frame values not captured on a vehicle (CLAUDE.md section 7 ''Never invent diagnostic data''); (2) the only SAFETY line is S06 ''[TODO: cảnh báo đo áp suất nhiên liệu và làm việc gần động cơ đang chạy ...]'', placed after S05 where those tests are named (workflows/technical-review.md step 6 ''where the risk occurs''). Still BLOCKED: there is no narration (the clearing caveat exists only as S06 ON-SCREEN ''Xóa mã ≠ sửa lỗi''); C05 (diagnostic-procedure) and C06 (safety) are unverified; the S05 tests have no OEM procedure; and the item is safety-flagged, so a qualified human technical review (reviewer_type human, qualified true) is mandatory and this agent review cannot replace it.'
+      corrections:
+      - 'youtube-scriptwriter, script.md S03 VISUAL: replace the sample table with a parameter-name-only graphic or with the freeze frame captured on the named test vehicle.'
+      - 'youtube-scriptwriter, script.md S04/S05: add SAFETY lines where the fuel-pressure and running-engine tests are named or shown; keep S06 for the clearing caveat and the C06 lamp warning, or move that warning next to S01/S02.'
+      - 'youtube-scriptwriter, script.md S06 VO: write the clearing caveat in the narration from the verified C04 wording. Say ''xóa mã lỗi'', not a bare ''xóa mã'': the clear_codes_mentions and banned_patterns in config/qc-policy.yaml do not match ''xóa mã'', so wording with it must be checked by hand.'
+      - 'technical-fact-checker (next run), item.yaml safety: once S05 VO exists, re-decide fuel-system: keep the flag with a SAFETY line if the video tells viewers how to test fuel pressure, or dismiss it with a rationale if it only names the test.'
+      - 'Approving editor: assign the qualified human technical reviewer (asset ''Kỹ thuật viên có chuyên môn duyệt nội dung an toàn'', status requested). Checklist: flags fuel-system and hot-or-moving-parts; segments S01 (shot 2), S04, S05, S06; OEM sources used: none registered yet; also check whether S05 shows ignition tests on a running engine, which no taxonomy flag names.'
+  decision: FAIL
+  notes: 'Rehearsal on TEST ITEM CTK-L-9001 (never approvable). Agent reviewer, not qualified. No source was consulted and no claim was verified. Per the rehearsal rules, claim statuses, safety flags and the research.md Fact-check log were not edited: the decisions in G3 and G5 are what the fact-checker would record. This reviewer did not write or research this item. The S02 animation will show P0301-P0304 (in VISUAL, not scanned by G5); C02''s range covers them for this review, but G5''s substring check would FAIL P0302-P0304 if they were typed into ON-SCREEN.'
+- id: R005
+  date: '2026-11-05'
+  reviewer: scripts/qc_content.py
+  reviewer_type: automated
+  role: qc
+  fingerprint: sha256:a26703010edd21af78e40fb9efd2f424c13a84001eeee8c71ab6f9a43003ee9e
+  gates:
+    G1:
+      result: PASS
+      evidence: |-
+        [PASS] Provenance: CTK-L-0015 from 'Content Direction'!F12.
+        [PASS] P4: Kiến thức chuyên sâu về hệ thống OBD2.
+        [PASS] Metadata complete; ID, folder, provenance and vocabularies consistent.
+      corrections: []
+    G2:
+      result: PASS
+      evidence: |-
+        [PASS] Brief complete for primary audience Thợ sửa chữa ô tô.
+        [INFO] Relevance and audience fit also need an independent judgment review (role qc).
+      corrections: []
+    G3:
+      result: BLOCKED
+      evidence: |-
+        [BLOCKED] research.md still has 5 [TODO] marker(s).
+        [BLOCKED] C01 is unverified: "P0300 là mã lỗi chuẩn (generic) nghĩa là phát hiện bỏ máy ngẫu nhiên/nhiều xi-lanh (Rando…"
+        [BLOCKED] C02 is unverified: "Các mã P0301-P0312 chỉ hiện tượng bỏ máy được phát hiện ở xi-lanh số 1-12."
+        [BLOCKED] C03 is unverified: "Dữ liệu đóng băng (freeze frame) ghi lại điều kiện vận hành tại thời điểm mã lỗi được lưu."
+        [BLOCKED] C04 is unverified: "Xóa mã lỗi chỉ xóa mã và dữ liệu chẩn đoán liên quan, đặt lại trạng thái sẵn sàng; không …"
+        [BLOCKED] C05 is unverified: "Nhóm nguyên nhân cần kiểm tra khi có P0300: đánh lửa, nhiên liệu, khí nạp (rò chân không)…"
+        [BLOCKED] C06 is unverified: "Đèn báo lỗi động cơ nhấp nháy khi mức bỏ máy đủ để làm hỏng bộ xúc tác; cần giảm tải và d…"
+      corrections:
+      - 'Complete the research (skill: automotive-researcher).'
+      - 'Verify it with an accepted source, or mark it removed and take it out of the script (skill: technical-fact-checker).'
+    G4:
+      result: BLOCKED
+      evidence: |-
+        [BLOCKED] script.md still has 11 [TODO] marker(s).
+        [INFO] Runtime estimate so far: 00:07 (narration incomplete).
+        [INFO] Clarity, coherence and retention quality also need an independent judgment review (role qc).
+      corrections:
+      - 'Finish the script (skill: youtube-scriptwriter).'
+    G5:
+      result: BLOCKED
+      evidence: |-
+        [BLOCKED] The script is not finished; the technical and safety review needs the final narration.
+        [BLOCKED] research.md is not finished; technical accuracy cannot be reviewed yet.
+        [INFO] Safety flags fuel-system, hot-or-moving-parts: a qualified human technical review is required before approval.
+        [BLOCKED] C05 (diagnostic-procedure) is unverified: technical approval is blocked.
+        [BLOCKED] C06 (safety) is unverified: technical approval is blocked.
+        [INFO] Automotive accuracy also needs an independent technical review (role technical).
+      corrections:
+      - Finish script.md first (G4), then re-run QC.
+      - Finish the research first (G3).
+      - Verify the procedure/safety statement with OEM or standard sources, or remove it.
+    G6:
+      result: BLOCKED
+      evidence: |-
+        [BLOCKED] seo.md still has 3 [TODO] marker(s).
+        [BLOCKED] Chapters cannot be set yet: they need the timing of the finished narration.
+      corrections:
+      - 'Complete the SEO analysis (skill: youtube-seo-specialist).'
+      - Finish script.md, then build chapters from `python3 scripts/qc_content.py runtime <ID>`.
+    G7:
+      result: FAIL
+      evidence: |-
+        [BLOCKED] Script gate G4 is BLOCKED; the production handoff needs a finished script.
+        [BLOCKED] storyboard.md still has 5 [TODO] marker(s).
+        [BLOCKED] Assets not yet available: Máy chẩn đoán dùng để quay demo (trung tính; Cartek 2 chỉ khi tính năng được xác minh), Xe thử có mã P0300 thật, Đồ họa sơ đồ xi-lanh, bảng dữ liệu đóng băng, sơ đồ cây nguyên nhân, Kỹ thuật viên có chuyên môn duyệt nội dung an toàn.
+        [FAIL] Demo segments exist but production.demo_setup lacks the tool and vehicle/location.
+        [FAIL] No responsible person (owner).
+        [FAIL] No target publish date.
+      corrections:
+      - Resolve G4 first.
+      - Complete the shot list.
+      - Confirm availability and set status to available or confirmed.
+      - Record tool, tool version, vehicle and location.
+      - Set item.yaml -> owner (Người phụ trách).
+      - Set item.yaml -> target_publish_date.
+    G8:
+      result: FAIL
+      evidence: |-
+        [FAIL] No target publish date.
+        [FAIL] No visibility plan.
+        [BLOCKED] 8 of 8 publishing checklist item(s) in seo.md are not ticked.
+        [WARN] Related content not yet published: CTK-L-0014, CTK-L-0009; YouTube end screens and cards can only link published videos.
+      corrections:
+      - Set item.yaml -> target_publish_date.
+      - Set publication.visibility_plan (public, scheduled, unlisted or private).
+      - Complete each item and tick it ([x]) before approval.
+      - Link only published videos at upload; keep the others for later updates.
   decision: FAIL
   notes: Automated structural checks. Judgment gates also need independent reviews.
 corrections: []

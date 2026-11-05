@@ -18,7 +18,7 @@
 
 - **Primary persona:** Thợ sửa chữa ô tô (`technician`)
 - **Secondary persona:** Chủ Garage ô tô (`garage-owner`): cùng quy trình, góc nhìn chi phí sửa chữa.
-- **Technical depth:** intermediate to advanced. Người xem đã dùng máy đọc lỗi và biết thay bugi, bô-bin.
+- **Technical depth:** advanced (khớp item.yaml). Người xem đã dùng máy đọc lỗi và biết thay bugi, bô-bin.
 - **What they already know:** đọc mã lỗi cơ bản, hệ thống đánh lửa và nhiên liệu ở mức sửa chữa.
 - **Why they would watch:** sheet ghi nỗi đau của thợ là "Cập nhật kiến thức, tìm kiếm thông tin , xử lý sự cố phức tạp" ('Khán giả'!C4). Bỏ máy nhiều xi-lanh là sự cố khó khoanh vùng.
 

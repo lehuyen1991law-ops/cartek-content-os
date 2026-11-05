@@ -24,7 +24,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from ctk import fileio, qc, schema  # noqa: E402
 from ctk.context import build_context  # noqa: E402
-from ctk.items import PERFORMANCE, find_item  # noqa: E402
+from ctk.items import PERFORMANCE, ConcurrentEditError, find_item  # noqa: E402
 from ctk.repo import Repo  # noqa: E402
 from ctk.sheet import is_youtube_url  # noqa: E402
 
@@ -124,5 +124,13 @@ def main(argv: list[str] | None = None) -> int:
     return 0
 
 
+def run(argv: list[str] | None = None) -> int:
+    try:
+        return main(argv)
+    except ConcurrentEditError as exc:
+        print(exc)
+        return 3
+
+
 if __name__ == "__main__":
-    sys.exit(main())
+    sys.exit(run())

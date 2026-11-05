@@ -37,13 +37,13 @@ Independence rule: if you (this agent session) wrote, researched or edited any d
 | **FAIL** | A deliverable exists and breaks a rule; the writer must correct it. |
 | **BLOCKED** | The gate cannot pass yet: a deliverable is unfinished, evidence is missing, or a prerequisite (source, sign-off, asset) is outstanding. |
 
-Your judgment PASS can never override an automated FAIL or BLOCKED on the same gate. A missing source, an unsupported Cartek 2 feature claim or an unverified technical instruction is never passed.
+Your judgment PASS can never override an automated FAIL or BLOCKED on the same gate: `qc_content.py review` refuses such a review, and refuses an editorial PASS while any automated gate is not PASS. A missing source, an unsupported Cartek 2 feature claim or an unverified technical instruction is never passed.
 
 ## Procedure
 
-1. Start QC and run the automated gates, recording the result in the review history:
+1. Run the automated gates and record the result in the review history. Move the stage to QC only when the item was handed over for its formal QC review; for a status check, leave the stage alone.
    ```bash
-   python3 scripts/set_status.py <ID> --stage QC --by "<tên>"
+   python3 scripts/set_status.py <ID> --stage QC --by "<tên>"   # formal QC review only
    python3 scripts/qc_content.py run <ID> --record
    python3 scripts/export_package.py <ID> --draft
    ```

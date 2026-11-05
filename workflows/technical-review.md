@@ -60,11 +60,11 @@ QC scans the working title, `brief.md`, `research.md` and `script.md` for hazard
 | `fuel-system` | Fuel lines, pressure release, fire risk | áp suất nhiên liệu, ống/đường xăng, bơm xăng, xả áp, tháo kim phun, rò rỉ xăng |
 | `lifting` | Jacking, lifts, working under the vehicle | kích xe, con đội, cầu nâng, chui gầm |
 | `battery-12v` | 12 V battery disconnection, jump starting | ắc quy, câu bình, tháo cực |
-| `hot-or-moving-parts` | Hot coolant, fans, belts | nước làm mát nóng, nắp két nước, quạt két nước, dây curoa |
+| `hot-or-moving-parts` | Hot coolant, fans, belts, running engine | nước làm mát nóng, nắp két nước, quạt két nước, dây curoa, động cơ đang chạy/nổ |
 | `adas` | ADAS sensors and calibration | ADAS, radar, cân chỉnh camera |
 
-- **Flag** (`safety.flags`) when the video shows or describes a procedure on that system. The item then needs a qualified human technical review and a safety warning in the script.
-- **Dismiss** (`safety.dismissed`) when the term appears without any hazardous procedure, for example a fuel pump mentioned only as a possible cause. Each dismissal needs a rationale of at least 15 characters:
+- **Flag** (`safety.flags`) when the video shows, demonstrates or explains how to do work on that system. The item then needs a qualified human technical review and a safety warning in the script where the risk occurs.
+- **Dismiss** (`safety.dismissed`) when the system is only named, for example a fuel pump mentioned as a possible cause or a test left to a professional, and no procedure is shown or explained. Each dismissal needs a rationale of at least 15 characters:
 
 ```yaml
 safety:

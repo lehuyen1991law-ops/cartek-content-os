@@ -242,6 +242,81 @@ class TestCompleteFixture(QCTestCase):
         self.assertIn("Gate summary", report)
 
 
+class TestReviewerFindings(QCTestCase):
+    """Regression tests for the problems found by the independent acceptance review."""
+
+    def setUp(self) -> None:
+        super().setUp()
+        write_complete_fixture(self.repo)
+
+    def replace_hook_sentence(self, new: str) -> None:
+        self.edit_file("CTK-L-0015", "script.md", lambda t: t.replace("Mã P0300 xuất hiện trong ví dụ này.", new, 1))
+
+    def test_xoa_ma_without_loi_is_banned_and_needs_caveat(self):
+        self.replace_hook_sentence("Mã P0300 xuất hiện. Xóa mã là xong.")
+        _, results = self.gates()
+        self.assertTrue(any("clearing" in e for e in self.findings(results, "G5", qc.FAIL)), results["G5"].evidence_lines())
+        self.replace_hook_sentence("Mã P0300 xuất hiện. Bạn có thể xóa mã bằng máy chẩn đoán.")
+        _, results = self.gates()
+        self.assertTrue(any("without saying it does not fix" in e for e in self.findings(results, "G5", qc.FAIL)))
+
+    def test_todo_prompt_does_not_count_as_caveat(self):
+        self.replace_hook_sentence("Mã P0300 xuất hiện. Bạn có thể xóa mã lỗi bằng máy. [TODO: nói rằng xóa mã không sửa nguyên nhân]")
+        _, results = self.gates()
+        self.assertTrue(any("without saying it does not fix" in e for e in self.findings(results, "G5", qc.FAIL)))
+
+    def test_claim_ranges_cover_codes_and_visuals_are_scanned(self):
+        def add_range_claim(data):
+            data["claims"].append({"id": "C02", "text": "SYNTHETIC: P0301-P0312 mean misfire in cylinders 1-12.", "category": "dtc-definition", "sources": ["SRC01"], "status": "verified", "feature_id": None, "verified_by": "unit-test", "verified_on": "2026-11-05", "notes": ""})
+        self.edit_item("CTK-L-0015", add_range_claim)
+        self.edit_file("CTK-L-0015", "script.md", lambda t: t.replace("- **ON-SCREEN:** Synthetic text", "- **ON-SCREEN:** P0302", 1))
+        _, results = self.gates()
+        self.assertFalse(any("P0302" in e for e in self.findings(results, "G5", qc.FAIL)))
+        self.edit_file("CTK-L-0015", "script.md", lambda t: t.replace("Synthetic visual.", "Màn hình hiển thị mã P0420.", 1))
+        _, results = self.gates()
+        self.assertTrue(any("P0420" in e for e in self.findings(results, "G5", qc.FAIL)))
+        self.assertEqual(qc.codes_covered("P0301–P0303 và P0300", r"\b[PBCU][0-3][0-9A-F]{3}\b"), {"P0300", "P0301", "P0302", "P0303"})
+
+    def test_placeholders_in_public_text_block(self):
+        self.edit_file("CTK-L-0015", "script.md", lambda t: t.replace("- **ON-SCREEN:** Synthetic text", "- **ON-SCREEN:** P0300 = bỏ máy (chờ xác minh)", 1))
+        self.edit_item("CTK-L-0015", lambda d: d["seo"].update(description="Synthetic description about p0300. [Bản nháp: viết sau]"))
+        _, results = self.gates()
+        self.assertTrue(any("Placeholder" in e for e in self.findings(results, "G4", qc.BLOCKED)))
+        self.assertTrue(any("Placeholder" in e for e in self.findings(results, "G6", qc.BLOCKED)))
+
+    def test_running_engine_is_a_safety_topic(self):
+        self.edit_file("CTK-L-0015", "script.md", lambda t: t.replace("Synthetic visual.", "Đo khi động cơ đang chạy.", 1))
+        _, results = self.gates()
+        self.assertTrue(any("'hot-or-moving-parts'" in e for e in self.findings(results, "G5", qc.FAIL)))
+
+    def test_chapters_fail_only_once_narration_exists(self):
+        self.edit_item("CTK-L-0015", lambda d: d["seo"].update(chapters=[]))
+        _, results = self.gates()
+        self.assertTrue(any("Chapters:" in e for e in self.findings(results, "G6", qc.FAIL)))
+        self.edit_file("CTK-L-0015", "script.md", lambda t: t.replace("- **VISUAL:** Synthetic visual.", "- **VISUAL:** [TODO: hình]", 1))
+        _, results = self.gates()
+        self.assertFalse(any("Chapters:" in e for e in self.findings(results, "G6", qc.FAIL)))
+        self.assertTrue(any("finished narration" in e for e in self.findings(results, "G6", qc.BLOCKED)))
+
+    def test_unpublished_related_content_is_a_warning(self):
+        self.edit_item("CTK-L-0015", lambda d: d["seo"].update(related_content=["CTK-L-0014"]))
+        _, results = self.gates()
+        self.assertEqual(results["G8"].result, qc.PASS)
+        self.assertTrue(any("not yet published" in e for e in self.findings(results, "G8", "WARN")))
+
+    def test_judgment_pass_cannot_overrule_automated_result(self):
+        self.edit_item("CTK-L-0015", lambda d: d["claims"][0].update(status="unverified"))
+        path = review_file(self.box.root, "overrule.yaml", reviewer="technical-fact-checker (agent)", reviewer_type="agent", role="technical",
+                           gates={"G3": {"result": "PASS", "evidence": "Looks fine to me, checked the claims.", "corrections": []}}, decision="PASS")
+        code, out = run("qc_content", self.repo.root, "review", "CTK-L-0015", "--file", str(path))
+        self.assertEqual(code, 1, out)
+        self.assertIn("not allowed while the automated result is BLOCKED", out)
+        path = review_file(self.box.root, "signoff.yaml", reviewer="Biên tập viên B", reviewer_type="human", role="editorial", gates={}, decision="PASS")
+        code, out = run("qc_content", self.repo.root, "review", "CTK-L-0015", "--file", str(path))
+        self.assertEqual(code, 1, out)
+        self.assertIn("editorial sign-off PASS is not allowed", out)
+
+
 class TestLifecycle(QCTestCase):
     def setUp(self) -> None:
         super().setUp()

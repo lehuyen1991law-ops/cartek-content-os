@@ -67,6 +67,31 @@ class TestNewContent(ContentTestCase):
         self.assertNotEqual(code, 0)
 
 
+class TestConcurrentEdits(ContentTestCase):
+    def test_save_refuses_when_item_changed_on_disk(self):
+        from ctk.items import ConcurrentEditError
+
+        run("new_content", self.repo.root, "--from-idea", "CTK-L-0002")
+        first = find_item(self.repo, "CTK-L-0002")
+        second = find_item(self.repo, "CTK-L-0002")
+        second.data["owner"] = "Session two"
+        second.save()
+        first.data["owner"] = "Session one"
+        with self.assertRaises(ConcurrentEditError):
+            first.save()
+        self.assertEqual(find_item(self.repo, "CTK-L-0002").data["owner"], "Session two")
+        self.assertEqual([p.name for p in first.path.iterdir() if p.name.endswith(".tmp")], [])
+
+    def test_crlf_file_is_not_a_false_conflict(self):
+        run("new_content", self.repo.root, "--from-idea", "CTK-L-0002")
+        path = find_item(self.repo, "CTK-L-0002").path / "item.yaml"
+        path.write_bytes(path.read_bytes().replace(b"\n", b"\r\n"))
+        item = find_item(self.repo, "CTK-L-0002")
+        item.data["owner"] = "An"
+        item.save()
+        self.assertEqual(find_item(self.repo, "CTK-L-0002").data["owner"], "An")
+
+
 class TestStatus(ContentTestCase):
     def setUp(self) -> None:
         super().setUp()
@@ -127,6 +152,14 @@ class TestValidation(ContentTestCase):
         self.assertEqual(code, 1)
         self.assertIn("not registered", out)
         self.assertIn("'everyone'", out)
+
+    def test_checklist_drift_is_a_warning(self):
+        run("new_content", self.repo.root, "--from-idea", "CTK-L-0002")
+        seo = find_item(self.repo, "CTK-L-0002").path / "seo.md"
+        seo.write_text(seo.read_text(encoding="utf-8") + "- [ ] Vietnamese captions checked against the final voice-over\n", encoding="utf-8")
+        code, out = run("validate_content", self.repo.root)
+        self.assertEqual(code, 0, out)
+        self.assertIn("Publishing checklist differs", out)
 
     def test_hand_edited_normalized_data_is_an_error(self):
         path = self.repo.normalized_dir / "personas.json"

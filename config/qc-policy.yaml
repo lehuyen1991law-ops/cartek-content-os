@@ -57,7 +57,7 @@ brand_tagline: "Cartek - Check your car"
 # --- G5 ------------------------------------------------------------------------------
 # Wording that implies clearing a code repairs the vehicle: always FAIL.
 banned_patterns:
-  - pattern: 'xoa (ma )?loi (la|thi|de|cho) (xong|het|sua|khac phuc|het benh|khoi)'
+  - pattern: 'xoa (ma loi|ma|loi) (la|thi|de|cho) (xong|het|sua|khac phuc|het benh|khoi)'
     reason: "Implies clearing a fault code repairs the fault."
   - pattern: '(tat|reset) den (check engine|bao loi|dong co) (la|thi|de) (xong|het|sua|khac phuc|khoi)'
     reason: "Implies turning off the warning lamp repairs the fault."
@@ -78,7 +78,7 @@ review_patterns:
   - pattern: 'khong can (den |ra )?(tho|garage|gara)'
     reason: "Tells viewers they do not need a professional; check safety."
 # Mentioning code clearing requires a caveat that it does not fix the cause.
-clear_codes_mentions: ['xoa (ma )?loi', 'clear (code|dtc)', 'reset (den|loi)']
+clear_codes_mentions: ['xoa (ma loi|ma|loi)\b', 'clear (code|dtc)', 'reset (den|loi|ma)']
 clear_codes_caveat_markers:
   - 'khong (sua|khac phuc|giai quyet)'
   - '(loi|den) (se )?(sang|bao|xuat hien) lai'
@@ -98,8 +98,12 @@ safety_terms:
   fuel-system: ['ap suat nhien lieu', '(ong|duong) (xang|dau|nhien lieu)', 'bom (xang|nhien lieu)', 'xa ap', 'thao kim phun', 'ro ri (xang|nhien lieu)']
   lifting: ['kich xe', 'con doi', 'cau nang', 'nang xe', 'chui (vao )?gam']
   battery-12v: ['ac quy', 'cau binh', 'thao cuc']
-  hot-or-moving-parts: ['nuoc lam mat nong', 'nap ket nuoc', 'quat (ket nuoc|lam mat)', 'day curoa']
+  hot-or-moving-parts: ['nuoc lam mat nong', 'nap ket nuoc', 'quat (ket nuoc|lam mat)', 'day curoa', '(dong co|may) dang (chay|no|hoat dong)']
   adas: ['\badas\b', 'radar', 'can chinh camera']
+
+# Placeholder wording that must never reach viewers (script narration/on-screen text and SEO
+# fields). Matched like the other patterns (accent-free, lower case). [TODO] is always included.
+draft_markers: ['\[todo', 'cho xac minh', 'ban nhap', '\btbd\b', '\bxxx\b', 'lorem ipsum', '\bplaceholder\b']
 
 # --- G6 ------------------------------------------------------------------------------
 min_title_candidates: 3

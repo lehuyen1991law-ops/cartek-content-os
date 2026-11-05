@@ -34,7 +34,7 @@ Khi máy đọc lỗi báo P0300, kỹ thuật viên cần biết gì và kiểm
 
 ## Cartek 2 features used (Tính năng Cartek 2)
 
-Đọc mã lỗi và dữ liệu đóng băng bằng Cartek 2 (C07). Không có trong `data/reference/cartek-2-feature-register.yaml` (sổ đang trống), nên chưa được dùng làm sự thật.
+None. C07 (Cartek 2 đọc mã và dữ liệu đóng băng) đã bị gỡ khỏi kịch bản ngày 2026-11-05 sau review R003/R004, vì `data/reference/cartek-2-feature-register.yaml` đang trống. Đoạn demo dùng máy chẩn đoán trung tính.
 
 ## Safety notes (An toàn)
 

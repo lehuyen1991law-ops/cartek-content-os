@@ -55,8 +55,10 @@ If you wrote or researched this item yourself, you are not independent: hand the
    - Code clearing mentioned means a caveat that it does not fix the cause. Wording that presents clearing as a repair is a FAIL.
    - Procedures a viewer could copy must match OEM or standard procedures for the stated vehicles.
 5. Decide safety. QC lists the hazardous terms it detected (G5). For each topic:
-   - add it to `safety.flags` when the video shows or instructs a hazardous procedure (high voltage, brakes, steering, airbags/SRS, fuel system, lifting, 12 V battery work, hot or moving parts, ADAS calibration), and check the script carries a `SAFETY:` line or a `TYPE: safety` segment;
-   - or add it to `safety.dismissed` with a rationale of at least 15 characters explaining why no hazardous procedure is shown (for example, a fuel-pressure test named as a possible next step but not performed on camera).
+   - add it to `safety.flags` when the video shows, demonstrates or explains how to do work on that system (high voltage, brakes, steering, airbags/SRS, fuel system, lifting, 12 V battery work, hot or moving parts such as a running engine, ADAS calibration), and check the script carries a `SAFETY:` line or a `TYPE: safety` segment where the risk occurs;
+   - or add it to `safety.dismissed` with a rationale of at least 15 characters when the system is only named, for example as a possible cause or as a next step left to a professional, and no procedure is shown or explained.
+
+   This is the same rule as [workflows/technical-review.md](../../workflows/technical-review.md#safety-flags-and-dismissals).
 6. Re-run `python3 scripts/qc_content.py run <ID>` after your `item.yaml` changes. G3 and G5 FAIL findings must be gone; remaining BLOCKED findings must be explained in your review.
 7. Record the technical review on the current content. Write a file from [templates/review.yaml](../../templates/review.yaml) outside the repository (for example `/tmp/<ID>-technical.yaml`), then:
    ```bash

@@ -24,7 +24,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from ctk import export, fileio, mdparse, qc, schema  # noqa: E402
 from ctk.context import build_context, describe_target  # noqa: E402
-from ctk.items import EXPORT_DIR, QC_REPORT, RELEASE_EXPORT, find_item, find_items, today  # noqa: E402
+from ctk.items import EXPORT_DIR, QC_REPORT, RELEASE_EXPORT, ConcurrentEditError, find_item, find_items, today  # noqa: E402
 from ctk.repo import Repo  # noqa: E402
 
 GATE_RESULTS = ("PASS", "FAIL", "BLOCKED")
@@ -116,7 +116,21 @@ def cmd_review(repo: Repo, args) -> int:
         for problem in problems:
             print(f"  - {problem}")
         return 1
-    item, ctx, _, _ = evaluate(repo, args.id)
+    item, ctx, results, _ = evaluate(repo, args.id)
+    # A judgment can confirm or reject what the automated checks found, never overrule them.
+    conflicts = [
+        f"{gate}: a judgment PASS is not allowed while the automated result is {results[gate].result}"
+        for gate, entry in (review.get("gates") or {}).items()
+        if entry.get("result") == "PASS" and results[gate].result != qc.PASS
+    ]
+    if review["role"] == "editorial" and review["decision"] == "PASS" and qc.overall(results) != qc.PASS:
+        conflicts.append(f"editorial sign-off PASS is not allowed while the automated result is {qc.overall(results)}")
+    if conflicts:
+        print("Review not recorded:")
+        for conflict in conflicts:
+            print(f"  - {conflict}")
+        print("Run `python3 scripts/qc_content.py run <ID>` and fix the automated findings first.")
+        return 1
     record = {
         "id": qc.next_review_id(item.data),
         "date": today(),
@@ -224,6 +238,9 @@ def main(argv: list[str] | None = None) -> int:
     except LookupError as exc:
         print(exc)
         return 2
+    except ConcurrentEditError as exc:
+        print(exc)
+        return 3
 
 
 if __name__ == "__main__":
