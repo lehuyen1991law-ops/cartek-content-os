@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/lehuyen1991law-ops/cartek-content-os/schemas/source-capture.schema.json",
+  "title": "Spreadsheet capture bundle",
+  "description": "Read-only capture of every tab of the source spreadsheet. Produced by scripts/import_sheet.py --fetch, or by an AI agent through a Google Sheets connector (see workflows/sheet-import.md), then ingested with --snapshot-file.",
+  "type": "object",
+  "required": ["capture_format", "spreadsheet", "captured_at", "capture_method", "tabs"],
+  "properties": {
+    "capture_format": { "const": 1 },
+    "spreadsheet": {
+      "type": "object",
+      "required": ["id"],
+      "properties": {
+        "id": { "type": "string", "minLength": 10 },
+        "title": { "type": ["string", "null"] },
+        "locale": { "type": ["string", "null"] },
+        "time_zone": { "type": ["string", "null"] }
+      }
+    },
+    "captured_at": { "$ref": "#/$defs/utc_timestamp" },
+    "capture_method": { "type": "string", "minLength": 3 },
+    "capture_notes": { "type": "array", "items": { "type": "string" } },
+    "tabs": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/tab" } }
+  },
+  "$defs": {
+    "utc_timestamp": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$" },
+    "a1_map": {
+      "type": ["object", "null"],
+      "propertyNames": { "pattern": "^[A-Z]{1,3}[1-9][0-9]*$" },
+      "additionalProperties": { "type": "string" }
+    },
+    "row": { "type": "array", "items": { "type": ["string", "number", "boolean", "null"] } },
+    "repeated_rows": {
+      "type": "object",
+      "description": "Run-length encoding: `row` repeated `repeat` times.",
+      "required": ["repeat", "row"],
+      "additionalProperties": false,
+      "properties": {
+        "repeat": { "type": "integer", "minimum": 1 },
+        "row": { "$ref": "#/$defs/row" }
+      }
+    },
+    "values": {
+      "type": "array",
+      "description": "Formatted cell values row by row, as returned by values.get (trailing empty cells may be omitted).",
+      "items": { "anyOf": [{ "$ref": "#/$defs/row" }, { "$ref": "#/$defs/repeated_rows" }] }
+    },
+    "grid": {
+      "type": ["object", "null"],
+      "properties": {
+        "row_count": { "type": ["integer", "null"] },
+        "column_count": { "type": ["integer", "null"] },
+        "frozen_row_count": { "type": ["integer", "null"] }
+      }
+    },
+    "tab": {
+      "type": "object",
+      "required": ["title", "values"],
+      "properties": {
+        "sheet_id": { "type": ["integer", "null"] },
+        "title": { "type": "string", "minLength": 1 },
+        "index": { "type": ["integer", "null"] },
+        "grid": { "$ref": "#/$defs/grid" },
+        "values": { "$ref": "#/$defs/values" },
+        "hyperlinks": { "$ref": "#/$defs/a1_map" },
+        "notes": { "$ref": "#/$defs/a1_map" },
+        "data_validation": { "type": ["array", "null"] },
+        "formats_sampled": { "type": ["object", "null"] },
+        "capture_notes": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

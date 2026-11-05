@@ -1,0 +1,221 @@
+{
+  "kind": "tracker",
+  "normalized_format": 1,
+  "generated_by": "scripts/import_sheet.py",
+  "inputs": [
+    {
+      "tab": "Video Publish",
+      "snapshot": "data/source/04-video-publish.json",
+      "captured_at": "2026-11-05T06:10:44Z",
+      "content_sha256": "fc44697abf76b5f707f6ad3a166ed44ae1997904ef04da38704b0e0e04b37a95"
+    },
+    {
+      "tab": "Short Publish",
+      "snapshot": "data/source/05-short-publish.json",
+      "captured_at": "2026-11-05T06:10:44Z",
+      "content_sha256": "cd031b4ca713c7719f363ba6906385c4d9c4ece12f6aa0812baa6490d4fb57df"
+    }
+  ],
+  "note": "Only rows with a title are production records. Template/example rows, placeholder filler and blank rows are classified, not imported.",
+  "tabs": [
+    {
+      "tab": "Video Publish",
+      "format": "long-form",
+      "columns": {
+        "A": "title",
+        "B": "category",
+        "C": "brand",
+        "D": "model",
+        "E": "owner",
+        "F": "status",
+        "G": "publish_date",
+        "H": "script",
+        "I": "publish_url"
+      },
+      "row_groups": [
+        {
+          "rows": "2",
+          "count": 1,
+          "classification": "template-example",
+          "values": {
+            "category": "Hướng dẫn sử dụng thiết bị OBD2 (Cartek 2)",
+            "brand": "FORD",
+            "owner": "NONE",
+            "status": "Đã tạm dừng"
+          }
+        },
+        {
+          "rows": "3",
+          "count": 1,
+          "classification": "template-example",
+          "values": {
+            "category": "Giải thích, chia sẻ kiến thức các hệ thống trên ô tô",
+            "brand": "MAZDA",
+            "owner": "NONE",
+            "status": "Đang thực hiện"
+          }
+        },
+        {
+          "rows": "4",
+          "count": 1,
+          "classification": "template-example",
+          "values": {
+            "category": "Các vấn đề lỗi xe thường gặp",
+            "brand": "CHRYSLER",
+            "owner": "NONE",
+            "status": "Đã xuất bản"
+          }
+        },
+        {
+          "rows": "5",
+          "count": 1,
+          "classification": "template-example",
+          "values": {
+            "category": "Kiến thức chuyên sâu về hệ thống OBD2",
+            "brand": "TOYOTA",
+            "owner": "NONE",
+            "status": "Đang thực hiện"
+          }
+        },
+        {
+          "rows": "6",
+          "count": 1,
+          "classification": "template-example",
+          "values": {
+            "category": "Tin tức và xu hướng trong lĩnh vực ô tô",
+            "brand": "0",
+            "owner": "NONE",
+            "status": "Đang thực hiện"
+          }
+        },
+        {
+          "rows": "7",
+          "count": 1,
+          "classification": "template-example",
+          "values": {
+            "status": "Mới"
+          }
+        },
+        {
+          "rows": "8",
+          "count": 1,
+          "classification": "blank",
+          "values": {}
+        },
+        {
+          "rows": "9-1015",
+          "count": 1007,
+          "classification": "placeholder-filler",
+          "values": {
+            "brand": "0"
+          }
+        }
+      ],
+      "counts": {
+        "blank": 1,
+        "placeholder-filler": 1007,
+        "template-example": 6
+      }
+    },
+    {
+      "tab": "Short Publish",
+      "format": "short",
+      "columns": {
+        "A": "title",
+        "B": "category",
+        "C": "brand",
+        "D": "model",
+        "E": "owner",
+        "F": "status",
+        "G": "publish_date",
+        "H": "script",
+        "I": "publish_url"
+      },
+      "row_groups": [
+        {
+          "rows": "2",
+          "count": 1,
+          "classification": "template-example",
+          "values": {
+            "category": "Giới thiệu sản phẩm/thiết bị",
+            "brand": "NONE",
+            "owner": "NONE",
+            "status": "Đã xuất bản"
+          }
+        },
+        {
+          "rows": "3",
+          "count": 1,
+          "classification": "template-example",
+          "values": {
+            "category": "Hướng dẫn sửa chữa đơn giản",
+            "brand": "NONE",
+            "owner": "NONE",
+            "status": "Đang thực hiện"
+          }
+        },
+        {
+          "rows": "4",
+          "count": 1,
+          "classification": "template-example",
+          "values": {
+            "category": "Mẹo nhanh và thủ thuật",
+            "brand": "NONE",
+            "owner": "NONE",
+            "status": "Đã xuất bản"
+          }
+        },
+        {
+          "rows": "5",
+          "count": 1,
+          "classification": "template-example",
+          "values": {
+            "category": "Giải đáp thắc mắc thường gặp",
+            "brand": "NONE",
+            "owner": "NONE",
+            "status": "Đã tạm dừng"
+          }
+        },
+        {
+          "rows": "6",
+          "count": 1,
+          "classification": "template-example",
+          "values": {
+            "category": "Giải đáp thắc mắc thường gặp",
+            "brand": "0",
+            "owner": "NONE",
+            "status": "Đang thực hiện"
+          }
+        },
+        {
+          "rows": "7",
+          "count": 1,
+          "classification": "template-example",
+          "values": {
+            "status": "Đang thực hiện"
+          }
+        },
+        {
+          "rows": "8",
+          "count": 1,
+          "classification": "blank",
+          "values": {}
+        },
+        {
+          "rows": "9-1015",
+          "count": 1007,
+          "classification": "placeholder-filler",
+          "values": {
+            "brand": "0"
+          }
+        }
+      ],
+      "counts": {
+        "blank": 1,
+        "placeholder-filler": 1007,
+        "template-example": 6
+      }
+    }
+  ],
+  "records": []
+}

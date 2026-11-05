@@ -1,0 +1,110 @@
+# Controlled vocabularies for content records (content/**/item.yaml).
+# Pillars (P1..) and Shorts categories (S1..) are NOT listed here: they are
+# imported from the spreadsheet into data/normalized/taxonomy.json.
+
+formats:
+  long-form:
+    code: L
+    directory: content/long-form
+    script_template: templates/long-form-script.md
+    aspect_ratio: "16:9"
+  short:
+    code: S
+    directory: content/shorts
+    script_template: templates/short-script.md
+    aspect_ratio: "9:16"
+
+# Canonical persona IDs mapped to the persona names used in the "Khán giả" tab.
+personas:
+  garage-owner:
+    aliases: ["Chủ Garage ô tô"]
+  technician:
+    aliases: ["Thợ sửa chữa ô tô"]
+  automotive-student:
+    aliases: ["Sinh viên chuyên ngành"]
+  car-owner:
+    aliases: ["Chủ xe ô tô (ít)", "Chủ xe ô tô"]
+
+technical_depth: [basic, intermediate, advanced]
+
+# Starting values used by scripts/new_content.py. These are editorial assumptions made in
+# this repository (the sheet does not map pillars to personas): change them per item in
+# item.yaml when the brief decides otherwise.
+persona_defaults:
+  garage-owner: {technical_depth: intermediate}
+  technician: {technical_depth: advanced}
+  automotive-student: {technical_depth: intermediate}
+  car-owner: {technical_depth: basic}
+pillar_defaults:
+  P1: {video_type: how-to, search_intent: how-to, audience: technician}
+  P2: {video_type: explainer, search_intent: informational, audience: automotive-student}
+  P3: {video_type: explainer, search_intent: troubleshooting, audience: car-owner}
+  P4: {video_type: explainer, search_intent: informational, audience: technician}
+  P5: {video_type: news, search_intent: news, audience: garage-owner}
+  S1: {video_type: tips-tricks, search_intent: how-to, audience: car-owner}
+  S2: {video_type: product-review, search_intent: product, audience: garage-owner}
+  S3: {video_type: how-to, search_intent: how-to, audience: car-owner}
+  S4: {video_type: explainer, search_intent: informational, audience: car-owner}
+
+search_intents:
+  informational: "Muốn hiểu một khái niệm/hệ thống (vd: OBD2 là gì)"
+  how-to: "Muốn làm theo từng bước (vd: cách đọc mã lỗi bằng Cartek 2)"
+  troubleshooting: "Có triệu chứng/mã lỗi cụ thể, muốn chẩn đoán"
+  comparison: "So sánh thiết bị/giải pháp"
+  product: "Tìm hiểu một sản phẩm/thiết bị cụ thể"
+  news: "Tin tức, xu hướng mới"
+
+# Video types listed in the sheet ("Thể loại video"), plus two the pillars imply.
+video_types:
+  how-to: "How - to Tutorials (sheet)"
+  product-review: "Giới thiệu sản phẩm (review) (sheet)"
+  tips-tricks: "tips - trick (sheet)"
+  expert-qa: "phỏng vấn chuyên gia (Q&A) (sheet)"
+  vlog: "Vlogs (sheet)"
+  explainer: "Giải thích kiến thức (added: implied by pillars 2 and 4)"
+  news: "Tin tức (added: implied by pillar 5)"
+
+source_types:
+  standard: "SAE / ISO standard (e.g. SAE J1979, SAE J2012, ISO 15031, ISO 15765-4)"
+  regulation: "Regulation text (e.g. US EPA / CARB OBD rules, EU type-approval)"
+  oem-service-information: "Manufacturer service/repair information for a specific vehicle"
+  oem-tsb: "Manufacturer technical service bulletin"
+  manufacturer-documentation: "Tool or component maker documentation (not Cartek)"
+  cartek-product-documentation: "Official Cartek product documentation or written product-team confirmation"
+  hands-on-test: "Recorded hands-on test on a real vehicle (date, vehicle, tool version)"
+  textbook: "Automotive engineering textbook or training curriculum"
+  trade-publication: "Trade or technical publication"
+  expert-interview: "Named expert, recorded and dated"
+  news: "Dated news article"
+  other: "Anything else (weak evidence on its own)"
+
+claim_categories:
+  obd-standard: "Behaviour defined by the OBD-II/EOBD standards"
+  dtc-definition: "Meaning of a diagnostic trouble code"
+  manufacturer-specific: "Behaviour or code meaning that depends on the manufacturer"
+  vehicle-specific: "Applies to a specific make/model/year/engine"
+  diagnostic-procedure: "A test or repair step the viewer may perform"
+  cartek-feature: "What the Cartek 2 device or app can do"
+  safety: "Safety statement or warning"
+  general-knowledge: "General automotive knowledge"
+  market-news: "Industry or market news"
+
+claim_statuses: [unverified, verified, disputed, removed]
+
+safety_flags:
+  high-voltage: "Hybrid / EV high-voltage systems"
+  brakes: "Braking systems, ABS, EPB"
+  steering: "Steering, EPS, steering-angle calibration"
+  airbag-srs: "Airbags / SRS, seat-belt pretensioners"
+  fuel-system: "Fuel lines, pressure release, fire risk"
+  lifting: "Jacking, lifts, working under the vehicle"
+  battery-12v: "12 V battery disconnection, jump starting"
+  hot-or-moving-parts: "Hot engine/coolant, fans, belts, running engine"
+  adas: "ADAS sensors and calibration"
+
+asset_types: [tool, vehicle, equipment, graphic, footage, software, location, person, other]
+asset_statuses: [needed, requested, available, confirmed]
+
+reviewer_types: [automated, agent, human]
+review_roles: [qc, technical, editorial]
+gate_results: [PASS, FAIL, BLOCKED]

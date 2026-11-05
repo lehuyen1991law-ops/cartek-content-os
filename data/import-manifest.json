@@ -1,0 +1,244 @@
+{
+  "manifest_format": 1,
+  "generated_by": "scripts/import_sheet.py",
+  "spreadsheet": {
+    "id": "1r4dfNOPGx50rXMuhZL6Tm0B5XG8nb47t7mSjVdDY-F4",
+    "title": "Cartek: Youtube Release",
+    "url": "https://docs.google.com/spreadsheets/d/1r4dfNOPGx50rXMuhZL6Tm0B5XG8nb47t7mSjVdDY-F4/edit",
+    "access": "read-only"
+  },
+  "latest_capture_at": "2026-11-05T06:10:44Z",
+  "tabs": [
+    {
+      "title": "Đối thủ",
+      "sheet_id": 331744519,
+      "parser": "competitors",
+      "snapshot": "data/source/00-doi-thu.json",
+      "outputs": [
+        "data/normalized/competitors.json"
+      ],
+      "records": {
+        "competitors": 5
+      },
+      "index": 0,
+      "grid": {
+        "row_count": 997,
+        "column_count": 25,
+        "frozen_row_count": 0
+      },
+      "captured_at": "2026-11-05T06:10:44Z",
+      "capture_method": "google-sheets-connector (values.get FORMATTED_VALUE + spreadsheets.get gridData)",
+      "content_sha256": "2b3e7120ca7d064d79367a09e2865745e958205f30898b88209ce46050340326",
+      "populated_range": "A1:F8",
+      "non_empty_cells": 43,
+      "status": "imported",
+      "issues": {
+        "error": 0,
+        "warning": 0,
+        "info": 1
+      }
+    },
+    {
+      "title": "Khán giả",
+      "sheet_id": 546980374,
+      "parser": "personas",
+      "snapshot": "data/source/01-khan-gia.json",
+      "outputs": [
+        "data/normalized/personas.json"
+      ],
+      "records": {
+        "personas": 4
+      },
+      "index": 1,
+      "grid": {
+        "row_count": 998,
+        "column_count": 25,
+        "frozen_row_count": 0
+      },
+      "captured_at": "2026-11-05T06:10:44Z",
+      "capture_method": "google-sheets-connector (values.get FORMATTED_VALUE + spreadsheets.get gridData)",
+      "content_sha256": "133b6a047eb0987a94ead063f99dfdd8b6870ac894c035e9581eac573a20e003",
+      "populated_range": "A1:E6",
+      "non_empty_cells": 30,
+      "status": "imported",
+      "issues": {
+        "error": 0,
+        "warning": 0,
+        "info": 0
+      }
+    },
+    {
+      "title": "Content Direction",
+      "sheet_id": 991115479,
+      "parser": "long-form-direction",
+      "snapshot": "data/source/02-content-direction.json",
+      "outputs": [
+        "data/normalized/channel.json",
+        "data/normalized/taxonomy.json",
+        "data/normalized/ideas.json"
+      ],
+      "records": {
+        "settings": 4,
+        "pillars": 5,
+        "ideas": 16
+      },
+      "index": 2,
+      "grid": {
+        "row_count": 996,
+        "column_count": 24,
+        "frozen_row_count": 0
+      },
+      "captured_at": "2026-11-05T06:10:44Z",
+      "capture_method": "google-sheets-connector (values.get FORMATTED_VALUE + spreadsheets.get gridData)",
+      "content_sha256": "f5cc0d0760ee7b9c6b6644eb695ce79e9d7b3fa310de8e929583e3334904f074",
+      "populated_range": "A1:G13",
+      "non_empty_cells": 40,
+      "status": "imported",
+      "issues": {
+        "error": 0,
+        "warning": 0,
+        "info": 0
+      }
+    },
+    {
+      "title": "Short",
+      "sheet_id": 1717813101,
+      "parser": "short-direction",
+      "snapshot": "data/source/03-short.json",
+      "outputs": [
+        "data/normalized/channel.json",
+        "data/normalized/taxonomy.json",
+        "data/normalized/ideas.json"
+      ],
+      "records": {
+        "settings": 3,
+        "short_categories": 4,
+        "ideas": 12
+      },
+      "index": 3,
+      "grid": {
+        "row_count": 997,
+        "column_count": 25,
+        "frozen_row_count": 0
+      },
+      "captured_at": "2026-11-05T06:10:44Z",
+      "capture_method": "google-sheets-connector (values.get FORMATTED_VALUE + spreadsheets.get gridData)",
+      "content_sha256": "e46051331645fd982d95b6ab0b4a962b46ef33545da36ea12915717f18306672",
+      "populated_range": "A1:F11",
+      "non_empty_cells": 30,
+      "status": "imported",
+      "issues": {
+        "error": 0,
+        "warning": 0,
+        "info": 1
+      }
+    },
+    {
+      "title": "Video Publish",
+      "sheet_id": 2144511491,
+      "parser": "tracker",
+      "snapshot": "data/source/04-video-publish.json",
+      "outputs": [
+        "data/normalized/tracker.json"
+      ],
+      "records": {
+        "production_records": 0
+      },
+      "index": 4,
+      "grid": {
+        "row_count": 1015,
+        "column_count": 27,
+        "frozen_row_count": 1
+      },
+      "captured_at": "2026-11-05T06:10:44Z",
+      "capture_method": "google-sheets-connector (values.get FORMATTED_VALUE + spreadsheets.get gridData)",
+      "content_sha256": "fc44697abf76b5f707f6ad3a166ed44ae1997904ef04da38704b0e0e04b37a95",
+      "populated_range": "A1:I1015",
+      "non_empty_cells": 1037,
+      "rows": {
+        "blank": 1,
+        "placeholder-filler": 1007,
+        "template-example": 6
+      },
+      "status": "imported",
+      "issues": {
+        "error": 0,
+        "warning": 0,
+        "info": 1
+      }
+    },
+    {
+      "title": "Short Publish",
+      "sheet_id": 1044477468,
+      "parser": "tracker",
+      "snapshot": "data/source/05-short-publish.json",
+      "outputs": [
+        "data/normalized/tracker.json"
+      ],
+      "records": {
+        "production_records": 0
+      },
+      "index": 5,
+      "grid": {
+        "row_count": 1015,
+        "column_count": 27,
+        "frozen_row_count": 1
+      },
+      "captured_at": "2026-11-05T06:10:44Z",
+      "capture_method": "google-sheets-connector (values.get FORMATTED_VALUE + spreadsheets.get gridData)",
+      "content_sha256": "cd031b4ca713c7719f363ba6906385c4d9c4ece12f6aa0812baa6490d4fb57df",
+      "populated_range": "A1:I1015",
+      "non_empty_cells": 1037,
+      "rows": {
+        "blank": 1,
+        "placeholder-filler": 1007,
+        "template-example": 6
+      },
+      "status": "imported",
+      "issues": {
+        "error": 0,
+        "warning": 0,
+        "info": 2
+      }
+    }
+  ],
+  "unconfigured_tabs": [],
+  "outputs": {
+    "data/normalized/channel.json": {
+      "sha256": "3bf1048f0eb54bee895f4c6b4a3e4604d60ac9501255548bc29201b565f4f462"
+    },
+    "data/normalized/competitors.json": {
+      "sha256": "c08bc4a26d73031137530c7e8ae52fda5c3e150aa8d453df48c765c0e9c675a3",
+      "records": 5
+    },
+    "data/normalized/ideas.json": {
+      "sha256": "c4c088d87181056bedb1b8b48c676f4fab877328e28e96d5e969c92a3308655a",
+      "records": 28
+    },
+    "data/normalized/personas.json": {
+      "sha256": "e180a37ba32af107d578a33c5b79d4b1f5198763b7b03d2bf655aeedba8cb60d",
+      "records": 4
+    },
+    "data/normalized/taxonomy.json": {
+      "sha256": "4f952aca85fca328f1e8d8d56a41892721f0114ea595eb6bbd74357393654094"
+    },
+    "data/normalized/tracker.json": {
+      "sha256": "2a7241f2f0e9a409e444246bcc97eb7a2c56adef332559e71703b11b911c9669",
+      "records": 0
+    },
+    "reports/import-report.md": {
+      "sha256": "6410ce72f7004bf884bdee89999ca968b5c9d0207e5f5eadc7a886d77158b243"
+    }
+  },
+  "id_registry": "data/id-registry.json",
+  "linked_sources": [
+    {
+      "id": "10gh0Fd2VK6lrZFizf3SNkTSV7rMhve7V0bSaFzihevI",
+      "title": "Cartek_Youtube Channel",
+      "referenced_from": "'Content Direction'!D1",
+      "import": false,
+      "audit_date": "2026-11-05",
+      "audit_summary": "Six tabs (VIDEO PUBLISH, Short, How-To Tutorials, Intro - Function, Promo, Q&A). VIDEO PUBLISH holds 6 example rows with no titles and no publish links; one row is marked published with the implausible date 28/08/1999. The other five tabs hold the same five sample vehicle rows (MAZDA CX5 2014 2.0 AT, SUBARU, FORD, DAEWOO, JAGUAR). No verifiable production records were found, so nothing is imported from it."
+    }
+  ]
+}

@@ -1,0 +1,181 @@
+{
+  "kind": "competitors",
+  "normalized_format": 1,
+  "generated_by": "scripts/import_sheet.py",
+  "inputs": [
+    {
+      "tab": "Đối thủ",
+      "snapshot": "data/source/00-doi-thu.json",
+      "captured_at": "2026-11-05T06:10:44Z",
+      "content_sha256": "2b3e7120ca7d064d79367a09e2865745e958205f30898b88209ce46050340326"
+    }
+  ],
+  "note": "Reach metrics are historical values recorded in the sheet at an unknown date; they are not current verified statistics.",
+  "records": [
+    {
+      "id": "ecuboot",
+      "name": "Ecuboot",
+      "youtube_url": "https://www.youtube.com/c/EcubootVi%E1%BB%87tNam",
+      "content_strategy": "Chia sẻ kiến thức, giới thiệu dịch vụ, quảng bá sản phẩm",
+      "strengths": "Video đa chủ đề; chia sẻ gần gũi - mộc mạc; Có các kiến thức rất chuyên sâu",
+      "weaknesses": "Lịch upload video không đều; đa số đều ở dạng POV; chất lượng video chưa cao, còn khá nghiệp dư",
+      "reach_metrics": {
+        "raw": "Avg Views: 1-2000, Avg Comments: 1-2, Subscriber : 4.28k",
+        "parsed": {
+          "avg_views": "1-2000",
+          "avg_comments": "1-2",
+          "subscribers": "4.28k"
+        },
+        "status": "historical-unverified",
+        "note": "Recorded in the sheet at an unknown date. Not current, not verified."
+      },
+      "seo_keywords": [
+        "Chẩn đoán ô tô",
+        "Chẩn đoán xe Châu Âu",
+        "chẩn đoán xe BMW",
+        "Khóa học chẩn đoán"
+      ],
+      "seo_keywords_raw": "\"Chẩn đoán ô tô\", \"Chẩn đoán xe Châu Âu\", \"chẩn đoán xe BMW\", \"Khóa học chẩn đoán\"",
+      "source": {
+        "tab": "Đối thủ",
+        "sheet_id": 331744519,
+        "column": "B",
+        "range": "'Đối thủ'!B1:B7"
+      },
+      "raw_values": {
+        "strengths": "Video đa chủ đề; chia sẻ gần gũi - mộc mạc; Có các kiến thức rất chuyên sâu "
+      }
+    },
+    {
+      "id": "obd-viet-nam",
+      "name": "OBD Viet Nam",
+      "youtube_url": "https://www.youtube.com/@kenhchuyengiachandoanoto/featured",
+      "content_strategy": "Giới thiệu dịch vụ, quảng bá sản phẩm, How - to video",
+      "strengths": "Là kênh youtube của OBD Việt nam, được đầu tư nhiều. Video được xuất bản liên tục hàng ngày. Giới thiệu cách sử dụng các sản phẩm kĩ lưỡng",
+      "weaknesses": "Nội dung chưa được đa dạng ngoài việc chia sẻ tính năng sản phẩm",
+      "reach_metrics": {
+        "raw": "Avg Views: 100-300, Avg Comments: 1-2, Subscriber : 29.2k",
+        "parsed": {
+          "avg_views": "100-300",
+          "avg_comments": "1-2",
+          "subscribers": "29.2k"
+        },
+        "status": "historical-unverified",
+        "note": "Recorded in the sheet at an unknown date. Not current, not verified."
+      },
+      "seo_keywords": [
+        "Autel",
+        "Gscan",
+        "OBD",
+        "liqui moly",
+        "Autel Việt nam",
+        "Phần mềm ô tô"
+      ],
+      "seo_keywords_raw": "\"Autel\"; \"Gscan\"; \"OBD\"; \"liqui moly\"; \"Autel Việt nam\"; \"Phần mềm ô tô\".",
+      "source": {
+        "tab": "Đối thủ",
+        "sheet_id": 331744519,
+        "column": "C",
+        "range": "'Đối thủ'!C1:C7"
+      }
+    },
+    {
+      "id": "ascom-thiet-bi-garage",
+      "name": "ASCOM - Thiết bị Garage",
+      "youtube_url": "https://www.youtube.com/@giaiphapotoascom/featured",
+      "content_strategy": "Chia sẻ thông tin - kiến thức, giới thiệu sản phẩm, giới thiệu dịch vụ",
+      "strengths": "Nội dung rất đa dạng thể loại, video upload đều hàng tuần",
+      "weaknesses": "Chất lượng video chưa cao",
+      "reach_metrics": {
+        "raw": "Avg Views: 100-200, Avg Comments: 0, Subscriber : 546",
+        "parsed": {
+          "avg_views": "100-200",
+          "avg_comments": "0",
+          "subscribers": "546"
+        },
+        "status": "historical-unverified",
+        "note": "Recorded in the sheet at an unknown date. Not current, not verified."
+      },
+      "seo_keywords": [
+        "Launch",
+        "Thinktool",
+        "Launchtech",
+        "X431",
+        "ô tô",
+        "sửa chữa ô tô"
+      ],
+      "seo_keywords_raw": "\"Launch\"; \"Thinktool\"; \"Launchtech\"; \"X431\"; \"ô tô\"; \"sửa chữa ô tô\".",
+      "source": {
+        "tab": "Đối thủ",
+        "sheet_id": 331744519,
+        "column": "D",
+        "range": "'Đối thủ'!D1:D7"
+      }
+    },
+    {
+      "id": "kenh-kien-thuc-o-to",
+      "name": "Kênh kiến thức ô tô",
+      "youtube_url": "https://www.youtube.com/@KENHKIENTHUCOTO/videos",
+      "content_strategy": "Chia sẻ kiến thức",
+      "strengths": "Nội dung kiến thức chuyên sâu, nhiều thể loại, tính học thuật cao",
+      "weaknesses": "Chất lượng video chưa cao.",
+      "reach_metrics": {
+        "raw": "Avg Views: 3-5k, Avg Comments: 10 - 15, Subscriber : 46k",
+        "parsed": {
+          "avg_views": "3-5k",
+          "avg_comments": "10 - 15",
+          "subscribers": "46k"
+        },
+        "status": "historical-unverified",
+        "note": "Recorded in the sheet at an unknown date. Not current, not verified."
+      },
+      "seo_keywords": [
+        "KKTOT",
+        "Kenh kien thuc oto",
+        "Kiến thức ô tô"
+      ],
+      "seo_keywords_raw": "\"KKTOT\"; \"Kenh kien thuc oto\"; \"Kiến thức ô tô\".",
+      "source": {
+        "tab": "Đối thủ",
+        "sheet_id": 331744519,
+        "column": "E",
+        "range": "'Đối thủ'!E1:E7"
+      }
+    },
+    {
+      "id": "vatc-huan-luyen-ky-thuat-o-to",
+      "name": "VATC - Huấn luyện kỹ thuật ô tô",
+      "youtube_url": "https://www.youtube.com/@vatc.dayngheoto/videos",
+      "content_strategy": "Vlog, Chia sẻ kiến thức, giới thiệu dịch vụ",
+      "strengths": "Nội dung được đầu tư nhiều, đa dạng góc nhìn cho viewer, lịch ra video khá đều đặn",
+      "weaknesses": "Chất lượng video chưa được cao",
+      "reach_metrics": {
+        "raw": "Avg Views: 100-200, Avg Comments: 0, Subscriber : 25.7k",
+        "parsed": {
+          "avg_views": "100-200",
+          "avg_comments": "0",
+          "subscribers": "25.7k"
+        },
+        "status": "historical-unverified",
+        "note": "Recorded in the sheet at an unknown date. Not current, not verified."
+      },
+      "seo_keywords": [
+        "VATC",
+        "Oto",
+        "Học sửa chữa ô tô",
+        "Nghề sửa chữa ô tô",
+        "Đào tạo ô tô"
+      ],
+      "seo_keywords_raw": "\"VATC\"; \"Oto\"; \"Học sửa chữa ô tô\"; \"Nghề sửa chữa ô tô\"; \"Đào tạo ô tô\"",
+      "source": {
+        "tab": "Đối thủ",
+        "sheet_id": 331744519,
+        "column": "F",
+        "range": "'Đối thủ'!F1:F7"
+      },
+      "raw_values": {
+        "name": "VATC - Huấn luyện kỹ thuật ô tô "
+      }
+    }
+  ]
+}

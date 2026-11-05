@@ -1,0 +1,24 @@
+# Production assumptions used for runtime estimates and the production package.
+
+# Narration speed in Vietnamese syllables per minute (Vietnamese words are written as
+# space-separated syllables). These are PLANNING ASSUMPTIONS, not measurements.
+# Calibrate: time 3 real Cartek voice-overs, count their syllables
+#   (python3 scripts/qc_content.py runtime <ID>), and set rate = syllables / minutes.
+speech_rate_syllables_per_minute:
+  long-form: 200
+  short: 220
+speech_rate_calibrated: false
+
+# Seconds added between segments for transitions/breaths.
+segment_transition_seconds:
+  long-form: 1.0
+  short: 0.3
+
+# Runtime targets. "from-source" uses data/normalized/channel.json (sheet: "5-8 phút",
+# "< 60 giây"). Override with explicit numbers if the strategy changes.
+runtime_targets: from-source
+
+# Warn when the hook segment (first segment) is estimated longer than this.
+hook_max_seconds:
+  long-form: 30
+  short: 5

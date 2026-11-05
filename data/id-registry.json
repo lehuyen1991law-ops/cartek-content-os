@@ -1,0 +1,237 @@
+{
+  "registry_format": 1,
+  "policy": "IDs are permanent and never reused. 0001-8999 = production, 9001-9999 = test items.",
+  "entries": {
+    "CTK-L-0001": {
+      "origin": "sheet-idea",
+      "title": "Cách kết nối Cartek 2 với các dòng xe phổ biến tại Việt Nam",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:long-form:cách kết nối cartek 2 với các dòng xe phổ biến tại việt nam",
+      "source_ref": "'Content Direction'!D6"
+    },
+    "CTK-L-0002": {
+      "origin": "sheet-idea",
+      "title": "Đọc và hiểu các mã lỗi OBD2 trên cartek 2",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:long-form:đọc và hiểu các mã lỗi obd2 trên cartek 2",
+      "source_ref": "'Content Direction'!E6"
+    },
+    "CTK-L-0003": {
+      "origin": "sheet-idea",
+      "title": "Xóa mã lỗi và reset hệ thống",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:long-form:xóa mã lỗi và reset hệ thống",
+      "source_ref": "'Content Direction'!F6"
+    },
+    "CTK-L-0004": {
+      "origin": "sheet-idea",
+      "title": "Sử dụng các tính năng nâng cao của Cartek 2",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:long-form:sử dụng các tính năng nâng cao của cartek 2",
+      "source_ref": "'Content Direction'!G6"
+    },
+    "CTK-L-0005": {
+      "origin": "sheet-idea",
+      "title": "Mẹo Bảo Dưỡng Định Kỳ Để Kéo Dài Tuổi Thọ Xe Hơi",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:long-form:mẹo bảo dưỡng định kỳ để kéo dài tuổi thọ xe hơi",
+      "source_ref": "'Content Direction'!D8"
+    },
+    "CTK-L-0006": {
+      "origin": "sheet-idea",
+      "title": "Các kỹ năng sửa chữa cơ bản mà chủ xe có thể tự làm",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:long-form:các kỹ năng sửa chữa cơ bản mà chủ xe có thể tự làm",
+      "source_ref": "'Content Direction'!E8"
+    },
+    "CTK-L-0007": {
+      "origin": "sheet-idea",
+      "title": "Động cơ Diesel: Sức mạnh tiềm ẩn & Những điều cần biết",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:long-form:động cơ diesel: sức mạnh tiềm ẩn & những điều cần biết",
+      "source_ref": "'Content Direction'!F8"
+    },
+    "CTK-L-0008": {
+      "origin": "sheet-idea",
+      "title": "5 thiết bị Không Thể Thiếu Cho Gara Ô Tô Chuyên Nghiệp | Nâng Tầm Tay Nghề",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:long-form:5 thiết bị không thể thiếu cho gara ô tô chuyên nghiệp | nâng tầm tay nghề",
+      "source_ref": "'Content Direction'!G8"
+    },
+    "CTK-L-0009": {
+      "origin": "sheet-idea",
+      "title": "Phải làm gì khi đèn động cơ báo lỗi?",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:long-form:phải làm gì khi đèn động cơ báo lỗi?",
+      "source_ref": "'Content Direction'!D10"
+    },
+    "CTK-L-0010": {
+      "origin": "sheet-idea",
+      "title": "Những điều cần làm khi xe không thể khởi động được",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:long-form:những điều cần làm khi xe không thể khởi động được",
+      "source_ref": "'Content Direction'!E10"
+    },
+    "CTK-L-0011": {
+      "origin": "sheet-idea",
+      "title": "Top 5 lỗi thường gặp trên ô tô và cách khắc phục hiệu quả",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:long-form:top 5 lỗi thường gặp trên ô tô và cách khắc phục hiệu quả",
+      "source_ref": "'Content Direction'!F10"
+    },
+    "CTK-L-0012": {
+      "origin": "sheet-idea",
+      "title": "Các lỗi Thường Gặp Trên Xe Đức: Mercedes, BMW",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:long-form:các lỗi thường gặp trên xe đức: mercedes, bmw",
+      "source_ref": "'Content Direction'!G10"
+    },
+    "CTK-L-0013": {
+      "origin": "sheet-idea",
+      "title": "OBD2: Hành Trình Khám Phá 'Cái Hộp Đen' Kỳ Diệu Trên Xe Của Bạn",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:long-form:obd2: hành trình khám phá 'cái hộp đen' kỳ diệu trên xe của bạn",
+      "source_ref": "'Content Direction'!D12"
+    },
+    "CTK-L-0014": {
+      "origin": "sheet-idea",
+      "title": "Cắt nghĩa các mã lỗi P_B_C_U trong hệ thống OBD-II trên xe",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:long-form:cắt nghĩa các mã lỗi p_b_c_u trong hệ thống obd-ii trên xe",
+      "source_ref": "'Content Direction'!E12"
+    },
+    "CTK-L-0015": {
+      "origin": "sheet-idea",
+      "title": "Lỗi P0300 - Ác Mộng của Mọi Động Cơ?",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:long-form:lỗi p0300 - ác mộng của mọi động cơ?",
+      "source_ref": "'Content Direction'!F12"
+    },
+    "CTK-L-0016": {
+      "origin": "sheet-idea",
+      "title": "OBD2 & Cá Nhân Hóa Trải Nghiệm Lái Xe: Điều Chỉnh & Tối Ưu Theo Phong Cách Riêng",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:long-form:obd2 & cá nhân hóa trải nghiệm lái xe: điều chỉnh & tối ưu theo phong cách riêng",
+      "source_ref": "'Content Direction'!G12"
+    },
+    "CTK-L-9001": {
+      "origin": "test",
+      "title": "TEST: Lỗi P0300 - Ác Mộng của Mọi Động Cơ?",
+      "state": "active",
+      "allocated_at": "2026-11-05",
+      "source_ref": "'Content Direction'!F12"
+    },
+    "CTK-S-0001": {
+      "origin": "sheet-idea",
+      "title": "3 Lỗi OBD2 thường gặp và cách khắc phục nhanh chóng",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:short:3 lỗi obd2 thường gặp và cách khắc phục nhanh chóng",
+      "source_ref": "'Short'!D5"
+    },
+    "CTK-S-0002": {
+      "origin": "sheet-idea",
+      "title": "Reset đèn check engine trong 2 phút",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:short:reset đèn check engine trong 2 phút",
+      "source_ref": "'Short'!E5"
+    },
+    "CTK-S-0003": {
+      "origin": "sheet-idea",
+      "title": "3 Mẹo đọc hiểu dữ liệu OBD2 mà ai cũng cần biết",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:short:3 mẹo đọc hiểu dữ liệu obd2 mà ai cũng cần biết",
+      "source_ref": "'Short'!F5"
+    },
+    "CTK-S-0004": {
+      "origin": "sheet-idea",
+      "title": "Thiết bị đọc OBD2 nào phù hợp với bạn?",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:short:thiết bị đọc obd2 nào phù hợp với bạn?",
+      "source_ref": "'Short'!D7"
+    },
+    "CTK-S-0005": {
+      "origin": "sheet-idea",
+      "title": "Top 3 phụ kiện OBD2 không thể thiếu cho xe hơi",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:short:top 3 phụ kiện obd2 không thể thiếu cho xe hơi",
+      "source_ref": "'Short'!E7"
+    },
+    "CTK-S-0006": {
+      "origin": "sheet-idea",
+      "title": "Top những phụ kiện OBD2 giúp tiết kiệm nhiên liệu",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:short:top những phụ kiện obd2 giúp tiết kiệm nhiên liệu",
+      "source_ref": "'Short'!F7"
+    },
+    "CTK-S-0007": {
+      "origin": "sheet-idea",
+      "title": "Cách thay bugi nhanh chóng tại nhà",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:short:cách thay bugi nhanh chóng tại nhà",
+      "source_ref": "'Short'!D9"
+    },
+    "CTK-S-0008": {
+      "origin": "sheet-idea",
+      "title": "Cách thay lọc gió động cơ trong 5 phút",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:short:cách thay lọc gió động cơ trong 5 phút",
+      "source_ref": "'Short'!E9"
+    },
+    "CTK-S-0009": {
+      "origin": "sheet-idea",
+      "title": "Top những lý do khiến xe bị ì máy",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:short:top những lý do khiến xe bị ì máy",
+      "source_ref": "'Short'!F9"
+    },
+    "CTK-S-0010": {
+      "origin": "sheet-idea",
+      "title": "Đèn Check Engine sáng có phải là vấn đề nghiêm trọng?",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:short:đèn check engine sáng có phải là vấn đề nghiêm trọng?",
+      "source_ref": "'Short'!D11"
+    },
+    "CTK-S-0011": {
+      "origin": "sheet-idea",
+      "title": "Các loại bảo dưỡng định kỳ cần thiết cho xe là gì?",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:short:các loại bảo dưỡng định kỳ cần thiết cho xe là gì?",
+      "source_ref": "'Short'!E11"
+    },
+    "CTK-S-0012": {
+      "origin": "sheet-idea",
+      "title": "Bao nhiêu lâu nên thay dầu nhớt cho xe?",
+      "state": "active",
+      "allocated_at": "2026-11-05T06:10:44Z",
+      "key": "idea:short:bao nhiêu lâu nên thay dầu nhớt cho xe?",
+      "source_ref": "'Short'!F11"
+    }
+  }
+}

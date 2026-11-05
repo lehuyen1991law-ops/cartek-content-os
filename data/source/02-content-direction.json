@@ -1,0 +1,42 @@
+{
+  "capture_format": 1,
+  "spreadsheet_id": "1r4dfNOPGx50rXMuhZL6Tm0B5XG8nb47t7mSjVdDY-F4",
+  "sheet_id": 991115479,
+  "sheet_title": "Content Direction",
+  "sheet_index": 2,
+  "grid": {
+    "row_count": 996,
+    "column_count": 24,
+    "frozen_row_count": 0
+  },
+  "captured_at": "2026-11-05T06:10:44Z",
+  "capture_method": "google-sheets-connector (values.get FORMATTED_VALUE + spreadsheets.get gridData)",
+  "capture_notes": [
+    "hyperlink/note/dataValidation requested for A1:H14: hyperlink on D1 only; no notes; no data validation."
+  ],
+  "content_sha256": "f5cc0d0760ee7b9c6b6644eb695ce79e9d7b3fa310de8e929583e3334904f074",
+  "populated_range": "A1:G13",
+  "non_empty_cells": 40,
+  "hyperlinks": {
+    "D1": "https://docs.google.com/spreadsheets/d/10gh0Fd2VK6lrZFizf3SNkTSV7rMhve7V0bSaFzihevI/edit?gid=392713151#gid=392713151"
+  },
+  "notes": {},
+  "data_validation": [],
+  "formats_sampled": null,
+  "values_encoding": "rows; {repeat, row} = identical consecutive rows",
+  "values": [
+    ["Chủ đề/ lĩnh vực kênh", "Chia sẻ kinh nghiệm sửa chữa ô tô qua hệ thống OBD2", "", "https://docs.google.com/spreadsheets/d/10gh0Fd2VK6lrZFizf3SNkTSV7rMhve7V0bSaFzihevI/edit?gid=392713151#gid=392713151"],
+    ["Thể loại video", "How - to Tutorials, Giới thiệu sản phẩm (review), tips - trick, phỏng vấn chuyên gia (Q&A), Vlogs."],
+    ["thời lượng", "5-8 phút"],
+    ["Call to Action ", "Để lại comment nếu cần tư vấn và hãy bấm like, subcribe, bật nút chuông thông báo để không bỏ lỡ những video hữu ích. Cartek - Check your car"],
+    ["Content Pillar 1", "Hướng dẫn sử dụng thiết bị OBD2 (Cartek 2)", "", "Hướng dẫn sử dụng thiết bị OBD2 (Cartek 2)"],
+    ["", "", "", "Cách kết nối Cartek 2 với các dòng xe phổ biến tại Việt Nam", "Đọc và hiểu các mã lỗi OBD2 trên cartek 2", "Xóa mã lỗi và reset hệ thống", "Sử dụng các tính năng nâng cao của Cartek 2"],
+    ["Content Pillar 2", "Giải thích, chia sẻ kiến thức các hệ thống trên ô tô", "", "Giải thích, chia sẻ kiến thức các hệ thống trên ô tô"],
+    ["", "", "", "Mẹo Bảo Dưỡng Định Kỳ Để Kéo Dài Tuổi Thọ Xe Hơi", "Các kỹ năng sửa chữa cơ bản mà chủ xe có thể tự làm", "Động cơ Diesel: Sức mạnh tiềm ẩn & Những điều cần biết", "5 thiết bị Không Thể Thiếu Cho Gara Ô Tô Chuyên Nghiệp | Nâng Tầm Tay Nghề"],
+    ["Content Pillar 3", "Các vấn đề lỗi xe thường gặp", "", "Các vấn đề lỗi xe thường gặp"],
+    ["", "", "", "Phải làm gì khi đèn động cơ báo lỗi?", "Những điều cần làm khi xe không thể khởi động được", "Top 5 lỗi thường gặp trên ô tô và cách khắc phục hiệu quả", "Các lỗi Thường Gặp Trên Xe Đức: Mercedes, BMW "],
+    ["Content Pillar 4", "Kiến thức chuyên sâu về hệ thống OBD2", "", "Kiến thức chuyên sâu về hệ thống OBD2"],
+    ["", "", "", "OBD2: Hành Trình Khám Phá 'Cái Hộp Đen' Kỳ Diệu Trên Xe Của Bạn", "Cắt nghĩa các mã lỗi P_B_C_U trong hệ thống OBD-II trên xe", "Lỗi P0300 - Ác Mộng của Mọi Động Cơ?", "OBD2 & Cá Nhân Hóa Trải Nghiệm Lái Xe: Điều Chỉnh & Tối Ưu Theo Phong Cách Riêng"],
+    ["Content Pillar 5", "Tin tức và xu hướng trong lĩnh vực ô tô", "", "Tin tức và xu hướng trong lĩnh vực ô tô"]
+  ]
+}

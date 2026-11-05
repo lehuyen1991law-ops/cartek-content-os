@@ -1,0 +1,48 @@
+name: content-qc
+
+# Offline checks only: no secrets, no network access to the spreadsheet, no schedule.
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: content-qc-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Unit and integration tests
+        run: python -m unittest discover -s tests -v
+
+      - name: Normalized data matches committed snapshots
+        run: python scripts/import_sheet.py --check
+
+      - name: Repository integrity (schemas, IDs, approvals, exports, skills)
+        run: python scripts/validate_content.py
+
+      - name: Markdown links
+        run: python scripts/check_links.py
+
+      - name: Content board is current
+        run: python scripts/generate_board.py --check
+
+      - name: QC summary for every content item
+        if: always()
+        run: python scripts/qc_content.py run --all --summary "$GITHUB_STEP_SUMMARY"

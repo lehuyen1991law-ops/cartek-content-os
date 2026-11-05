@@ -1,0 +1,107 @@
+# Source-of-truth definition for the spreadsheet import.
+# The spreadsheet is READ-ONLY for this repository: no script writes to it.
+# Used by: scripts/import_sheet.py
+
+spreadsheet:
+  id: 1r4dfNOPGx50rXMuhZL6Tm0B5XG8nb47t7mSjVdDY-F4
+  title: "Cartek: Youtube Release"
+  url: https://docs.google.com/spreadsheets/d/1r4dfNOPGx50rXMuhZL6Tm0B5XG8nb47t7mSjVdDY-F4/edit
+  access: read-only
+
+# One entry per tab. `parser` selects the normalizer in scripts/ctk/sheet.py.
+# Tabs are matched by title first, then by sheet_id (in case a tab is renamed).
+tabs:
+  - title: "Đối thủ"
+    sheet_id: 331744519
+    parser: competitors
+    snapshot: data/source/00-doi-thu.json
+    outputs: [data/normalized/competitors.json]
+  - title: "Khán giả"
+    sheet_id: 546980374
+    parser: personas
+    snapshot: data/source/01-khan-gia.json
+    outputs: [data/normalized/personas.json]
+  - title: "Content Direction"
+    sheet_id: 991115479
+    parser: long-form-direction
+    snapshot: data/source/02-content-direction.json
+    outputs: [data/normalized/channel.json, data/normalized/taxonomy.json, data/normalized/ideas.json]
+  - title: "Short"
+    sheet_id: 1717813101
+    parser: short-direction
+    snapshot: data/source/03-short.json
+    outputs: [data/normalized/channel.json, data/normalized/taxonomy.json, data/normalized/ideas.json]
+  - title: "Video Publish"
+    sheet_id: 2144511491
+    parser: tracker
+    format: long-form
+    snapshot: data/source/04-video-publish.json
+    outputs: [data/normalized/tracker.json]
+  - title: "Short Publish"
+    sheet_id: 1044477468
+    parser: tracker
+    format: short
+    snapshot: data/source/05-short-publish.json
+    outputs: [data/normalized/tracker.json]
+
+# Cell values that the team uses as "empty" placeholders in tracker tabs.
+placeholder_values: ["0", "NONE", "N/A", "-", "--"]
+
+# Date formats accepted in the "Ngày đăng" column. The sheet formats that
+# column as dd/MM/yyyy (observed in the 2026-11-05 audit).
+date_formats: ["%d/%m/%Y", "%d/%m/%y", "%Y-%m-%d"]
+
+# A publish date earlier than this is treated as implausible (first YouTube upload: 2005-04-23).
+earliest_plausible_date: "2005-04-23"
+
+# Tracker header names (row 1) mapped to normalized field names.
+tracker_columns:
+  "Tiêu đề": title
+  "Thể loại": category
+  "Hãng xe": brand
+  "Model": model
+  "Người phụ trách": owner
+  "Trạng thái": status
+  "Ngày đăng": publish_date
+  "Kịch bản": script
+  "Link xuất bản": publish_url
+  "Link": publish_url
+
+# Row labels (column A) of the transposed research tabs.
+competitor_fields:
+  "Kênh đối thủ": name
+  "Link youtube": youtube_url
+  "Chiến lược content": content_strategy
+  "Đo lường tiếp cận viewer": reach_metrics_raw
+  "Thế Mạnh": strengths
+  "Điểm Yếu": weaknesses
+  "SEO/Keywords": seo_keywords_raw
+
+persona_fields:
+  "Đối tượng Viewer": name
+  "Nhân khẩu học": demographics_raw
+  "Sở thích": interests
+  "Nỗi đau/ thách thức": pain_points
+  "Hành vi trên internet, mạng xã hội": online_behavior
+  "Content yêu thích": preferred_content
+
+# Row labels of the direction tabs ("Content Direction" and "Short").
+direction_fields:
+  "Chủ đề/ lĩnh vực kênh": channel_topic
+  "Thể loại video": video_types_raw
+  "thời lượng": duration_raw
+  "Call to Action": cta
+
+# Other spreadsheets referenced from the source. Audited, not imported.
+linked_sources:
+  - id: 10gh0Fd2VK6lrZFizf3SNkTSV7rMhve7V0bSaFzihevI
+    title: "Cartek_Youtube Channel"
+    referenced_from: "'Content Direction'!D1"
+    import: false
+    audit_date: "2026-11-05"
+    audit_summary: >-
+      Six tabs (VIDEO PUBLISH, Short, How-To Tutorials, Intro - Function, Promo, Q&A).
+      VIDEO PUBLISH holds 6 example rows with no titles and no publish links; one row is
+      marked published with the implausible date 28/08/1999. The other five tabs hold the
+      same five sample vehicle rows (MAZDA CX5 2014 2.0 AT, SUBARU, FORD, DAEWOO, JAGUAR).
+      No verifiable production records were found, so nothing is imported from it.

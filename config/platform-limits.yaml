@@ -1,0 +1,29 @@
+# YouTube platform limits enforced by QC gates G6 and G8.
+# Re-verify before relying on them: platforms change. Update `verified_on` when you do.
+
+verified_on: "2026-11-05"
+
+title:
+  max_chars: 100
+  source: https://support.google.com/youtube/answer/57404
+description:
+  max_chars: 5000
+  source: https://support.google.com/youtube/answer/57404
+tags:
+  # Commas between tags count; a tag containing a space counts 2 extra characters (quotes).
+  max_chars_total: 500
+  source: https://developers.google.com/youtube/v3/docs/videos
+chapters:
+  first_timestamp: "00:00"
+  min_count: 3
+  min_chapter_seconds: 10
+  source: https://support.google.com/youtube/answer/9884579
+shorts:
+  # YouTube accepts square/vertical uploads up to 3 minutes as Shorts (uploads from
+  # 2024-10-15). Cartek's own Shorts target stays "< 60 giây" (source: sheet tab "Short").
+  platform_max_seconds: 180
+  source: https://support.google.com/youtube/answer/15424877
+
+# Editorial soft limit (not a platform rule): long titles get truncated in search and
+# suggested-video surfaces, so QC warns above this length.
+title_soft_max_chars: 70

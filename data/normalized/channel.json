@@ -1,0 +1,83 @@
+{
+  "kind": "channel",
+  "normalized_format": 1,
+  "generated_by": "scripts/import_sheet.py",
+  "inputs": [
+    {
+      "tab": "Content Direction",
+      "snapshot": "data/source/02-content-direction.json",
+      "captured_at": "2026-11-05T06:10:44Z",
+      "content_sha256": "f5cc0d0760ee7b9c6b6644eb695ce79e9d7b3fa310de8e929583e3334904f074"
+    },
+    {
+      "tab": "Short",
+      "snapshot": "data/source/03-short.json",
+      "captured_at": "2026-11-05T06:10:44Z",
+      "content_sha256": "e46051331645fd982d95b6ab0b4a962b46ef33545da36ea12915717f18306672"
+    }
+  ],
+  "settings": {
+    "long-form": {
+      "channel_topic": {
+        "value": "Chia sẻ kinh nghiệm sửa chữa ô tô qua hệ thống OBD2",
+        "ref": "'Content Direction'!B1"
+      },
+      "video_types": {
+        "values": [
+          "How - to Tutorials",
+          "Giới thiệu sản phẩm (review)",
+          "tips - trick",
+          "phỏng vấn chuyên gia (Q&A)",
+          "Vlogs"
+        ],
+        "raw": "How - to Tutorials, Giới thiệu sản phẩm (review), tips - trick, phỏng vấn chuyên gia (Q&A), Vlogs.",
+        "ref": "'Content Direction'!B2"
+      },
+      "duration": {
+        "raw": "5-8 phút",
+        "ref": "'Content Direction'!B3",
+        "min_seconds": 300,
+        "max_seconds": 480,
+        "max_inclusive": true
+      },
+      "cta": {
+        "text": "Để lại comment nếu cần tư vấn và hãy bấm like, subcribe, bật nút chuông thông báo để không bỏ lỡ những video hữu ích. Cartek - Check your car",
+        "ref": "'Content Direction'!B4",
+        "includes_brand_tagline": true
+      }
+    },
+    "short": {
+      "video_types": {
+        "values": [
+          "How - to Tutorials",
+          "Giới thiệu sản phẩm (review)",
+          "tips - trick",
+          "phỏng vấn chuyên gia (Q&A)",
+          "Vlogs"
+        ],
+        "raw": "How - to Tutorials, Giới thiệu sản phẩm (review), tips - trick, phỏng vấn chuyên gia (Q&A), Vlogs.",
+        "ref": "'Short'!B1"
+      },
+      "duration": {
+        "raw": "< 60 giây",
+        "ref": "'Short'!B2",
+        "min_seconds": null,
+        "max_seconds": 60,
+        "max_inclusive": false
+      },
+      "cta": {
+        "text": "Cartek - Check your car",
+        "ref": "'Short'!B3",
+        "includes_brand_tagline": true
+      }
+    }
+  },
+  "linked_resources": [
+    {
+      "url": "https://docs.google.com/spreadsheets/d/10gh0Fd2VK6lrZFizf3SNkTSV7rMhve7V0bSaFzihevI/edit?gid=392713151#gid=392713151",
+      "text": "https://docs.google.com/spreadsheets/d/10gh0Fd2VK6lrZFizf3SNkTSV7rMhve7V0bSaFzihevI/edit?gid=392713151#gid=392713151",
+      "ref": "'Content Direction'!D1",
+      "context": "channel_topic"
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+# Editorial workflow: stage order, Vietnamese labels, and the mapping to the
+# spreadsheet's status values ("Trạng thái" column in Video Publish / Short Publish).
+# Used by: scripts/set_status.py, scripts/qc_content.py, scripts/validate_content.py,
+#          scripts/generate_board.py, scripts/import_sheet.py
+
+stages:
+  - id: IDEA
+    label_vi: "Ý tưởng"
+    sheet_status: "Mới"
+    exit_criteria: "Topic, format, pillar and primary audience chosen; owner assigned."
+  - id: RESEARCH
+    label_vi: "Nghiên cứu"
+    sheet_status: "Đang thực hiện"
+    exit_criteria: "research.md complete; every technical claim registered with sources."
+  - id: BRIEF
+    label_vi: "Brief nội dung"
+    sheet_status: "Đang thực hiện"
+    exit_criteria: "brief.md complete: audience, problem, takeaway, angle, scope, risks."
+  - id: SCRIPT
+    label_vi: "Kịch bản"
+    sheet_status: "Đang thực hiện"
+    exit_criteria: "script.md complete: hooks, outline, segments with VO + visuals, CTA."
+  - id: TECHNICAL_REVIEW
+    label_vi: "Duyệt kỹ thuật"
+    sheet_status: "Đang thực hiện"
+    exit_criteria: "All claims verified or removed; safety review recorded when flagged."
+  - id: SEO
+    label_vi: "SEO"
+    sheet_status: "Đang thực hiện"
+    exit_criteria: "SEO block in item.yaml complete; seo.md checklist complete."
+  - id: PRODUCTION_PACKAGE
+    label_vi: "Gói sản xuất"
+    sheet_status: "Đang thực hiện"
+    exit_criteria: "Storyboard/shot list and assets ready; draft export validates."
+  - id: QC
+    label_vi: "Kiểm duyệt chất lượng"
+    sheet_status: "Đang thực hiện"
+    exit_criteria: "Automated gates G1-G8 PASS and independent reviews recorded."
+  - id: APPROVED
+    label_vi: "Đã duyệt"
+    sheet_status: "Đang thực hiện"
+    exit_criteria: "Set only by `qc_content.py approve`; release export generated."
+  - id: PUBLISHED
+    label_vi: "Đã xuất bản"
+    sheet_status: "Đã xuất bản"
+    exit_criteria: "Public URL and publish date recorded (set_status.py --url --date)."
+  - id: PERFORMANCE_REVIEW
+    label_vi: "Đánh giá hiệu quả"
+    sheet_status: "Đã xuất bản"
+    exit_criteria: "performance.yaml holds real YouTube Studio data and the review."
+
+# "On hold" is a flag, not a stage: the item keeps its stage while paused.
+on_hold_sheet_status: "Đã tạm dừng"
+
+# Reverse mapping used when the importer reads tracker rows.
+sheet_statuses:
+  "Mới":
+    stage: IDEA
+  "Đang thực hiện":
+    stage: null          # in progress, exact stage unknown: must be set in the repo
+  "Đã tạm dừng":
+    on_hold: true
+  "Đã xuất bản":
+    stage: PUBLISHED
+    requires_evidence: [publish_date, publish_url]
+
+# Stages that can only be reached through guarded commands.
+guarded_stages:
+  APPROVED: "python3 scripts/qc_content.py approve <ID>"
+  PUBLISHED: "python3 scripts/set_status.py <ID> --stage PUBLISHED --url <URL> --date <YYYY-MM-DD>"
+  PERFORMANCE_REVIEW: "python3 scripts/set_status.py <ID> --stage PERFORMANCE_REVIEW (requires performance.yaml)"
