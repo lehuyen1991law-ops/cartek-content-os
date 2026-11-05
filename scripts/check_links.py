@@ -43,6 +43,9 @@ def broken_links(root: Path) -> list[str]:
             resolved = (path.parent / file_part).resolve()
             if not resolved.exists():
                 problems.append(f"{path.relative_to(root)}: broken link -> {target}")
+            elif resolved.is_dir() and not any(p.is_file() for p in resolved.rglob("*")):
+                # Git does not track empty folders: the link would break in every fresh clone.
+                problems.append(f"{path.relative_to(root)}: link to an empty folder (not kept by Git) -> {target}")
     return problems
 
 

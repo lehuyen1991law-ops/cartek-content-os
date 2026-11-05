@@ -168,6 +168,25 @@ class TestExport(ContentTestCase):
         self.assertGreater(package["timing"]["estimated_total_seconds"], 300)
 
 
+class TestLinkChecker(unittest.TestCase):
+    def test_links_to_missing_files_and_empty_folders_are_broken(self):
+        import tempfile
+        from pathlib import Path
+
+        from helpers import load_script
+
+        checker = load_script("check_links")
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            (root / "empty").mkdir()
+            (root / "full").mkdir()
+            (root / "full" / "a.md").write_text("x", encoding="utf-8")
+            (root / "doc.md").write_text("[a](full/) [b](empty/) [c](missing.md) [d](https://example.com) `[e](code.md)`", encoding="utf-8")
+            problems = checker.broken_links(root)
+        self.assertEqual(len(problems), 2, problems)
+        self.assertTrue(any("empty folder" in p for p in problems))
+
+
 class TestMarkdownConventions(unittest.TestCase):
     def test_templates_parse(self):
         for name in ("long-form-script.md", "short-script.md"):
