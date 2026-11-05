@@ -1,0 +1,38 @@
+{
+  "capture_format": 1,
+  "spreadsheet_id": "1r4dfNOPGx50rXMuhZL6Tm0B5XG8nb47t7mSjVdDY-F4",
+  "sheet_id": 1717813101,
+  "sheet_title": "Short",
+  "sheet_index": 3,
+  "grid": {
+    "row_count": 997,
+    "column_count": 25,
+    "frozen_row_count": 0
+  },
+  "captured_at": "2026-11-05T06:10:44Z",
+  "capture_method": "google-sheets-connector (values.get FORMATTED_VALUE + spreadsheets.get gridData)",
+  "capture_notes": [
+    "hyperlink/note/dataValidation requested for A1:G12: none returned."
+  ],
+  "content_sha256": "e46051331645fd982d95b6ab0b4a962b46ef33545da36ea12915717f18306672",
+  "populated_range": "A1:F11",
+  "non_empty_cells": 30,
+  "hyperlinks": {},
+  "notes": {},
+  "data_validation": [],
+  "formats_sampled": null,
+  "values_encoding": "rows; {repeat, row} = identical consecutive rows",
+  "values": [
+    ["Thể loại video", "How - to Tutorials, Giới thiệu sản phẩm (review), tips - trick, phỏng vấn chuyên gia (Q&A), Vlogs."],
+    ["thời lượng", "< 60 giây"],
+    ["Call to Action ", "Cartek - Check your car"],
+    ["Thể loại 1", "Mẹo nhanh và thủ thuật", "", "Mẹo nhanh và thủ thuật"],
+    ["", "", "", "3 Lỗi OBD2 thường gặp và cách khắc phục nhanh chóng", "Reset đèn check engine trong 2 phút", "3 Mẹo đọc hiểu dữ liệu OBD2 mà ai cũng cần biết"],
+    ["Thể loại 2", "Giới thiệu sản phẩm/ thiết bị", "", "Giới thiệu sản phẩm/thiết bị"],
+    ["", "", "", "Thiết bị đọc OBD2 nào phù hợp với bạn?", "Top 3 phụ kiện OBD2 không thể thiếu cho xe hơi", "Top những phụ kiện OBD2 giúp tiết kiệm nhiên liệu"],
+    ["Thể loại 3", "Hướng dẫn sửa chữa đơn giản", "", "Hướng dẫn sửa chữa đơn giản"],
+    ["", "", "", "Cách thay bugi nhanh chóng tại nhà", "Cách thay lọc gió động cơ trong 5 phút", "Top những lý do khiến xe bị ì máy"],
+    ["Thể loại 4", "Giải đáp thắc mắc thường gặp", "", "Giải đáp thắc mắc thường gặp"],
+    ["", "", "", "Đèn Check Engine sáng có phải là vấn đề nghiêm trọng?", "Các loại bảo dưỡng định kỳ cần thiết cho xe là gì?", "Bao nhiêu lâu nên thay dầu nhớt cho xe?"]
+  ]
+}

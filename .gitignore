@@ -1,0 +1,50 @@
+# --- Secrets and credentials: never commit -------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*credentials*.json
+*service-account*.json
+client_secret*.json
+token*.json
+
+# --- Python ---------------------------------------------------------------
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# --- Editors / OS -----------------------------------------------------------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# --- Generated drafts (approved release packages ARE committed) ------------
+content/**/exports/*.draft.json
+
+# --- Raw media and production project files: keep outside Git --------------
+# Link storage locations from item.yaml -> production.footage_links instead.
+*.mp4
+*.mov
+*.mkv
+*.avi
+*.wav
+*.mp3
+*.m4a
+*.aac
+*.psd
+*.prproj
+*.aep
+*.drp
+assets/raw/
+
+# --- Local scratch ------------------------------------------------------------
+scratch/
+tmp/

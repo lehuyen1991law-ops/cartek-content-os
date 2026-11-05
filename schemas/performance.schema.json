@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/lehuyen1991law-ops/cartek-content-os/schemas/performance.schema.json",
+  "title": "Post-publication performance record (performance.yaml)",
+  "description": "Real YouTube metrics only, copied from YouTube Studio or its export. Every snapshot names its source and evidence. Missing metrics are omitted, never estimated.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["content_id", "video_url", "snapshots"],
+  "properties": {
+    "content_id": { "type": "string", "pattern": "^CTK-[LS]-[0-9]{4}$" },
+    "video_url": { "type": "string", "pattern": "^https?://(www\\.|m\\.)?(youtube\\.com|youtu\\.be)/\\S+$" },
+    "snapshots": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["captured_on", "window", "source", "evidence", "entered_by", "metrics"],
+        "properties": {
+          "captured_on": { "type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$", "format": "date" },
+          "window": { "enum": ["first-48-hours", "first-7-days", "first-28-days", "lifetime", "custom"] },
+          "window_note": { "type": "string" },
+          "source": { "enum": ["youtube-studio", "youtube-studio-export", "youtube-analytics-api"] },
+          "evidence": { "type": "string", "minLength": 5 },
+          "entered_by": { "type": "string", "minLength": 2 },
+          "metrics": {
+            "type": "object",
+            "additionalProperties": false,
+            "minProperties": 1,
+            "properties": {
+              "views": { "$ref": "#/$defs/count" },
+              "watch_time_hours": { "$ref": "#/$defs/number" },
+              "average_view_duration_seconds": { "$ref": "#/$defs/number" },
+              "average_percentage_viewed": { "$ref": "#/$defs/percent" },
+              "impressions": { "$ref": "#/$defs/count" },
+              "impressions_ctr_percent": { "$ref": "#/$defs/percent" },
+              "subscribers_gained": { "$ref": "#/$defs/count" },
+              "likes": { "$ref": "#/$defs/count" },
+              "comments": { "$ref": "#/$defs/count" },
+              "shares": { "$ref": "#/$defs/count" }
+            }
+          },
+          "retention_notes": { "type": "string" },
+          "traffic_sources_notes": { "type": "string" }
+        }
+      }
+    },
+    "insights": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["observation", "evidence", "confidence"],
+        "properties": {
+          "observation": { "type": "string", "minLength": 5 },
+          "evidence": { "type": "string", "minLength": 5 },
+          "confidence": { "enum": ["low", "medium", "high"] }
+        }
+      }
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["action", "applies_to", "status"],
+        "properties": {
+          "action": { "type": "string", "minLength": 5 },
+          "applies_to": { "type": "array", "items": { "type": "string" } },
+          "owner": { "type": "string" },
+          "status": { "enum": ["proposed", "accepted", "done", "rejected"] }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "count": { "type": ["integer", "null"], "minimum": 0 },
+    "number": { "type": ["number", "null"], "minimum": 0 },
+    "percent": { "type": ["number", "null"], "minimum": 0, "maximum": 100 }
+  }
+}

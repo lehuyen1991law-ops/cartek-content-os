@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/lehuyen1991law-ops/cartek-content-os/schemas/source-snapshot.schema.json",
+  "title": "Raw snapshot of one spreadsheet tab",
+  "description": "Stored in data/source/. Written only by scripts/import_sheet.py. Values are preserved exactly as captured; identical consecutive rows are run-length encoded.",
+  "type": "object",
+  "required": ["capture_format", "spreadsheet_id", "sheet_title", "captured_at", "capture_method", "content_sha256", "values"],
+  "properties": {
+    "capture_format": { "const": 1 },
+    "spreadsheet_id": { "type": "string", "minLength": 10 },
+    "sheet_id": { "type": ["integer", "null"] },
+    "sheet_title": { "type": "string", "minLength": 1 },
+    "sheet_index": { "type": ["integer", "null"] },
+    "grid": { "$ref": "source-capture.schema.json#/$defs/grid" },
+    "captured_at": { "$ref": "source-capture.schema.json#/$defs/utc_timestamp" },
+    "capture_method": { "type": "string" },
+    "capture_notes": { "type": "array", "items": { "type": "string" } },
+    "content_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "populated_range": { "type": ["string", "null"] },
+    "non_empty_cells": { "type": "integer", "minimum": 0 },
+    "hyperlinks": { "$ref": "source-capture.schema.json#/$defs/a1_map" },
+    "notes": { "$ref": "source-capture.schema.json#/$defs/a1_map" },
+    "data_validation": { "type": ["array", "null"] },
+    "formats_sampled": { "type": ["object", "null"] },
+    "values_encoding": { "type": "string" },
+    "values": { "$ref": "source-capture.schema.json#/$defs/values" }
+  }
+}

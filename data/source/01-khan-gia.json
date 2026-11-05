@@ -1,0 +1,33 @@
+{
+  "capture_format": 1,
+  "spreadsheet_id": "1r4dfNOPGx50rXMuhZL6Tm0B5XG8nb47t7mSjVdDY-F4",
+  "sheet_id": 546980374,
+  "sheet_title": "Khán giả",
+  "sheet_index": 1,
+  "grid": {
+    "row_count": 998,
+    "column_count": 25,
+    "frozen_row_count": 0
+  },
+  "captured_at": "2026-11-05T06:10:44Z",
+  "capture_method": "google-sheets-connector (values.get FORMATTED_VALUE + spreadsheets.get gridData)",
+  "capture_notes": [
+    "hyperlink/note/dataValidation requested for A1:E6: none returned."
+  ],
+  "content_sha256": "133b6a047eb0987a94ead063f99dfdd8b6870ac894c035e9581eac573a20e003",
+  "populated_range": "A1:E6",
+  "non_empty_cells": 30,
+  "hyperlinks": {},
+  "notes": {},
+  "data_validation": [],
+  "formats_sampled": null,
+  "values_encoding": "rows; {repeat, row} = identical consecutive rows",
+  "values": [
+    ["Đối tượng Viewer", "Chủ Garage ô tô", "Thợ sửa chữa ô tô", "Sinh viên chuyên ngành", "Chủ xe ô tô (ít)"],
+    ["Nhân khẩu học", "Tuổi: 35-50, Giới tính: Nam, Sở hữu ô tô và garage quy mô vừa. ", "Tuổi: 20-45, Giới tính: Nam, kỹ thuật viên chuyên ngành", "Tuổi: 18-22, Giới tính: Nam, Sinh viên học về ô tô", "Tuổi: 24-50, Giới tính: Nam, Sở hữu ô tô cá nhân"],
+    ["Sở thích", "Ô tô, công nghệ, tự tay làm (DIY), chia sẻ kinh nghiệm", "Liên quan đến ô tô, công nghệ mới, chia sẻ kinh nghiệm, giải trí", "Nghiên cứu kiến thức chuyên sâu, công nghệ mới", "Ô tô, tự tay làm (DIY)"],
+    ["Nỗi đau/ thách thức", "Cập nhật kiến thức liên tục, Khó khăn trong tìm kiếm thông tin, Áp lực chi phí cho garage, đổi mới để cạnh tranh với garage khác. ", "Cập nhật kiến thức, tìm kiếm thông tin , xử lý sự cố phức tạp", "Cập nhật kiến thức mới, tìm kiếm thông tin hữu ích, trải nghiệm thực tế tại Garage hoặc thực nghiệm với xe", "Tìm kiếm thông tin hữu ích, lỗi vặt cơ bản của xe hơi"],
+    ["Hành vi trên internet, mạng xã hội", "Tìm kiếm thông tin, Hoạt động trong các hội nhóm, follow các influencer youtube", "Tìm kiếm thông tin sửa chữa, tham gia cộng đồng, theo dõi klênh youtube", "Tìm kiếm thông tin học tập, tham gia cộng đồng, theo dõi nhiều kênh chia sẻ kiến thức", "Tìm kiếm thông tin, follow các kênh về xe trên nhiều nền tảng mạng xã hội"],
+    ["Content yêu thích", "Video hướng dẫn sửa chữa, bảo dưỡng. Video review xe. Video giới thiệu công nghệ mới. Video chia sẻ kinh nghiệm", "Đánh giá sản phẩm, hướng dẫn sửa chữa, so sánh công nghệ, chia sẻ kinh nghiệm", "Kinh nghiệm thực chiến, kiến thức chuyên sâu, ", "  Review xe, các tính năng đặc biệt, sửa chữa cơ bản các lỗi vặt hay gặp, kinh nghiệm sử dụng xe hơi"]
+  ]
+}

@@ -1,0 +1,427 @@
+# Content record. Schema: schemas/content.schema.json. Field guide: templates/item.yaml.
+# Edit values freely, except: status.stage APPROVED/PUBLISHED and reviews/history are written by
+# scripts/qc_content.py and scripts/set_status.py.
+schema_version: 1
+id: CTK-L-9001
+format: long-form
+test_item: true
+working_title: Lỗi P0300 - Ác Mộng của Mọi Động Cơ?
+language: vi
+pillar: P4
+video_type: explainer
+audience:
+  primary: technician
+  secondary:
+  - garage-owner
+  technical_depth: advanced
+search_intent: troubleshooting
+keywords:
+  primary: lỗi P0300
+  secondary:
+  - P0300 là gì
+  - bỏ máy ngẫu nhiên
+  - chẩn đoán bỏ máy
+  - mã lỗi OBD2
+vehicle:
+  scope: generic
+  brands: []
+  models: []
+  model_years: ''
+  engines: []
+  powertrains: []
+  systems:
+  - engine
+  - ignition
+  - fuel
+  - air-intake
+problem: Khi máy đọc báo P0300, thợ thường thay bugi hoặc bô-bin theo kinh nghiệm trước khi xác định nguyên nhân (giả định cần xác nhận).
+takeaway: 'Có quy trình khoanh vùng P0300: đọc mã và dữ liệu đi kèm, xếp nhóm nguyên nhân, chọn phép thử xác nhận trước khi thay linh kiện.'
+owner: ''
+target_publish_date: null
+status:
+  stage: RESEARCH
+  on_hold: false
+  hold_reason: ''
+safety:
+  flags:
+  - fuel-system
+  - hot-or-moving-parts
+  dismissed:
+  - flag: high-voltage
+    rationale: Xe hybrid/điện chỉ được nhắc là ngoài phạm vi; video không có thao tác trên hệ thống cao áp.
+sources:
+- id: SRC01
+  title: SAE J2012 — Diagnostic Trouble Code Definitions
+  publisher: SAE International
+  type: standard
+  citation: 'SAE J2012, current revision. Equivalent: ISO 15031-6.'
+  notes: Candidate source. Not yet consulted (paid standard).
+- id: SRC02
+  title: SAE J1979 — E/E Diagnostic Test Modes
+  publisher: SAE International
+  type: standard
+  citation: SAE J1979, current revision (diagnostic services such as freeze frame and clearing DTCs).
+  notes: Candidate source. Not yet consulted (paid standard).
+- id: SRC03
+  title: California Code of Regulations, title 13, section 1968.2 (OBD II requirements)
+  publisher: California Air Resources Board
+  type: regulation
+  citation: 13 CCR § 1968.2
+  notes: Candidate source for the misfire warning-lamp behaviour. Not yet consulted.
+claims:
+- id: C01
+  text: P0300 là mã lỗi chuẩn (generic) nghĩa là phát hiện bỏ máy ngẫu nhiên/nhiều xi-lanh (Random/Multiple Cylinder Misfire Detected).
+  category: dtc-definition
+  sources:
+  - SRC01
+  status: unverified
+  feature_id: null
+  verified_by: ''
+  verified_on: null
+  notes: Kiểm chứng định nghĩa trong SAE J2012 / ISO 15031-6.
+- id: C02
+  text: Các mã P0301-P0312 chỉ hiện tượng bỏ máy được phát hiện ở xi-lanh số 1-12.
+  category: dtc-definition
+  sources:
+  - SRC01
+  status: unverified
+  feature_id: null
+  verified_by: ''
+  verified_on: null
+  notes: Kiểm chứng trong SAE J2012.
+- id: C03
+  text: Dữ liệu đóng băng (freeze frame) ghi lại điều kiện vận hành tại thời điểm mã lỗi được lưu.
+  category: obd-standard
+  sources:
+  - SRC02
+  status: unverified
+  feature_id: null
+  verified_by: ''
+  verified_on: null
+  notes: Kiểm chứng phạm vi dữ liệu trong SAE J1979.
+- id: C04
+  text: Xóa mã lỗi chỉ xóa mã và dữ liệu chẩn đoán liên quan, đặt lại trạng thái sẵn sàng; không sửa nguyên nhân, lỗi sẽ quay lại nếu nguyên nhân còn.
+  category: obd-standard
+  sources:
+  - SRC02
+  status: unverified
+  feature_id: null
+  verified_by: ''
+  verified_on: null
+  notes: Kiểm chứng danh sách dữ liệu bị xóa trong SAE J1979.
+- id: C05
+  text: 'Nhóm nguyên nhân cần kiểm tra khi có P0300: đánh lửa, nhiên liệu, khí nạp (rò chân không), cơ khí (áp suất nén), cảm biến; mỗi nhóm có phép thử xác nhận riêng.'
+  category: diagnostic-procedure
+  sources: []
+  status: unverified
+  feature_id: null
+  verified_by: ''
+  verified_on: null
+  notes: 'Chưa có nguồn: cần tài liệu hãng hoặc giáo trình.'
+- id: C06
+  text: Đèn báo lỗi động cơ nhấp nháy khi mức bỏ máy đủ để làm hỏng bộ xúc tác; cần giảm tải và dừng xe an toàn.
+  category: safety
+  sources:
+  - SRC03
+  status: unverified
+  feature_id: null
+  verified_by: ''
+  verified_on: null
+  notes: Kiểm chứng yêu cầu nhấp nháy đèn trong 13 CCR 1968.2 và tài liệu hãng.
+- id: C07
+  text: Cartek 2 đọc được mã P0300 và dữ liệu đóng băng.
+  category: cartek-feature
+  sources: []
+  status: unverified
+  feature_id: null
+  verified_by: ''
+  verified_on: null
+  notes: Không có trong sổ đăng ký tính năng (đang trống); cần đội sản phẩm xác nhận.
+seo:
+  title_candidates:
+  - 'Lỗi P0300: Khoanh vùng nguyên nhân bỏ máy trước khi thay linh kiện'
+  - P0300 là gì? Quy trình chẩn đoán bỏ máy cho kỹ thuật viên
+  - 'Mã lỗi P0300: Đọc dữ liệu đóng băng để tìm đúng nguyên nhân'
+  recommended_title: 'Lỗi P0300: Khoanh vùng nguyên nhân bỏ máy trước khi thay linh kiện'
+  title_rationale: Từ khóa chính đứng đầu; nêu đúng lời hứa của video; hợp với kỹ thuật viên. Cụm 'bỏ máy' phụ thuộc C01 (chưa kiểm chứng).
+  description: |-
+    Máy đọc báo P0300 thì nên kiểm tra gì trước khi thay bugi hay bô-bin? Video này đi qua quy trình khoanh vùng nguyên nhân bỏ máy cho kỹ thuật viên.
+
+    [Bản nháp kiểm thử: phần nội dung chi tiết sẽ viết sau khi các claim được kiểm chứng.]
+
+    Cartek - Check your car
+  tags:
+  - P0300
+  - lỗi P0300
+  - bỏ máy
+  - chẩn đoán OBD2
+  - mã lỗi OBD2
+  - Cartek
+  hashtags:
+  - '#P0300'
+  - '#OBD2'
+  - '#Cartek'
+  chapters: []
+  thumbnail_concepts:
+  - concept: Màn hình máy đọc hiện P0300 phóng to, bên cạnh bugi có dấu hỏi
+    on_image_text: 'P0300: thay gì trước?'
+  - concept: Sơ đồ 4 xi-lanh, cả bốn nhấp nháy đỏ
+    on_image_text: Bỏ máy ở đâu?
+  related_content:
+  - CTK-L-0014
+  - CTK-L-0009
+  pinned_comment: ''
+production:
+  assets_required:
+  - item: Thiết bị Cartek 2 (tính năng cần xác nhận trong sổ đăng ký)
+    type: tool
+    status: needed
+    notes: Demo S04 bị chặn cho đến khi có feature ID đã xác minh.
+  - item: Xe thử có mã P0300 thật
+    type: vehicle
+    status: needed
+    notes: Ghi hãng/model/đời/động cơ vào demo_setup.
+  - item: Đồ họa sơ đồ xi-lanh, bảng dữ liệu đóng băng, sơ đồ cây nguyên nhân
+    type: graphic
+    status: needed
+    notes: ''
+  - item: Kỹ thuật viên có chuyên môn duyệt nội dung an toàn
+    type: person
+    status: requested
+    notes: Bắt buộc do safety.flags.
+  demo_setup: null
+  footage_links: []
+  runtime_exception: null
+publication:
+  visibility_plan: ''
+  published_at: null
+  url: null
+  playlist: ''
+  sheet_row: ''
+  upload_checklist:
+  - item: Uploaded video is the approved cut (matches script.md segments)
+    done: false
+  - item: Title, description with chapters, tags pasted from exports/production-package.json
+    done: false
+  - item: Thumbnail uploaded
+    done: false
+  - item: End screen and cards point to related Cartek content
+    done: false
+  - item: Vietnamese captions checked against the final voice-over
+    done: false
+  - item: Visibility or schedule set as planned
+    done: false
+  - item: Pinned comment posted
+    done: false
+provenance:
+  origin: test
+  source_record: CTK-L-0015
+  source_ref: "'Content Direction'!F12"
+  source_title: Lỗi P0300 - Ác Mộng của Mọi Động Cơ?
+  source_sha256: f131d73c1a369e9c539b8fb51f343c31d43f00f92a2b0ba8c7d94212dde2f504
+  created: '2026-11-05'
+history:
+- version: 1
+  date: '2026-11-05'
+  stage: IDEA
+  by: Claude Code (acceptance test)
+  note: TEST ITEM for workflow acceptance. Workspace created from CTK-L-0015 ('Content Direction'!F12).
+- version: 2
+  date: '2026-11-05'
+  stage: SCRIPT
+  by: Claude Code (acceptance test)
+  note: 'Acceptance test: brief written, research skeleton, script skeleton, SEO draft. Research NOT performed.'
+- version: 3
+  date: '2026-11-05'
+  stage: RESEARCH
+  by: Claude Code (acceptance test)
+  note: 'Returned to RESEARCH: claims C01-C07 are unverified; script and SEO are skeletons.'
+reviews:
+- id: R001
+  date: '2026-11-05'
+  reviewer: scripts/qc_content.py
+  reviewer_type: automated
+  role: qc
+  fingerprint: sha256:e4ab245a848cf2a7b0542cfbbf41665b3b7ed0a525f51e27520134cca6007207
+  gates:
+    G1:
+      result: PASS
+      evidence: |-
+        [PASS] Provenance: CTK-L-0015 from 'Content Direction'!F12.
+        [PASS] P4: Kiến thức chuyên sâu về hệ thống OBD2.
+        [PASS] Metadata complete; ID, folder, provenance and vocabularies consistent.
+      corrections: []
+    G2:
+      result: PASS
+      evidence: |-
+        [PASS] Brief complete for primary audience Thợ sửa chữa ô tô.
+        [INFO] Relevance and audience fit also need an independent judgment review (role qc).
+      corrections: []
+    G3:
+      result: BLOCKED
+      evidence: |-
+        [BLOCKED] research.md still has 5 [TODO] marker(s).
+        [BLOCKED] C01 is unverified: "P0300 là mã lỗi chuẩn (generic) nghĩa là phát hiện bỏ máy ngẫu nhiên/nhiều xi-lanh (Rando…"
+        [BLOCKED] C02 is unverified: "Các mã P0301-P0312 chỉ hiện tượng bỏ máy được phát hiện ở xi-lanh số 1-12."
+        [BLOCKED] C03 is unverified: "Dữ liệu đóng băng (freeze frame) ghi lại điều kiện vận hành tại thời điểm mã lỗi được lưu."
+        [BLOCKED] C04 is unverified: "Xóa mã lỗi chỉ xóa mã và dữ liệu chẩn đoán liên quan, đặt lại trạng thái sẵn sàng; không …"
+        [BLOCKED] C05 is unverified: "Nhóm nguyên nhân cần kiểm tra khi có P0300: đánh lửa, nhiên liệu, khí nạp (rò chân không)…"
+        [BLOCKED] C06 is unverified: "Đèn báo lỗi động cơ nhấp nháy khi mức bỏ máy đủ để làm hỏng bộ xúc tác; cần giảm tải và d…"
+        [BLOCKED] C07 is unverified: "Cartek 2 đọc được mã P0300 và dữ liệu đóng băng."
+        [BLOCKED] C07 describes a Cartek 2 capability that is not in the feature register.
+      corrections:
+      - 'Complete the research (skill: automotive-researcher).'
+      - 'Verify it with an accepted source, or mark it removed and take it out of the script (skill: technical-fact-checker).'
+      - Add it to data/reference/cartek-2-feature-register.yaml with product-team evidence, then set feature_id.
+    G4:
+      result: BLOCKED
+      evidence: |-
+        [BLOCKED] script.md still has 9 [TODO] marker(s).
+        [INFO] Runtime estimate so far: 00:07 (narration incomplete).
+        [INFO] Clarity, coherence and retention quality also need an independent judgment review (role qc).
+      corrections:
+      - 'Finish the script (skill: youtube-scriptwriter).'
+    G5:
+      result: BLOCKED
+      evidence: |-
+        [BLOCKED] The script is not finished; the technical and safety review needs the final narration.
+        [BLOCKED] research.md is not finished; technical accuracy cannot be reviewed yet.
+        [INFO] Safety flags fuel-system, hot-or-moving-parts: a qualified human technical review is required before approval.
+        [BLOCKED] C05 (diagnostic-procedure) is unverified: technical approval is blocked.
+        [BLOCKED] C06 (safety) is unverified: technical approval is blocked.
+        [INFO] Automotive accuracy also needs an independent technical review (role technical).
+      corrections:
+      - Finish script.md first (G4), then re-run QC.
+      - Finish the research first (G3).
+      - Verify the procedure/safety statement with OEM or standard sources, or remove it.
+    G6:
+      result: FAIL
+      evidence: |-
+        [BLOCKED] seo.md still has 3 [TODO] marker(s).
+        [FAIL] Chapters: 0 chapter(s); YouTube needs at least 3.
+      corrections:
+      - 'Complete the SEO analysis (skill: youtube-seo-specialist).'
+      - Build chapters from `python3 scripts/qc_content.py runtime <ID>` timings.
+    G7:
+      result: FAIL
+      evidence: |-
+        [BLOCKED] Script gate G4 is BLOCKED; the production handoff needs a finished script.
+        [BLOCKED] storyboard.md still has 5 [TODO] marker(s).
+        [BLOCKED] Assets not yet available: Thiết bị Cartek 2 (tính năng cần xác nhận trong sổ đăng ký), Xe thử có mã P0300 thật, Đồ họa sơ đồ xi-lanh, bảng dữ liệu đóng băng, sơ đồ cây nguyên nhân, Kỹ thuật viên có chuyên môn duyệt nội dung an toàn.
+        [FAIL] Demo segments exist but production.demo_setup lacks the tool and vehicle/location.
+        [FAIL] No responsible person (owner).
+        [FAIL] No target publish date.
+      corrections:
+      - Resolve G4 first.
+      - Complete the shot list.
+      - Confirm availability and set status to available or confirmed.
+      - Record tool, tool version, vehicle and location.
+      - Set item.yaml -> owner (Người phụ trách).
+      - Set item.yaml -> target_publish_date.
+    G8:
+      result: FAIL
+      evidence: |-
+        [FAIL] No target publish date.
+        [FAIL] No visibility plan.
+        [BLOCKED] 8 of 8 publishing checklist item(s) in seo.md are not ticked.
+      corrections:
+      - Set item.yaml -> target_publish_date.
+      - Set publication.visibility_plan (public, scheduled, unlisted or private).
+      - Complete each item and tick it ([x]) before publishing.
+  decision: FAIL
+  notes: Automated structural checks. Judgment gates also need independent reviews.
+- id: R002
+  date: '2026-11-05'
+  reviewer: scripts/qc_content.py
+  reviewer_type: automated
+  role: qc
+  fingerprint: sha256:e4ab245a848cf2a7b0542cfbbf41665b3b7ed0a525f51e27520134cca6007207
+  gates:
+    G1:
+      result: PASS
+      evidence: |-
+        [PASS] Provenance: CTK-L-0015 from 'Content Direction'!F12.
+        [PASS] P4: Kiến thức chuyên sâu về hệ thống OBD2.
+        [PASS] Metadata complete; ID, folder, provenance and vocabularies consistent.
+      corrections: []
+    G2:
+      result: PASS
+      evidence: |-
+        [PASS] Brief complete for primary audience Thợ sửa chữa ô tô.
+        [INFO] Relevance and audience fit also need an independent judgment review (role qc).
+      corrections: []
+    G3:
+      result: BLOCKED
+      evidence: |-
+        [BLOCKED] research.md still has 5 [TODO] marker(s).
+        [BLOCKED] C01 is unverified: "P0300 là mã lỗi chuẩn (generic) nghĩa là phát hiện bỏ máy ngẫu nhiên/nhiều xi-lanh (Rando…"
+        [BLOCKED] C02 is unverified: "Các mã P0301-P0312 chỉ hiện tượng bỏ máy được phát hiện ở xi-lanh số 1-12."
+        [BLOCKED] C03 is unverified: "Dữ liệu đóng băng (freeze frame) ghi lại điều kiện vận hành tại thời điểm mã lỗi được lưu."
+        [BLOCKED] C04 is unverified: "Xóa mã lỗi chỉ xóa mã và dữ liệu chẩn đoán liên quan, đặt lại trạng thái sẵn sàng; không …"
+        [BLOCKED] C05 is unverified: "Nhóm nguyên nhân cần kiểm tra khi có P0300: đánh lửa, nhiên liệu, khí nạp (rò chân không)…"
+        [BLOCKED] C06 is unverified: "Đèn báo lỗi động cơ nhấp nháy khi mức bỏ máy đủ để làm hỏng bộ xúc tác; cần giảm tải và d…"
+        [BLOCKED] C07 is unverified: "Cartek 2 đọc được mã P0300 và dữ liệu đóng băng."
+        [BLOCKED] C07 describes a Cartek 2 capability that is not in the feature register.
+      corrections:
+      - 'Complete the research (skill: automotive-researcher).'
+      - 'Verify it with an accepted source, or mark it removed and take it out of the script (skill: technical-fact-checker).'
+      - Add it to data/reference/cartek-2-feature-register.yaml with product-team evidence, then set feature_id.
+    G4:
+      result: BLOCKED
+      evidence: |-
+        [BLOCKED] script.md still has 9 [TODO] marker(s).
+        [INFO] Runtime estimate so far: 00:07 (narration incomplete).
+        [INFO] Clarity, coherence and retention quality also need an independent judgment review (role qc).
+      corrections:
+      - 'Finish the script (skill: youtube-scriptwriter).'
+    G5:
+      result: BLOCKED
+      evidence: |-
+        [BLOCKED] The script is not finished; the technical and safety review needs the final narration.
+        [BLOCKED] research.md is not finished; technical accuracy cannot be reviewed yet.
+        [INFO] Safety flags fuel-system, hot-or-moving-parts: a qualified human technical review is required before approval.
+        [BLOCKED] C05 (diagnostic-procedure) is unverified: technical approval is blocked.
+        [BLOCKED] C06 (safety) is unverified: technical approval is blocked.
+        [INFO] Automotive accuracy also needs an independent technical review (role technical).
+      corrections:
+      - Finish script.md first (G4), then re-run QC.
+      - Finish the research first (G3).
+      - Verify the procedure/safety statement with OEM or standard sources, or remove it.
+    G6:
+      result: FAIL
+      evidence: |-
+        [BLOCKED] seo.md still has 3 [TODO] marker(s).
+        [FAIL] Chapters: 0 chapter(s); YouTube needs at least 3.
+      corrections:
+      - 'Complete the SEO analysis (skill: youtube-seo-specialist).'
+      - Build chapters from `python3 scripts/qc_content.py runtime <ID>` timings.
+    G7:
+      result: FAIL
+      evidence: |-
+        [BLOCKED] Script gate G4 is BLOCKED; the production handoff needs a finished script.
+        [BLOCKED] storyboard.md still has 5 [TODO] marker(s).
+        [BLOCKED] Assets not yet available: Thiết bị Cartek 2 (tính năng cần xác nhận trong sổ đăng ký), Xe thử có mã P0300 thật, Đồ họa sơ đồ xi-lanh, bảng dữ liệu đóng băng, sơ đồ cây nguyên nhân, Kỹ thuật viên có chuyên môn duyệt nội dung an toàn.
+        [FAIL] Demo segments exist but production.demo_setup lacks the tool and vehicle/location.
+        [FAIL] No responsible person (owner).
+        [FAIL] No target publish date.
+      corrections:
+      - Resolve G4 first.
+      - Complete the shot list.
+      - Confirm availability and set status to available or confirmed.
+      - Record tool, tool version, vehicle and location.
+      - Set item.yaml -> owner (Người phụ trách).
+      - Set item.yaml -> target_publish_date.
+    G8:
+      result: FAIL
+      evidence: |-
+        [FAIL] No target publish date.
+        [FAIL] No visibility plan.
+        [BLOCKED] 8 of 8 publishing checklist item(s) in seo.md are not ticked.
+      corrections:
+      - Set item.yaml -> target_publish_date.
+      - Set publication.visibility_plan (public, scheduled, unlisted or private).
+      - Complete each item and tick it ([x]) before publishing.
+  decision: FAIL
+  notes: Automated structural checks. Judgment gates also need independent reviews.
+corrections: []
+internal_notes: Acceptance test item (2026-11-05). Research intentionally not performed; do not publish or reuse text as fact. The real production item is CTK-L-0015.

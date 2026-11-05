@@ -1,0 +1,29 @@
+# Post-publication performance record: content/<format>/<ID>-<slug>/performance.yaml
+# Schema: schemas/performance.schema.json. Workflow: workflows/post-publish-analysis.md.
+# ONLY real numbers copied from YouTube Studio (or its export). Never estimate or invent.
+# Leave a metric out if you do not have it.
+
+content_id: CTK-L-0000
+video_url: ""
+snapshots:
+  - captured_on: "YYYY-MM-DD"     # date you read the numbers
+    window: first-7-days          # first-48-hours | first-7-days | first-28-days | lifetime | custom
+    window_note: ""
+    source: youtube-studio        # youtube-studio | youtube-studio-export | youtube-analytics-api
+    evidence: ""                  # path/link to the export or screenshot (outside Git if private)
+    entered_by: ""
+    metrics:
+      views: null
+      watch_time_hours: null
+      average_view_duration_seconds: null
+      average_percentage_viewed: null
+      impressions: null
+      impressions_ctr_percent: null
+      subscribers_gained: null
+      likes: null
+      comments: null
+      shares: null
+    retention_notes: ""           # where viewers drop off, read from the retention graph
+    traffic_sources_notes: ""
+insights: []                      # [{observation, evidence, confidence: low|medium|high}]
+actions: []                       # [{action, applies_to: [IDs or "future"], owner, status}]

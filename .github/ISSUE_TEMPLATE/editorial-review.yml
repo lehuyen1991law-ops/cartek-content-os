@@ -1,0 +1,39 @@
+name: Editorial review
+description: Request or record a review (QC, technical, editorial) or a correction for a content item.
+title: "[Review] CTK-"
+labels: ["editorial-review"]
+body:
+  - type: input
+    id: content_id
+    attributes:
+      label: Content ID
+      placeholder: CTK-L-0015
+    validations:
+      required: true
+  - type: dropdown
+    id: role
+    attributes:
+      label: Review type
+      options:
+        - "qc (G2, G4, G6, G7)"
+        - "technical (G3, G5)"
+        - "editorial sign-off (human)"
+        - "correction to a published video"
+    validations:
+      required: true
+  - type: textarea
+    id: findings
+    attributes:
+      label: Findings
+      description: For each gate, PASS / FAIL / BLOCKED with evidence (file, segment, claim ID) and the correction needed.
+    validations:
+      required: true
+  - type: checkboxes
+    id: rules
+    attributes:
+      label: Review rules
+      options:
+        - label: I did not write the deliverables I am reviewing.
+          required: true
+        - label: The review will be recorded with `python3 scripts/qc_content.py review <ID> --file review.yaml` on the current content.
+          required: true

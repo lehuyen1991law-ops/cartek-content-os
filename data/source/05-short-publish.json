@@ -1,0 +1,48 @@
+{
+  "capture_format": 1,
+  "spreadsheet_id": "1r4dfNOPGx50rXMuhZL6Tm0B5XG8nb47t7mSjVdDY-F4",
+  "sheet_id": 1044477468,
+  "sheet_title": "Short Publish",
+  "sheet_index": 5,
+  "grid": {
+    "row_count": 1015,
+    "column_count": 27,
+    "frozen_row_count": 1
+  },
+  "captured_at": "2026-11-05T06:10:44Z",
+  "capture_method": "google-sheets-connector (values.get FORMATTED_VALUE + spreadsheets.get gridData)",
+  "capture_notes": [
+    "hyperlink/note/dataValidation requested for A1:I10 and A500:I501: none returned.",
+    "Rows 9-1015 verified by targeted reads: A9:B1015 and D9:AA1015 empty; C1001:C1015 all '0'."
+  ],
+  "content_sha256": "cd031b4ca713c7719f363ba6906385c4d9c4ece12f6aa0812baa6490d4fb57df",
+  "populated_range": "A1:I1015",
+  "non_empty_cells": 1037,
+  "hyperlinks": {},
+  "notes": {},
+  "data_validation": [],
+  "formats_sampled": {
+    "C2": {
+      "type": "TEXT"
+    },
+    "D2": {
+      "type": "TEXT"
+    },
+    "G2": {
+      "type": "DATE",
+      "pattern": "dd/MM/yyyy"
+    }
+  },
+  "values_encoding": "rows; {repeat, row} = identical consecutive rows",
+  "values": [
+    ["Tiêu đề", "Thể loại", "Hãng xe", "Model", "Người phụ trách", "Trạng thái", "Ngày đăng", "Kịch bản", "Link xuất bản"],
+    ["", "Giới thiệu sản phẩm/thiết bị", "NONE", "", "NONE", "Đã xuất bản"],
+    ["", "Hướng dẫn sửa chữa đơn giản", "NONE", "", "NONE", "Đang thực hiện"],
+    ["", "Mẹo nhanh và thủ thuật", "NONE", "", "NONE", "Đã xuất bản"],
+    ["", "Giải đáp thắc mắc thường gặp", "NONE", "", "NONE", "Đã tạm dừng"],
+    ["", "Giải đáp thắc mắc thường gặp", "0", "", "NONE", "Đang thực hiện"],
+    ["", "", "", "", "", "Đang thực hiện"],
+    [],
+    {"repeat": 1007, "row": ["", "", "0"]}
+  ]
+}

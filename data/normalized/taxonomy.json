@@ -1,0 +1,178 @@
+{
+  "kind": "taxonomy",
+  "normalized_format": 1,
+  "generated_by": "scripts/import_sheet.py",
+  "inputs": [
+    {
+      "tab": "Content Direction",
+      "snapshot": "data/source/02-content-direction.json",
+      "captured_at": "2026-11-05T06:10:44Z",
+      "content_sha256": "f5cc0d0760ee7b9c6b6644eb695ce79e9d7b3fa310de8e929583e3334904f074"
+    },
+    {
+      "tab": "Short",
+      "snapshot": "data/source/03-short.json",
+      "captured_at": "2026-11-05T06:10:44Z",
+      "content_sha256": "e46051331645fd982d95b6ab0b4a962b46ef33545da36ea12915717f18306672"
+    }
+  ],
+  "pillars": [
+    {
+      "code": "P1",
+      "name": "Hướng dẫn sử dụng thiết bị OBD2 (Cartek 2)",
+      "variants": [],
+      "label": "Content Pillar 1",
+      "source": {
+        "tab": "Content Direction",
+        "sheet_id": 991115479,
+        "ref": "'Content Direction'!B5"
+      },
+      "idea_ids": [
+        "CTK-L-0001",
+        "CTK-L-0002",
+        "CTK-L-0003",
+        "CTK-L-0004"
+      ],
+      "idea_count": 4
+    },
+    {
+      "code": "P2",
+      "name": "Giải thích, chia sẻ kiến thức các hệ thống trên ô tô",
+      "variants": [],
+      "label": "Content Pillar 2",
+      "source": {
+        "tab": "Content Direction",
+        "sheet_id": 991115479,
+        "ref": "'Content Direction'!B7"
+      },
+      "idea_ids": [
+        "CTK-L-0005",
+        "CTK-L-0006",
+        "CTK-L-0007",
+        "CTK-L-0008"
+      ],
+      "idea_count": 4
+    },
+    {
+      "code": "P3",
+      "name": "Các vấn đề lỗi xe thường gặp",
+      "variants": [],
+      "label": "Content Pillar 3",
+      "source": {
+        "tab": "Content Direction",
+        "sheet_id": 991115479,
+        "ref": "'Content Direction'!B9"
+      },
+      "idea_ids": [
+        "CTK-L-0009",
+        "CTK-L-0010",
+        "CTK-L-0011",
+        "CTK-L-0012"
+      ],
+      "idea_count": 4
+    },
+    {
+      "code": "P4",
+      "name": "Kiến thức chuyên sâu về hệ thống OBD2",
+      "variants": [],
+      "label": "Content Pillar 4",
+      "source": {
+        "tab": "Content Direction",
+        "sheet_id": 991115479,
+        "ref": "'Content Direction'!B11"
+      },
+      "idea_ids": [
+        "CTK-L-0013",
+        "CTK-L-0014",
+        "CTK-L-0015",
+        "CTK-L-0016"
+      ],
+      "idea_count": 4
+    },
+    {
+      "code": "P5",
+      "name": "Tin tức và xu hướng trong lĩnh vực ô tô",
+      "variants": [],
+      "label": "Content Pillar 5",
+      "source": {
+        "tab": "Content Direction",
+        "sheet_id": 991115479,
+        "ref": "'Content Direction'!B13"
+      },
+      "idea_ids": [],
+      "idea_count": 0
+    }
+  ],
+  "short_categories": [
+    {
+      "code": "S1",
+      "name": "Mẹo nhanh và thủ thuật",
+      "variants": [],
+      "label": "Thể loại 1",
+      "source": {
+        "tab": "Short",
+        "sheet_id": 1717813101,
+        "ref": "'Short'!B4"
+      },
+      "idea_ids": [
+        "CTK-S-0001",
+        "CTK-S-0002",
+        "CTK-S-0003"
+      ],
+      "idea_count": 3
+    },
+    {
+      "code": "S2",
+      "name": "Giới thiệu sản phẩm/ thiết bị",
+      "variants": [
+        "Giới thiệu sản phẩm/thiết bị"
+      ],
+      "label": "Thể loại 2",
+      "source": {
+        "tab": "Short",
+        "sheet_id": 1717813101,
+        "ref": "'Short'!B6"
+      },
+      "idea_ids": [
+        "CTK-S-0004",
+        "CTK-S-0005",
+        "CTK-S-0006"
+      ],
+      "idea_count": 3
+    },
+    {
+      "code": "S3",
+      "name": "Hướng dẫn sửa chữa đơn giản",
+      "variants": [],
+      "label": "Thể loại 3",
+      "source": {
+        "tab": "Short",
+        "sheet_id": 1717813101,
+        "ref": "'Short'!B8"
+      },
+      "idea_ids": [
+        "CTK-S-0007",
+        "CTK-S-0008",
+        "CTK-S-0009"
+      ],
+      "idea_count": 3
+    },
+    {
+      "code": "S4",
+      "name": "Giải đáp thắc mắc thường gặp",
+      "variants": [],
+      "label": "Thể loại 4",
+      "source": {
+        "tab": "Short",
+        "sheet_id": 1717813101,
+        "ref": "'Short'!B10"
+      },
+      "idea_ids": [
+        "CTK-S-0010",
+        "CTK-S-0011",
+        "CTK-S-0012"
+      ],
+      "idea_count": 3
+    }
+  ]
+}

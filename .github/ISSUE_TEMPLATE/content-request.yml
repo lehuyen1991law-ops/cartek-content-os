@@ -1,0 +1,74 @@
+name: Content request
+description: Propose a new Cartek video (long-form or Shorts).
+title: "[Content] "
+labels: ["content-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Check the idea backlog first (`reports/content-board.md`). Do not include customer data or secrets.
+  - type: dropdown
+    id: format
+    attributes:
+      label: Format
+      options: ["long-form", "short"]
+    validations:
+      required: true
+  - type: dropdown
+    id: pillar
+    attributes:
+      label: Pillar / Shorts category
+      description: See strategy/content-pillars.md
+      options:
+        - "P1 Hướng dẫn sử dụng thiết bị OBD2 (Cartek 2)"
+        - "P2 Giải thích, chia sẻ kiến thức các hệ thống trên ô tô"
+        - "P3 Các vấn đề lỗi xe thường gặp"
+        - "P4 Kiến thức chuyên sâu về hệ thống OBD2"
+        - "P5 Tin tức và xu hướng trong lĩnh vực ô tô"
+        - "S1 Mẹo nhanh và thủ thuật"
+        - "S2 Giới thiệu sản phẩm/thiết bị"
+        - "S3 Hướng dẫn sửa chữa đơn giản"
+        - "S4 Giải đáp thắc mắc thường gặp"
+    validations:
+      required: true
+  - type: dropdown
+    id: audience
+    attributes:
+      label: Primary audience
+      options: ["technician (Thợ sửa chữa ô tô)", "garage-owner (Chủ Garage ô tô)", "automotive-student (Sinh viên chuyên ngành)", "car-owner (Chủ xe ô tô)"]
+    validations:
+      required: true
+  - type: input
+    id: title
+    attributes:
+      label: Working title (Vietnamese)
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Viewer problem and takeaway
+      description: What problem does the viewer have, and what will they be able to do after watching?
+    validations:
+      required: true
+  - type: input
+    id: vehicle
+    attributes:
+      label: Vehicles (if specific)
+      description: Brand / model / year / engine, or "generic OBD-II"
+  - type: textarea
+    id: sources
+    attributes:
+      label: Known sources or evidence
+      description: Standards, OEM service information, test logs. Leave empty if unknown; research will find them.
+  - type: input
+    id: date
+    attributes:
+      label: Wanted publish date (YYYY-MM-DD)
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checks
+      options:
+        - label: Any Cartek 2 feature mentioned must be verified in data/reference/cartek-2-feature-register.yaml before it can be published.
+          required: true

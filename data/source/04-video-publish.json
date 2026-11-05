@@ -1,0 +1,48 @@
+{
+  "capture_format": 1,
+  "spreadsheet_id": "1r4dfNOPGx50rXMuhZL6Tm0B5XG8nb47t7mSjVdDY-F4",
+  "sheet_id": 2144511491,
+  "sheet_title": "Video Publish",
+  "sheet_index": 4,
+  "grid": {
+    "row_count": 1015,
+    "column_count": 27,
+    "frozen_row_count": 1
+  },
+  "captured_at": "2026-11-05T06:10:44Z",
+  "capture_method": "google-sheets-connector (values.get FORMATTED_VALUE + spreadsheets.get gridData)",
+  "capture_notes": [
+    "hyperlink/note/dataValidation requested for A1:I10 and A500:I501: none returned.",
+    "Rows 9-1015 verified by targeted reads: A9:B1015 and D9:AA1015 empty; C1001:C1015 all '0'."
+  ],
+  "content_sha256": "fc44697abf76b5f707f6ad3a166ed44ae1997904ef04da38704b0e0e04b37a95",
+  "populated_range": "A1:I1015",
+  "non_empty_cells": 1037,
+  "hyperlinks": {},
+  "notes": {},
+  "data_validation": [],
+  "formats_sampled": {
+    "C2": {
+      "type": "TEXT"
+    },
+    "D2": {
+      "type": "TEXT"
+    },
+    "G2": {
+      "type": "DATE",
+      "pattern": "dd/MM/yyyy"
+    }
+  },
+  "values_encoding": "rows; {repeat, row} = identical consecutive rows",
+  "values": [
+    ["Tiêu đề", "Thể loại", "Hãng xe", "Model", "Người phụ trách", "Trạng thái", "Ngày đăng", "Kịch bản", "Link xuất bản"],
+    ["", "Hướng dẫn sử dụng thiết bị OBD2 (Cartek 2)", "FORD", "", "NONE", "Đã tạm dừng"],
+    ["", "Giải thích, chia sẻ kiến thức các hệ thống trên ô tô", "MAZDA", "", "NONE", "Đang thực hiện"],
+    ["", "Các vấn đề lỗi xe thường gặp", "CHRYSLER", "", "NONE", "Đã xuất bản"],
+    ["", "Kiến thức chuyên sâu về hệ thống OBD2", "TOYOTA", "", "NONE", "Đang thực hiện"],
+    ["", "Tin tức và xu hướng trong lĩnh vực ô tô", "0", "", "NONE", "Đang thực hiện"],
+    ["", "", "", "", "", "Mới"],
+    [],
+    {"repeat": 1007, "row": ["", "", "0"]}
+  ]
+}

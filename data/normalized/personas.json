@@ -1,0 +1,114 @@
+{
+  "kind": "personas",
+  "normalized_format": 1,
+  "generated_by": "scripts/import_sheet.py",
+  "inputs": [
+    {
+      "tab": "Khán giả",
+      "snapshot": "data/source/01-khan-gia.json",
+      "captured_at": "2026-11-05T06:10:44Z",
+      "content_sha256": "133b6a047eb0987a94ead063f99dfdd8b6870ac894c035e9581eac573a20e003"
+    }
+  ],
+  "records": [
+    {
+      "id": "garage-owner",
+      "name": "Chủ Garage ô tô",
+      "label": "Chủ Garage ô tô",
+      "priority": "standard",
+      "demographics": {
+        "raw": "Tuổi: 35-50, Giới tính: Nam, Sở hữu ô tô và garage quy mô vừa.",
+        "age_range": "35-50",
+        "gender": "Nam",
+        "description": "Sở hữu ô tô và garage quy mô vừa."
+      },
+      "interests": "Ô tô, công nghệ, tự tay làm (DIY), chia sẻ kinh nghiệm",
+      "pain_points": "Cập nhật kiến thức liên tục, Khó khăn trong tìm kiếm thông tin, Áp lực chi phí cho garage, đổi mới để cạnh tranh với garage khác.",
+      "online_behavior": "Tìm kiếm thông tin, Hoạt động trong các hội nhóm, follow các influencer youtube",
+      "preferred_content": "Video hướng dẫn sửa chữa, bảo dưỡng. Video review xe. Video giới thiệu công nghệ mới. Video chia sẻ kinh nghiệm",
+      "source": {
+        "tab": "Khán giả",
+        "sheet_id": 546980374,
+        "column": "B",
+        "range": "'Khán giả'!B1:B6"
+      },
+      "raw_values": {
+        "demographics_raw": "Tuổi: 35-50, Giới tính: Nam, Sở hữu ô tô và garage quy mô vừa. ",
+        "pain_points": "Cập nhật kiến thức liên tục, Khó khăn trong tìm kiếm thông tin, Áp lực chi phí cho garage, đổi mới để cạnh tranh với garage khác. "
+      }
+    },
+    {
+      "id": "technician",
+      "name": "Thợ sửa chữa ô tô",
+      "label": "Thợ sửa chữa ô tô",
+      "priority": "standard",
+      "demographics": {
+        "raw": "Tuổi: 20-45, Giới tính: Nam, kỹ thuật viên chuyên ngành",
+        "age_range": "20-45",
+        "gender": "Nam",
+        "description": "kỹ thuật viên chuyên ngành"
+      },
+      "interests": "Liên quan đến ô tô, công nghệ mới, chia sẻ kinh nghiệm, giải trí",
+      "pain_points": "Cập nhật kiến thức, tìm kiếm thông tin , xử lý sự cố phức tạp",
+      "online_behavior": "Tìm kiếm thông tin sửa chữa, tham gia cộng đồng, theo dõi klênh youtube",
+      "preferred_content": "Đánh giá sản phẩm, hướng dẫn sửa chữa, so sánh công nghệ, chia sẻ kinh nghiệm",
+      "source": {
+        "tab": "Khán giả",
+        "sheet_id": 546980374,
+        "column": "C",
+        "range": "'Khán giả'!C1:C6"
+      }
+    },
+    {
+      "id": "automotive-student",
+      "name": "Sinh viên chuyên ngành",
+      "label": "Sinh viên chuyên ngành",
+      "priority": "standard",
+      "demographics": {
+        "raw": "Tuổi: 18-22, Giới tính: Nam, Sinh viên học về ô tô",
+        "age_range": "18-22",
+        "gender": "Nam",
+        "description": "Sinh viên học về ô tô"
+      },
+      "interests": "Nghiên cứu kiến thức chuyên sâu, công nghệ mới",
+      "pain_points": "Cập nhật kiến thức mới, tìm kiếm thông tin hữu ích, trải nghiệm thực tế tại Garage hoặc thực nghiệm với xe",
+      "online_behavior": "Tìm kiếm thông tin học tập, tham gia cộng đồng, theo dõi nhiều kênh chia sẻ kiến thức",
+      "preferred_content": "Kinh nghiệm thực chiến, kiến thức chuyên sâu,",
+      "source": {
+        "tab": "Khán giả",
+        "sheet_id": 546980374,
+        "column": "D",
+        "range": "'Khán giả'!D1:D6"
+      },
+      "raw_values": {
+        "preferred_content": "Kinh nghiệm thực chiến, kiến thức chuyên sâu, "
+      }
+    },
+    {
+      "id": "car-owner",
+      "name": "Chủ xe ô tô",
+      "label": "Chủ xe ô tô (ít)",
+      "priority": "low",
+      "demographics": {
+        "raw": "Tuổi: 24-50, Giới tính: Nam, Sở hữu ô tô cá nhân",
+        "age_range": "24-50",
+        "gender": "Nam",
+        "description": "Sở hữu ô tô cá nhân"
+      },
+      "interests": "Ô tô, tự tay làm (DIY)",
+      "pain_points": "Tìm kiếm thông tin hữu ích, lỗi vặt cơ bản của xe hơi",
+      "online_behavior": "Tìm kiếm thông tin, follow các kênh về xe trên nhiều nền tảng mạng xã hội",
+      "preferred_content": "Review xe, các tính năng đặc biệt, sửa chữa cơ bản các lỗi vặt hay gặp, kinh nghiệm sử dụng xe hơi",
+      "source": {
+        "tab": "Khán giả",
+        "sheet_id": 546980374,
+        "column": "E",
+        "range": "'Khán giả'!E1:E6"
+      },
+      "priority_basis": "Label suffix '(ít)' (= few/less) in the sheet.",
+      "raw_values": {
+        "preferred_content": "  Review xe, các tính năng đặc biệt, sửa chữa cơ bản các lỗi vặt hay gặp, kinh nghiệm sử dụng xe hơi"
+      }
+    }
+  ]
+}

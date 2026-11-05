@@ -1,0 +1,3 @@
+# Runtime and CI dependencies (everything else is the Python standard library).
+PyYAML>=6.0
+jsonschema>=4.18

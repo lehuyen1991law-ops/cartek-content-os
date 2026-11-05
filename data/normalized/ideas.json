@@ -1,0 +1,442 @@
+{
+  "kind": "ideas",
+  "normalized_format": 1,
+  "generated_by": "scripts/import_sheet.py",
+  "inputs": [
+    {
+      "tab": "Content Direction",
+      "snapshot": "data/source/02-content-direction.json",
+      "captured_at": "2026-11-05T06:10:44Z",
+      "content_sha256": "f5cc0d0760ee7b9c6b6644eb695ce79e9d7b3fa310de8e929583e3334904f074"
+    },
+    {
+      "tab": "Short",
+      "snapshot": "data/source/03-short.json",
+      "captured_at": "2026-11-05T06:10:44Z",
+      "content_sha256": "e46051331645fd982d95b6ab0b4a962b46ef33545da36ea12915717f18306672"
+    }
+  ],
+  "records": [
+    {
+      "id": "CTK-L-0001",
+      "format": "long-form",
+      "group": "P1",
+      "group_name": "Hướng dẫn sử dụng thiết bị OBD2 (Cartek 2)",
+      "title": "Cách kết nối Cartek 2 với các dòng xe phổ biến tại Việt Nam",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Content Direction",
+        "sheet_id": 991115479,
+        "ref": "'Content Direction'!D6",
+        "row": 6,
+        "column": "D"
+      }
+    },
+    {
+      "id": "CTK-L-0002",
+      "format": "long-form",
+      "group": "P1",
+      "group_name": "Hướng dẫn sử dụng thiết bị OBD2 (Cartek 2)",
+      "title": "Đọc và hiểu các mã lỗi OBD2 trên cartek 2",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Content Direction",
+        "sheet_id": 991115479,
+        "ref": "'Content Direction'!E6",
+        "row": 6,
+        "column": "E"
+      }
+    },
+    {
+      "id": "CTK-L-0003",
+      "format": "long-form",
+      "group": "P1",
+      "group_name": "Hướng dẫn sử dụng thiết bị OBD2 (Cartek 2)",
+      "title": "Xóa mã lỗi và reset hệ thống",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Content Direction",
+        "sheet_id": 991115479,
+        "ref": "'Content Direction'!F6",
+        "row": 6,
+        "column": "F"
+      }
+    },
+    {
+      "id": "CTK-L-0004",
+      "format": "long-form",
+      "group": "P1",
+      "group_name": "Hướng dẫn sử dụng thiết bị OBD2 (Cartek 2)",
+      "title": "Sử dụng các tính năng nâng cao của Cartek 2",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Content Direction",
+        "sheet_id": 991115479,
+        "ref": "'Content Direction'!G6",
+        "row": 6,
+        "column": "G"
+      }
+    },
+    {
+      "id": "CTK-L-0005",
+      "format": "long-form",
+      "group": "P2",
+      "group_name": "Giải thích, chia sẻ kiến thức các hệ thống trên ô tô",
+      "title": "Mẹo Bảo Dưỡng Định Kỳ Để Kéo Dài Tuổi Thọ Xe Hơi",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Content Direction",
+        "sheet_id": 991115479,
+        "ref": "'Content Direction'!D8",
+        "row": 8,
+        "column": "D"
+      }
+    },
+    {
+      "id": "CTK-L-0006",
+      "format": "long-form",
+      "group": "P2",
+      "group_name": "Giải thích, chia sẻ kiến thức các hệ thống trên ô tô",
+      "title": "Các kỹ năng sửa chữa cơ bản mà chủ xe có thể tự làm",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Content Direction",
+        "sheet_id": 991115479,
+        "ref": "'Content Direction'!E8",
+        "row": 8,
+        "column": "E"
+      }
+    },
+    {
+      "id": "CTK-L-0007",
+      "format": "long-form",
+      "group": "P2",
+      "group_name": "Giải thích, chia sẻ kiến thức các hệ thống trên ô tô",
+      "title": "Động cơ Diesel: Sức mạnh tiềm ẩn & Những điều cần biết",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Content Direction",
+        "sheet_id": 991115479,
+        "ref": "'Content Direction'!F8",
+        "row": 8,
+        "column": "F"
+      }
+    },
+    {
+      "id": "CTK-L-0008",
+      "format": "long-form",
+      "group": "P2",
+      "group_name": "Giải thích, chia sẻ kiến thức các hệ thống trên ô tô",
+      "title": "5 thiết bị Không Thể Thiếu Cho Gara Ô Tô Chuyên Nghiệp | Nâng Tầm Tay Nghề",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Content Direction",
+        "sheet_id": 991115479,
+        "ref": "'Content Direction'!G8",
+        "row": 8,
+        "column": "G"
+      }
+    },
+    {
+      "id": "CTK-L-0009",
+      "format": "long-form",
+      "group": "P3",
+      "group_name": "Các vấn đề lỗi xe thường gặp",
+      "title": "Phải làm gì khi đèn động cơ báo lỗi?",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Content Direction",
+        "sheet_id": 991115479,
+        "ref": "'Content Direction'!D10",
+        "row": 10,
+        "column": "D"
+      }
+    },
+    {
+      "id": "CTK-L-0010",
+      "format": "long-form",
+      "group": "P3",
+      "group_name": "Các vấn đề lỗi xe thường gặp",
+      "title": "Những điều cần làm khi xe không thể khởi động được",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Content Direction",
+        "sheet_id": 991115479,
+        "ref": "'Content Direction'!E10",
+        "row": 10,
+        "column": "E"
+      }
+    },
+    {
+      "id": "CTK-L-0011",
+      "format": "long-form",
+      "group": "P3",
+      "group_name": "Các vấn đề lỗi xe thường gặp",
+      "title": "Top 5 lỗi thường gặp trên ô tô và cách khắc phục hiệu quả",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Content Direction",
+        "sheet_id": 991115479,
+        "ref": "'Content Direction'!F10",
+        "row": 10,
+        "column": "F"
+      }
+    },
+    {
+      "id": "CTK-L-0012",
+      "format": "long-form",
+      "group": "P3",
+      "group_name": "Các vấn đề lỗi xe thường gặp",
+      "title": "Các lỗi Thường Gặp Trên Xe Đức: Mercedes, BMW",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Content Direction",
+        "sheet_id": 991115479,
+        "ref": "'Content Direction'!G10",
+        "row": 10,
+        "column": "G",
+        "raw": "Các lỗi Thường Gặp Trên Xe Đức: Mercedes, BMW "
+      }
+    },
+    {
+      "id": "CTK-L-0013",
+      "format": "long-form",
+      "group": "P4",
+      "group_name": "Kiến thức chuyên sâu về hệ thống OBD2",
+      "title": "OBD2: Hành Trình Khám Phá 'Cái Hộp Đen' Kỳ Diệu Trên Xe Của Bạn",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Content Direction",
+        "sheet_id": 991115479,
+        "ref": "'Content Direction'!D12",
+        "row": 12,
+        "column": "D"
+      }
+    },
+    {
+      "id": "CTK-L-0014",
+      "format": "long-form",
+      "group": "P4",
+      "group_name": "Kiến thức chuyên sâu về hệ thống OBD2",
+      "title": "Cắt nghĩa các mã lỗi P_B_C_U trong hệ thống OBD-II trên xe",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Content Direction",
+        "sheet_id": 991115479,
+        "ref": "'Content Direction'!E12",
+        "row": 12,
+        "column": "E"
+      }
+    },
+    {
+      "id": "CTK-L-0015",
+      "format": "long-form",
+      "group": "P4",
+      "group_name": "Kiến thức chuyên sâu về hệ thống OBD2",
+      "title": "Lỗi P0300 - Ác Mộng của Mọi Động Cơ?",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Content Direction",
+        "sheet_id": 991115479,
+        "ref": "'Content Direction'!F12",
+        "row": 12,
+        "column": "F"
+      }
+    },
+    {
+      "id": "CTK-L-0016",
+      "format": "long-form",
+      "group": "P4",
+      "group_name": "Kiến thức chuyên sâu về hệ thống OBD2",
+      "title": "OBD2 & Cá Nhân Hóa Trải Nghiệm Lái Xe: Điều Chỉnh & Tối Ưu Theo Phong Cách Riêng",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Content Direction",
+        "sheet_id": 991115479,
+        "ref": "'Content Direction'!G12",
+        "row": 12,
+        "column": "G"
+      }
+    },
+    {
+      "id": "CTK-S-0001",
+      "format": "short",
+      "group": "S1",
+      "group_name": "Mẹo nhanh và thủ thuật",
+      "title": "3 Lỗi OBD2 thường gặp và cách khắc phục nhanh chóng",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Short",
+        "sheet_id": 1717813101,
+        "ref": "'Short'!D5",
+        "row": 5,
+        "column": "D"
+      }
+    },
+    {
+      "id": "CTK-S-0002",
+      "format": "short",
+      "group": "S1",
+      "group_name": "Mẹo nhanh và thủ thuật",
+      "title": "Reset đèn check engine trong 2 phút",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Short",
+        "sheet_id": 1717813101,
+        "ref": "'Short'!E5",
+        "row": 5,
+        "column": "E"
+      }
+    },
+    {
+      "id": "CTK-S-0003",
+      "format": "short",
+      "group": "S1",
+      "group_name": "Mẹo nhanh và thủ thuật",
+      "title": "3 Mẹo đọc hiểu dữ liệu OBD2 mà ai cũng cần biết",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Short",
+        "sheet_id": 1717813101,
+        "ref": "'Short'!F5",
+        "row": 5,
+        "column": "F"
+      }
+    },
+    {
+      "id": "CTK-S-0004",
+      "format": "short",
+      "group": "S2",
+      "group_name": "Giới thiệu sản phẩm/ thiết bị",
+      "title": "Thiết bị đọc OBD2 nào phù hợp với bạn?",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Short",
+        "sheet_id": 1717813101,
+        "ref": "'Short'!D7",
+        "row": 7,
+        "column": "D"
+      }
+    },
+    {
+      "id": "CTK-S-0005",
+      "format": "short",
+      "group": "S2",
+      "group_name": "Giới thiệu sản phẩm/ thiết bị",
+      "title": "Top 3 phụ kiện OBD2 không thể thiếu cho xe hơi",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Short",
+        "sheet_id": 1717813101,
+        "ref": "'Short'!E7",
+        "row": 7,
+        "column": "E"
+      }
+    },
+    {
+      "id": "CTK-S-0006",
+      "format": "short",
+      "group": "S2",
+      "group_name": "Giới thiệu sản phẩm/ thiết bị",
+      "title": "Top những phụ kiện OBD2 giúp tiết kiệm nhiên liệu",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Short",
+        "sheet_id": 1717813101,
+        "ref": "'Short'!F7",
+        "row": 7,
+        "column": "F"
+      }
+    },
+    {
+      "id": "CTK-S-0007",
+      "format": "short",
+      "group": "S3",
+      "group_name": "Hướng dẫn sửa chữa đơn giản",
+      "title": "Cách thay bugi nhanh chóng tại nhà",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Short",
+        "sheet_id": 1717813101,
+        "ref": "'Short'!D9",
+        "row": 9,
+        "column": "D"
+      }
+    },
+    {
+      "id": "CTK-S-0008",
+      "format": "short",
+      "group": "S3",
+      "group_name": "Hướng dẫn sửa chữa đơn giản",
+      "title": "Cách thay lọc gió động cơ trong 5 phút",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Short",
+        "sheet_id": 1717813101,
+        "ref": "'Short'!E9",
+        "row": 9,
+        "column": "E"
+      }
+    },
+    {
+      "id": "CTK-S-0009",
+      "format": "short",
+      "group": "S3",
+      "group_name": "Hướng dẫn sửa chữa đơn giản",
+      "title": "Top những lý do khiến xe bị ì máy",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Short",
+        "sheet_id": 1717813101,
+        "ref": "'Short'!F9",
+        "row": 9,
+        "column": "F"
+      }
+    },
+    {
+      "id": "CTK-S-0010",
+      "format": "short",
+      "group": "S4",
+      "group_name": "Giải đáp thắc mắc thường gặp",
+      "title": "Đèn Check Engine sáng có phải là vấn đề nghiêm trọng?",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Short",
+        "sheet_id": 1717813101,
+        "ref": "'Short'!D11",
+        "row": 11,
+        "column": "D"
+      }
+    },
+    {
+      "id": "CTK-S-0011",
+      "format": "short",
+      "group": "S4",
+      "group_name": "Giải đáp thắc mắc thường gặp",
+      "title": "Các loại bảo dưỡng định kỳ cần thiết cho xe là gì?",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Short",
+        "sheet_id": 1717813101,
+        "ref": "'Short'!E11",
+        "row": 11,
+        "column": "E"
+      }
+    },
+    {
+      "id": "CTK-S-0012",
+      "format": "short",
+      "group": "S4",
+      "group_name": "Giải đáp thắc mắc thường gặp",
+      "title": "Bao nhiêu lâu nên thay dầu nhớt cho xe?",
+      "record_type": "planning-idea",
+      "source": {
+        "tab": "Short",
+        "sheet_id": 1717813101,
+        "ref": "'Short'!F11",
+        "row": 11,
+        "column": "F"
+      }
+    }
+  ]
+}

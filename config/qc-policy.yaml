@@ -1,0 +1,116 @@
+# Quality-control policy for gates G1-G8 (scripts/qc_content.py).
+# Text patterns are matched against a lower-cased, accent-stripped copy of the text
+# ("Xóa lỗi" -> "xoa loi"), so write them WITHOUT Vietnamese accents.
+# Text inside HTML comments (<!-- ... -->) is ignored: template guidance lives there.
+
+gates:
+  G1: "Source data and metadata validation"
+  G2: "Audience and topic relevance"
+  G3: "Research completeness and factual accuracy"
+  G4: "Script coherence, clarity and retention quality"
+  G5: "Automotive technical and safety review"
+  G6: "SEO package completeness"
+  G7: "Production handoff readiness"
+  G8: "Publishing metadata validation"
+
+# --- Approval rules (who must sign off on the CURRENT content fingerprint) ---------
+approval:
+  # Independent judgment reviews required in addition to the automated run.
+  judgment_reviews:
+    - role: qc
+      gates: [G2, G4, G6, G7]
+      reviewer_types: [agent, human]
+    - role: technical
+      gates: [G3, G5]
+      reviewer_types: [agent, human]
+  # When must the technical review be done by a qualified HUMAN?
+  #   safety_flagged = only when safety.flags is not empty (minimum required by the brief)
+  #   always         = every item (recommended once a technical reviewer is assigned)
+  human_technical_review: safety_flagged
+  # A human editor must record an editorial PASS before approval (publishing is public).
+  require_human_final_signoff: true
+
+# --- G2 ------------------------------------------------------------------------------
+brief_required_sections: ["Audience", "Problem", "Takeaway", "Angle", "Scope", "Risks"]
+
+# --- G3 ------------------------------------------------------------------------------
+min_claims: 1
+# A VERIFIED claim needs at least one source of an accepted type for its category.
+claim_source_requirements:
+  obd-standard: [standard, regulation, textbook, oem-service-information, manufacturer-documentation]
+  dtc-definition: [standard, oem-service-information, textbook, manufacturer-documentation]
+  manufacturer-specific: [oem-service-information, oem-tsb, manufacturer-documentation, hands-on-test]
+  vehicle-specific: [oem-service-information, oem-tsb, hands-on-test]
+  diagnostic-procedure: [oem-service-information, oem-tsb, standard, textbook, hands-on-test, manufacturer-documentation]
+  cartek-feature: [cartek-product-documentation, hands-on-test]
+  safety: [oem-service-information, regulation, standard, textbook, manufacturer-documentation]
+  general-knowledge: [standard, regulation, oem-service-information, oem-tsb, textbook, trade-publication, manufacturer-documentation, expert-interview, hands-on-test]
+  market-news: [news, trade-publication, regulation, manufacturer-documentation, cartek-product-documentation]
+research_required_sections: ["Research question", "Findings", "Standard vs manufacturer-specific", "Open questions"]
+
+# --- G4 ------------------------------------------------------------------------------
+min_hook_candidates: 3
+min_outline_items: {long-form: 3, short: 2}
+min_segments: {long-form: 4, short: 2}
+brand_tagline: "Cartek - Check your car"
+
+# --- G5 ------------------------------------------------------------------------------
+# Wording that implies clearing a code repairs the vehicle: always FAIL.
+banned_patterns:
+  - pattern: 'xoa (ma )?loi (la|thi|de|cho) (xong|het|sua|khac phuc|het benh|khoi)'
+    reason: "Implies clearing a fault code repairs the fault."
+  - pattern: '(tat|reset) den (check engine|bao loi|dong co) (la|thi|de) (xong|het|sua|khac phuc|khoi)'
+    reason: "Implies turning off the warning lamp repairs the fault."
+  - pattern: 'clear(ing)? (the )?(code|codes|dtc|dtcs) (fix|fixes|repair|repairs|solve|solves)'
+    reason: "Implies clearing a fault code repairs the fault."
+# A banned phrase inside a sentence that also contains one of these markers is treated as
+# myth-debunking ("Nhiều người tưởng xóa lỗi là xong, nhưng...") and reported for review instead.
+# Kept specific on purpose: a bare "không" is too common and would let banned wording through.
+debunk_markers: ['khong phai', 'khong dung', '\bla sai\b', 'sai lam', 'lam tuong', 'tuong rang', 'nguoi tuong', 'nghi rang', 'hieu lam', 'chua chac', '\bmyth\b']
+# Wording a reviewer must look at (reported as warnings, never auto-passed silently).
+review_patterns:
+  - pattern: '100 ?%'
+    reason: "Absolute certainty claim."
+  - pattern: '\b(chac chan|dam bao|tuyet doi|vinh vien)\b'
+    reason: "Guarantee wording; confirm it is supported."
+  - pattern: '\b(tat ca|moi) (cac )?(dong |loai |hang )?xe\b'
+    reason: "Possible all-vehicle compatibility claim."
+  - pattern: 'khong can (den |ra )?(tho|garage|gara)'
+    reason: "Tells viewers they do not need a professional; check safety."
+# Mentioning code clearing requires a caveat that it does not fix the cause.
+clear_codes_mentions: ['xoa (ma )?loi', 'clear (code|dtc)', 'reset (den|loi)']
+clear_codes_caveat_markers:
+  - 'khong (sua|khac phuc|giai quyet)'
+  - '(loi|den) (se )?(sang|bao|xuat hien) lai'
+  - 'nguyen nhan (van|con|goc)'
+  - 'does not (fix|repair)'
+# DTC codes in the script must appear in the claim register.
+dtc_pattern: '\b[PBCU][0-3][0-9A-F]{3}\b'
+# Manufacturer-controlled DTC ranges (SAE J2012 / ISO 15031-6; verify against the standard).
+manufacturer_specific_dtc_patterns: ['^P1', '^P3[0-3]', '^[BCU][12]']
+# Terms that suggest a hazardous topic. Detected topics must be flagged
+# (safety.flags -> qualified human review) or dismissed with a rationale.
+safety_terms:
+  high-voltage: ['cao ap', 'dien ap cao', 'high voltage', '\bxe dien\b', 'hybrid', '\bpin (xe|cao ap)\b']
+  brakes: ['\bphanh\b', '\babs\b', '\bepb\b', 'ma phanh']
+  steering: ['vo lang', 'tro luc lai', '\beps\b', 'goc lai', 'thuoc lai']
+  airbag-srs: ['tui khi', '\bsrs\b', 'airbag', 'cang dai']
+  fuel-system: ['ap suat nhien lieu', '(ong|duong) (xang|dau|nhien lieu)', 'bom (xang|nhien lieu)', 'xa ap', 'thao kim phun', 'ro ri (xang|nhien lieu)']
+  lifting: ['kich xe', 'con doi', 'cau nang', 'nang xe', 'chui (vao )?gam']
+  battery-12v: ['ac quy', 'cau binh', 'thao cuc']
+  hot-or-moving-parts: ['nuoc lam mat nong', 'nap ket nuoc', 'quat (ket nuoc|lam mat)', 'day curoa']
+  adas: ['\badas\b', 'radar', 'can chinh camera']
+
+# --- G6 ------------------------------------------------------------------------------
+min_title_candidates: 3
+min_tags: 3
+min_thumbnail_concepts: {long-form: 2, short: 1}
+seo_required_sections: ["Search intent", "Keyword notes", "Title rationale", "Publishing checklist"]
+# Promises about performance that cannot be backed by evidence: FAIL.
+performance_claim_patterns:
+  - '\bctr\b'
+  - '(len|lot|vao) top'
+  - 'trieu (view|luot xem)'
+  - '\bviral\b'
+  - 'top 1\b'
+  - 'chac chan (duoc )?(de xuat|len xu huong)'

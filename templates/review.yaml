@@ -1,0 +1,18 @@
+# Judgment review record. Copy, fill in, then record it with:
+#   python3 scripts/qc_content.py review <ID> --file <this-file>
+# The script stamps the date, the review ID and the current content fingerprint.
+# A review only counts toward approval while the content is unchanged.
+
+reviewer: ""            # name, or "content-qc-inspector (agent)" / "technical-fact-checker (agent)"
+reviewer_type: agent    # agent | human
+role: qc                # qc (G2, G4, G6, G7) | technical (G3, G5) | editorial (final human sign-off)
+qualified: false        # human technical reviewers: true if qualified for the flagged safety topics
+gates:
+  # One entry per gate you evaluated. result: PASS | FAIL | BLOCKED.
+  # Evidence must quote or point to the exact file/segment/claim you checked.
+  G2:
+    result: BLOCKED
+    evidence: ""
+    corrections: []
+decision: BLOCKED       # editorial role: PASS | FAIL | BLOCKED; other roles: summary of the gates
+notes: ""

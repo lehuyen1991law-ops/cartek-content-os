@@ -1,0 +1,26 @@
+# Cartek 2 feature register: the ONLY place content may take Cartek 2 capabilities from.
+#
+# Status of this register on 2026-11-05: EMPTY. The source spreadsheet names the product
+# ("Cartek 2") but documents none of its functions, supported protocols, vehicle coverage
+# or software versions. Until the product team fills this in, every content claim of
+# category "cartek-feature" is BLOCKED by QC gate G3.
+#
+# How to add a feature (owner: Cartek product team; process: strategy/product-facts.md):
+#   - id: F001
+#     name: "Đọc mã lỗi OBD-II (Service $03)"        # short name as used on screen
+#     description: "What it does, in one or two sentences."
+#     status: verified          # verified | unverified | unsupported
+#     standard_or_oem: obd-standard   # obd-standard | manufacturer-specific
+#     evidence:
+#       type: cartek-product-documentation   # or hands-on-test
+#       reference: "Manual v1.2 p.14" / "Test log 2026-11-20, Toyota Vios 2018"
+#       date: "2026-11-20"
+#       confirmed_by: "Name, role"
+#     firmware_or_app_version: "x.y.z"
+#     vehicles_tested: []       # e.g. ["Toyota Vios 2018 1.5 AT"]
+#     limitations: ""           # known unsupported makes/models/functions
+
+register_format: 1
+product: "Cartek 2"
+last_reviewed: "2026-11-05"
+features: []

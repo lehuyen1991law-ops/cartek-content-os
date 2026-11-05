@@ -1,0 +1,99 @@
+# Annotated reference for content/<format>/<ID>-<slug>/item.yaml.
+# scripts/new_content.py builds item.yaml from this file (comments are not copied).
+# Schema: schemas/content.schema.json. Workflow: workflows/idea-to-publish.md.
+# Text values are Vietnamese unless noted. Dates are "YYYY-MM-DD" strings.
+
+schema_version: 1
+id: CTK-L-0000                # permanent ID from data/id-registry.json
+format: long-form             # long-form | short
+test_item: false              # true only for test items (IDs CTK-?-9001..9999)
+working_title: ""             # tiêu đề làm việc (not the final YouTube title)
+language: vi
+pillar: P1                    # long-form: P1..P5, short: S1..S4 (data/normalized/taxonomy.json)
+video_type: explainer         # config/taxonomy.yaml -> video_types
+audience:
+  primary: technician         # garage-owner | technician | automotive-student | car-owner
+  secondary: []
+  technical_depth: intermediate   # basic | intermediate | advanced
+search_intent: informational  # config/taxonomy.yaml -> search_intents
+keywords:
+  primary: ""
+  secondary: []
+vehicle:
+  scope: generic              # generic = any OBD-II vehicle; specific = named make/model
+  brands: []                  # e.g. [TOYOTA]
+  models: []                  # e.g. [Vios]
+  model_years: ""             # e.g. "2014-2018"
+  engines: []                 # e.g. ["2.0 AT"]
+  powertrains: []             # gasoline | diesel | hybrid | phev | bev
+  systems: []                 # e.g. [engine, ignition, fuel]
+problem: ""                   # vấn đề người xem gặp phải (one sentence)
+takeaway: ""                  # điều người xem làm được/hiểu được sau video (one sentence)
+owner: ""                     # Người phụ trách
+target_publish_date: null     # "YYYY-MM-DD"
+status:
+  stage: IDEA                 # config/workflow.yaml -> stages
+  on_hold: false              # "Đã tạm dừng" in the sheet
+  hold_reason: ""
+safety:
+  flags: []                   # config/taxonomy.yaml -> safety_flags; any flag requires qualified human review
+  dismissed: []               # [{flag: fuel-system, rationale: "..."}] detected terms judged non-hazardous
+sources: []
+  # - id: SRC01
+  #   title: "SAE J1979 ..."
+  #   publisher: "SAE International"
+  #   type: standard          # config/taxonomy.yaml -> source_types
+  #   url: "https://..."      # or citation: "..." for offline sources
+  #   accessed: "2026-11-05"
+  #   notes: ""
+claims: []
+  # - id: C01
+  #   text: "P0300 = Random/Multiple Cylinder Misfire Detected"
+  #   category: dtc-definition   # config/taxonomy.yaml -> claim_categories
+  #   sources: [SRC01]
+  #   status: unverified         # unverified | verified | disputed | removed
+  #   feature_id: null           # required for category cartek-feature
+  #   verified_by: ""
+  #   verified_on: null
+  #   notes: ""
+seo:
+  title_candidates: []
+  recommended_title: ""
+  title_rationale: ""
+  description: ""
+  tags: []
+  hashtags: []
+  chapters: []                # long-form: [{time: "00:00", title: "..."}]
+  thumbnail_concepts: []      # [{concept: "...", on_image_text: "..."}]
+  related_content: []         # content IDs, e.g. [CTK-L-0002]
+  pinned_comment: ""
+production:
+  assets_required: []         # [{item: "Cartek 2", type: tool, status: needed, notes: ""}]
+  demo_setup: null            # {tool: "Cartek 2", tool_version: "", vehicle: "...", location: ""}
+  footage_links: []           # links to raw footage storage (never commit video files)
+  runtime_exception: null     # {min_seconds: 0, max_seconds: 600, rationale: "..."}
+publication:
+  visibility_plan: ""         # public | unlisted | scheduled | private
+  published_at: null          # set by scripts/set_status.py --stage PUBLISHED
+  url: null
+  playlist: ""
+  sheet_row: ""               # e.g. "'Video Publish'!A12" once tracked in the sheet
+  upload_checklist:           # done in YouTube Studio; not part of the reviewed content
+    - {item: "Uploaded video is the approved cut (matches script.md segments)", done: false}
+    - {item: "Title, description with chapters, tags pasted from exports/production-package.json", done: false}
+    - {item: "Thumbnail uploaded", done: false}
+    - {item: "End screen and cards point to related Cartek content", done: false}
+    - {item: "Vietnamese captions checked against the final voice-over", done: false}
+    - {item: "Visibility or schedule set as planned", done: false}
+    - {item: "Pinned comment posted", done: false}
+provenance:
+  origin: manual              # sheet-idea | sheet-tracker | manual | test
+  source_record: null         # e.g. CTK-L-0015 (data/normalized/ideas.json)
+  source_ref: null            # e.g. "'Content Direction'!F12"
+  source_title: null          # upstream title when the workspace was created
+  source_sha256: null
+  created: null
+history: []                   # [{version, date, stage, by, note}] written by scripts
+reviews: []                   # append-only QC decisions written by scripts/qc_content.py
+corrections: []               # after publishing: [{date, description, action, by}] (pinned comment, description note)
+internal_notes: ""
