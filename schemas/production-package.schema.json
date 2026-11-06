@@ -21,6 +21,7 @@
     "voiceover",
     "shot_list",
     "storyboard_shots",
+    "visual_style",
     "on_screen_text",
     "broll_and_animation",
     "assets",
@@ -308,6 +309,197 @@
         "type": "object",
         "additionalProperties": {
           "type": "string"
+        }
+      }
+    },
+    "visual_style": {
+      "type": "object",
+      "description": "Typography, effects and caption rules for the edit, resolved from config/visual-style.yaml (a repository default, not a sheet value) and the storyboard's 'Effects' and 'Text style' columns. Library values are copied at export time; re-export after a library change.",
+      "additionalProperties": false,
+      "required": [
+        "source",
+        "guide",
+        "status",
+        "fonts",
+        "typography_roles_used",
+        "effects_used",
+        "unknown_effects",
+        "unknown_text_styles",
+        "text_rules",
+        "sound_rules",
+        "caption_rules"
+      ],
+      "properties": {
+        "source": {
+          "type": "string"
+        },
+        "guide": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "fonts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "name",
+              "role",
+              "licence",
+              "source",
+              "vietnamese_coverage",
+              "used_by_storyboard"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "role": {
+                "type": "string"
+              },
+              "licence": {
+                "type": "string"
+              },
+              "source": {
+                "type": "string"
+              },
+              "vietnamese_coverage": {
+                "type": "string"
+              },
+              "used_by_storyboard": {
+                "type": "boolean"
+              }
+            }
+          }
+        },
+        "typography_roles_used": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "font",
+              "shots"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "font": {
+                "type": "string"
+              },
+              "weight": {
+                "type": ["integer", "null"]
+              },
+              "size_px_1080p": {
+                "type": ["integer", "null"]
+              },
+              "colour": {
+                "type": "string"
+              },
+              "max_lines": {
+                "type": ["integer", "null"]
+              },
+              "max_chars_per_line": {
+                "type": ["integer", "null"]
+              },
+              "shots": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "effects_used": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "kind",
+              "description",
+              "shots"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "kind": {
+                "enum": [
+                  "sfx",
+                  "vfx",
+                  "transition",
+                  "lower-third"
+                ]
+              },
+              "description": {
+                "type": "string"
+              },
+              "never_use": {
+                "type": "string"
+              },
+              "shots": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "unknown_effects": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "unknown_text_styles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "text_rules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "sound_rules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "caption_rules": {
+          "type": "object",
+          "required": [
+            "mandatory",
+            "delivery",
+            "rules"
+          ],
+          "properties": {
+            "mandatory": {
+              "type": "boolean"
+            },
+            "delivery": {
+              "type": "string"
+            },
+            "rules": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
         }
       }
     },

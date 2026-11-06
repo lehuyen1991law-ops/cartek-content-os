@@ -66,7 +66,7 @@ The persona column holds the repository's starting defaults (`config/taxonomy.ya
    python3 scripts/qc_content.py run <ID>
    ```
 5. Shorts SEO (`item.yaml` `seo:`): at least 3 title candidates and a recommended title of at most 100 characters; a short description that states the takeaway; at least 3 tags; optional `hashtags` (each written as `#word`); at least 1 thumbnail concept. Shorts do not use chapters. Follow [youtube-seo-specialist](../youtube-seo-specialist/SKILL.md) for evidence and wording rules.
-6. Storyboard is optional for Shorts (G7 does not require it); write one when the Short has a demo.
+6. Storyboard is optional for Shorts (G7 does not require it); write one when the Short has a demo, using the effect IDs and typography roles of [config/visual-style.yaml](../../config/visual-style.yaml) ([strategy/visual-identity.md](../../strategy/visual-identity.md); text sizes scale to the 9:16 frame). "Logo Cartek" in the CTA visual is allowed without a claim; a Cartek 2 capability is not.
 
 ## Cutting a Short from a long-form item
 

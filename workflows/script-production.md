@@ -154,7 +154,7 @@ Write them where they happen and list them under `## Retention notes`.
 - No `[TODO]` markers (else BLOCKED).
 - At least 3 hook candidates; selected hook and rationale; outline of at least 3 items (long-form) or 2 (Shorts) (else FAIL).
 - At least 4 segments (long-form) or 2 (Shorts); each with a valid `TYPE`, a `VO` (unless a silent demo), a `VISUAL`, and a numeric `DEMO-SECONDS` (else FAIL).
-- First segment `hook`, last segment `cta`, CTA contains the brand line (else FAIL).
+- First segment `hook`, last segment `cta`, CTA contains the brand line (else FAIL). "Logo Cartek" or the Cartek end screen in the CTA's `VISUAL:` is fine for G5; a Cartek 2 capability statement there still needs a `cartek-feature` claim.
 - Estimated runtime inside the target or the recorded exception (else FAIL).
 - Hook longer than `hook_max_seconds`, or no retention notes: warnings.
 

@@ -12,14 +12,14 @@ This repository turns the planning spreadsheet **"Cartek: Youtube Release"** int
 | Path | Purpose |
 |---|---|
 | [CLAUDE.md](CLAUDE.md) | Operating guide for Claude Code and other agents |
-| [strategy/](strategy/) | Positioning, pillars, personas, competitors, editorial rules, brand voice, product facts |
+| [strategy/](strategy/) | Positioning, pillars, personas, competitors, editorial rules, brand voice, visual identity, product facts |
 | [data/](data/README.md) | Raw sheet snapshots, normalized records, ID registry, import manifest, Cartek 2 feature register |
 | [content/](content/README.md) | One workspace per video: `item.yaml`, brief, research, script, SEO, storyboard, QC report, exports |
 | [templates/](templates/) | Starting files for every deliverable |
 | [workflows/](workflows/) | Step-by-step procedures from idea to post-publish analysis |
 | [skills/](skills/) | Seven Agent Skills (also linked from `.claude/skills/`) |
 | [schemas/](schemas/) | JSON Schemas: content record, production package, performance data, source data |
-| [config/](config/) | Workflow stages, QC policy, platform limits, taxonomy, production assumptions, sheet source |
+| [config/](config/) | Workflow stages, QC policy, platform limits, taxonomy, production assumptions, visual style library (fonts, effects, captions), sheet source |
 | [scripts/](scripts/) | Import, scaffolding, QC, export, board, validation (Python standard library + PyYAML + jsonschema) |
 | [reports/](reports/README.md) | Import report, content board, audit and acceptance reports |
 | [tests/](tests/) | Unit and integration tests (`unittest`) |
@@ -58,7 +58,7 @@ IDEA → RESEARCH → BRIEF → SCRIPT → TECHNICAL_REVIEW → SEO → PRODUCTI
 
 - Sheet statuses map onto these stages: `Mới` = IDEA, `Đang thực hiện` = any working stage, `Đã tạm dừng` = on hold, `Đã xuất bản` = PUBLISHED (only with a real date and link).
 - Eight QC gates (G1–G8) return PASS, FAIL or BLOCKED with evidence. Approval also needs independent reviews on the exact current content, a qualified human technical review for safety topics, and a human editorial sign-off.
-- Approved items export a machine-readable production package ([schemas/production-package.schema.json](schemas/production-package.schema.json)) for an external video system.
+- Approved items export a machine-readable production package ([schemas/production-package.schema.json](schemas/production-package.schema.json)) for an external video system, including a `visual_style` section (fonts, effects and typography roles used, caption rules) resolved from the storyboard and [config/visual-style.yaml](config/visual-style.yaml).
 
 ## Commands
 

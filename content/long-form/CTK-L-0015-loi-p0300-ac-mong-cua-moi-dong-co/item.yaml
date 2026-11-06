@@ -114,7 +114,7 @@ claims:
   verified_on: null
   notes: 'SRC01 (e)(3.1.1) the system shall monitor the engine for misfire; (e)(3.4.1)(A)-(B) pending code then confirmed code when the misfire percentage is exceeded again in following or similar-condition driving cycles; (d)(2.5.2) after codes are cleared, a permanent code is erased only when the monitor itself determines the malfunction is not present. The regulation describes detection, not repair: ''không sửa được'' is an inference the fact-checker must accept. Re-detection time varies; do not state a number.'
 - id: C06
-  text: Trên xe được chứng nhận theo quy định OBD II của California (xe EPA đời 2017 trở lên cũng áp dụng quy định này), khi ECU phát hiện mức bỏ máy có thể làm hỏng bộ xúc tác, đèn MIL nhấp nháy mỗi giây một lần trong lúc bỏ máy đang xảy ra; xe có chiến lược cắt nhiên liệu khi bỏ máy được phép chỉ sáng đèn liên tục thay vì nhấp nháy.
+  text: Trên xe được chứng nhận theo quy định OBD-II của California (xe EPA đời 2017 trở lên cũng áp dụng quy định này), khi ECU phát hiện mức bỏ máy có thể làm hỏng bộ xúc tác, đèn MIL nhấp nháy mỗi giây một lần trong lúc bỏ máy đang xảy ra; xe có chiến lược cắt nhiên liệu khi bỏ máy được phép chỉ sáng đèn liên tục thay vì nhấp nháy.
   category: obd-standard
   sources:
   - SRC01
@@ -144,14 +144,14 @@ claims:
   verified_on: null
   notes: 'No source read: needs OEM misfire diagnostic procedure or a textbook (SAE/OEM/textbook). The regulation does not list causes. Which groups are ''common'' is not claimed.'
 - id: C09
-  text: Với nhóm đánh lửa và nhiên liệu, kiểm tra theo quy trình của hãng cho xe cụ thể (ví dụ kiểm tra bô-bin/bugi, đo áp suất nhiên liệu, kiểm tra kim phun) trước khi kết luận và thay thế.
+  text: Với nhóm đánh lửa và nhiên liệu, kiểm tra theo quy trình của hãng cho xe cụ thể (ví dụ kiểm tra bô-bin/bugi, hoán đổi bô-bin giữa hai xi-lanh rồi chạy lại đúng điều kiện để xem bỏ máy có đi theo bô-bin không, đo áp suất nhiên liệu, kiểm tra kim phun) trước khi kết luận và thay thế.
   category: diagnostic-procedure
   sources: []
   status: unverified
   feature_id: null
   verified_by: ''
   verified_on: null
-  notes: 'No source read: needs OEM service information for test procedures and specifications. Do not quote pressure or resistance values: they are vehicle-specific.'
+  notes: 'No source read: needs OEM service information for test procedures and specifications. Do not quote pressure or resistance values: they are vehicle-specific. The coil-swap test is listed as one test, not as a "common" one: no source for its frequency.'
 - id: C10
   text: Với nhóm rò rỉ khí nạp, có thể xác nhận bằng thử khói (smoke test) kết hợp đọc fuel trim; với nhóm cơ khí, xác nhận bằng đo áp suất nén hoặc thử độ lọt khí (leak-down).
   category: diagnostic-procedure
@@ -162,7 +162,7 @@ claims:
   verified_on: null
   notes: 'No source read: needs OEM service information or a textbook for smoke test, fuel-trim interpretation, compression and leak-down procedures.'
 - id: C11
-  text: Quy định OBD II của California (13 CCR 1968.2) áp dụng cho xe du lịch, xe tải nhẹ và xe tải hạng trung từ đời 2004, và EPA yêu cầu xe đời 2017 trở lên tuân theo bản 2013 của quy định này; các quy định đó không mặc nhiên áp dụng cho xe bán tại Việt Nam, nên cần đối chiếu tài liệu của hãng cho đúng thị trường, đời xe và động cơ.
+  text: Quy định OBD-II của California (13 CCR 1968.2) áp dụng cho xe du lịch, xe tải nhẹ và xe tải hạng trung từ đời 2004, và EPA yêu cầu xe đời 2017 trở lên tuân theo bản 2013 của quy định này; các quy định đó không mặc nhiên áp dụng cho xe bán tại Việt Nam, nên cần đối chiếu tài liệu của hãng cho đúng thị trường, đời xe và động cơ.
   category: general-knowledge
   sources:
   - SRC01
@@ -173,7 +173,7 @@ claims:
   verified_on: null
   notes: 'SRC01 (b) Applicability; SRC02 introductory text and (a). The second half (Vietnam) is an inference: no Vietnamese OBD regulation was read. EPA scope is limited to vehicles certified under 40 CFR part 86 subpart S as read in SRC02.'
 - id: C12
-  text: Trên xe theo quy định OBD II của California (áp dụng dần cho đời 2010-2012 trở lên), mã lỗi permanent không xóa được bằng máy chẩn đoán hay bằng cách ngắt điện ECU; ECU chỉ tự xóa mã này khi chính nó xác định lỗi không còn.
+  text: Trên xe theo quy định OBD-II của California (áp dụng dần cho đời 2010-2012 trở lên), mã lỗi permanent không xóa được bằng máy chẩn đoán hay bằng cách ngắt điện ECU; ECU chỉ tự xóa mã này khi chính nó xác định lỗi không còn.
   category: obd-standard
   sources:
   - SRC01
@@ -182,6 +182,16 @@ claims:
   verified_by: ''
   verified_on: null
   notes: SRC01 (c) definition; (d)(2.2.5) storage phase-in 50/75/100% for MY2010/2011/2012; (g)(4.4.6)(B)-(C) stored in NVRAM, not erasable by any scan tool command or by disconnecting power; (d)(2.5.1)-(2.5.2) erasure conditions. Reprogramming exceptions in (g)(4.4.6)(D) not covered by this claim.
+- id: C13
+  text: 'Trên xe theo quy định OBD-II của California từ đời 2005, khi hơn 90% số lần bỏ máy dồn vào một xi-lanh, hãng được phép lưu mã của xi-lanh đó thay cho mã bỏ máy nhiều xi-lanh, nên cùng một tình trạng bỏ máy có thể hiện P0300 trên xe này và P0301 đến P0312 trên xe khác tùy chiến lược của hãng; quy định không đánh số xi-lanh, thứ tự xi-lanh theo tài liệu của hãng cho từng động cơ.'
+  category: obd-standard
+  sources:
+  - SRC01
+  status: unverified
+  feature_id: null
+  verified_by: ''
+  verified_on: null
+  notes: 'SRC01 (e)(3.1.2): the system shall identify the specific misfiring cylinder; (e)(3.1.3): a separate code for multiple-cylinder misfire, and on 2005+ vehicles the manufacturer may store the cylinder-specific code instead when more than 90% of misfires are in one cylinder. The code numbers themselves are C01/C02 (dtc-definition, still unsourced). "Thứ tự xi-lanh theo tài liệu của hãng" is an inference from the regulation not defining cylinder numbering; needs OEM service information to confirm.'
 seo:
   title_candidates: []
   recommended_title: ''
@@ -194,12 +204,68 @@ seo:
   related_content: []
   pinned_comment: ''
 production:
-  assets_required: []
-  demo_setup: null
+  assets_required:
+  - item: Máy chẩn đoán OBD2 đọc và hiển thị được freeze frame, danh sách mã pending/confirmed/permanent
+    type: tool
+    status: needed
+    notes: Thiết bị trung tính, không nêu tên trên hình (shot 1, 4, 10, 11, 14, 15, 20, 24, 25, 26, 27, 29). Không phải Cartek 2 (sổ tính năng đang trống).
+  - item: Xe thử có P0300 thật đang lưu trong ECU và freeze frame đọc được
+    type: vehicle
+    status: needed
+    notes: Chưa chốt hãng/đời xe (vehicle.scope generic). Xe phải có mã thật trước ngày quay; không dàn dựng số liệu. Mã permanent và đèn nháy chỉ quay nếu xe thật có (shot 29, 30).
+  - item: Đồng hồ đo áp suất nhiên liệu kèm bộ nối phù hợp xe thử
+    type: equipment
+    status: needed
+    notes: Shot 19; nối theo quy trình xả áp của hãng. Không quay rõ mặt số.
+  - item: Máy thử khói (smoke machine)
+    type: equipment
+    status: needed
+    notes: Shot 20.
+  - item: Đồng hồ đo áp suất nén
+    type: equipment
+    status: needed
+    notes: Shot 21; không quay rõ mặt số.
+  - item: Dụng cụ tháo và hoán đổi bô-bin, găng tay
+    type: equipment
+    status: needed
+    notes: Shot 18.
+  - item: Hộp bugi mới (chưa mở) làm đạo cụ cho cảnh "ba cái sai"
+    type: other
+    status: needed
+    notes: Shot 24; chỉ là đạo cụ, không lắp lên xe thử trong video.
+  - item: Bình chữa cháy trong tầm tay và trong khung hình khi đo áp suất nhiên liệu
+    type: equipment
+    status: needed
+    notes: Shot 19; safety flag fuel-system.
+  - item: Camera chính, đèn LED mềm, micro cài áo
+    type: equipment
+    status: needed
+    notes: Quay màn hình vuông góc, không lóa; thu tiếng thật của động cơ và máy chẩn đoán.
+  - item: Xưởng có chỗ nổ máy thông thoáng hoặc ống hút khí xả
+    type: location
+    status: needed
+    notes: Chưa chốt địa điểm.
+  - item: Người dẫn (kỹ thuật viên) và tên/chức danh đã xác nhận cho lower third
+    type: person
+    status: needed
+    notes: Shot 3.
+  - item: Đồ họa và lower third theo config/visual-style.yaml
+    type: graphic
+    status: needed
+    notes: Code-popup P0300/P0301-P0304, animation động cơ bốn xi-lanh, đồ họa bốn bước, danh sách dữ liệu bị xóa, sơ đồ cây bốn nhánh, ba thẻ "ba cái sai", bộ xúc tác và đèn check engine, lower third, băng cảnh báo an toàn, màn hình kết thúc.
+  - item: File phụ đề tiếng Việt làm từ lời thoại thu thật
+    type: other
+    status: needed
+    notes: Tải lên YouTube, không burned-in; đối chiếu với bản thu cuối (upload_checklist).
+  demo_setup:
+    tool: Máy chẩn đoán OBD2 đọc được freeze frame (thiết bị trung tính, không nêu tên trên hình; không phải Cartek 2 vì sổ tính năng đang trống)
+    tool_version: ''
+    vehicle: Xe thử có P0300 thật đang lưu trong ECU và freeze frame đọc được; chưa chốt hãng/đời xe (vehicle.scope generic). Số liệu đọc trên máy lúc quay, không dựng.
+    location: Xưởng có chỗ nổ máy thông thoáng, chưa chốt địa điểm; tránh xa quạt và dây curoa, bình chữa cháy sẵn khi đo áp suất nhiên liệu.
   footage_links: []
   runtime_exception: null
 publication:
-  visibility_plan: ''
+  visibility_plan: public
   published_at: null
   url: null
   playlist: ''

@@ -86,6 +86,21 @@ clear_codes_caveat_markers:
   - '(loi|den) (se )?(sang|bao|xuat hien) lai'
   - 'nguyen nhan (van|con|goc)'
   - 'does not (fix|repair)'
+# Naming Cartek in a segment (VO, ON-SCREEN, SAFETY, VISUAL) needs a cartek-feature claim, except
+# the brand line (brand_tagline) and these brand marks: a logo, the brand name as a channel/brand
+# and the end screen are not capability statements. Patterns are matched on normalized text, one
+# clause at a time (clauses end at . ; ! ? , or a line break; a colon does NOT end a clause).
+# "(?! 2)" keeps "logo cartek 2 ..." (the product) subject to the rule. A mark is exempt only when
+# the clause ends right after it or continues with one of brand_mark_followers (placement words):
+# "Logo Cartek; màn hình kết thúc Cartek với video liên quan" passes, "Thương hiệu Cartek chẩn
+# đoán được mọi xe" and "Logo Cartek: đọc freeze frame mọi xe" still FAIL.
+brand_mark_mentions:
+  - '\blogo cartek\b(?! 2)'
+  - '\bcartek logo\b'
+  - '\b(thuong hieu|nhan hieu|kenh|dong chu) cartek\b(?! 2)'
+  - '\bman hinh ket thuc cartek\b(?! 2)'
+  - '\bend screen cartek\b(?! 2)'
+brand_mark_followers: ['voi', 'va', 'ben', 'kem', 'cung', 'o', 'tren', 'duoi', 'goc', 'phia', 'nam', 'hien', 'xuat hien', 'mo dan', 'nho']
 # DTC codes in the script must appear in the claim register.
 dtc_pattern: '\b[PBCU][0-3][0-9A-F]{3}\b'
 # Manufacturer-controlled DTC ranges (SAE J2012 / ISO 15031-6; verify against the standard).

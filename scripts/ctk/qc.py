@@ -18,7 +18,7 @@ from dataclasses import dataclass, field
 from datetime import date
 from typing import Any
 
-from . import export, mdparse, schema
+from . import export, mdparse, schema, visual
 from .fileio import read_text as fileio_read
 from . import textutil as tu
 from .context import Context, describe_target, within_target
@@ -470,13 +470,26 @@ def gate_g5(ctx: Context) -> GateResult:
     description = _normalized(ctx.data["seo"].get("description") or "")
     if any(m.search(seo_text) for m in mentions) and not any(c.search(description) for c in caveats):
         g.fail("The SEO metadata mentions clearing codes but the description does not say clearing does not fix the cause.", "Add the caveat to seo.description.")
-    # Cartek 2 capabilities: any mention of the product (other than the brand line) needs a cartek-feature claim.
+    # Cartek 2 capabilities: any mention of the product (other than the brand line and the brand
+    # marks listed in the policy, such as "Logo Cartek") needs a cartek-feature claim.
     tagline = _normalized(policy["brand_tagline"])
+    # A mark is exempt only when its clause ends right after it or goes on with a placement word
+    # (brand_mark_followers): "Logo Cartek" yes, "Logo Cartek: đọc freeze frame mọi xe" no.
+    followers = "|".join(policy.get("brand_mark_followers", []))
+    tail = r"(?=$| (?:" + followers + r")\b)" if followers else r"(?=$)"
+    brand_marks = [re.compile(p + tail) for p in policy.get("brand_mark_mentions", [])]
     feature_claims = {c["id"] for c in data["claims"] if c["category"] == "cartek-feature" and c["status"] != "removed"}
     for segment in ctx.script.segments:
-        text = _normalized(mdparse.without_todos(" ".join([segment.get("VO"), segment.get("ON-SCREEN"), segment.get("SAFETY"), segment.get("VISUAL")])))
-        if re.search(r"\bcartek\b", text.replace(tagline, " ")) and not (set(segment.claims) & feature_claims):
-            g.fail(f"{segment.id} shows or names Cartek (beyond the brand line) but cites no cartek-feature claim.", "Cite a cartek-feature claim backed by the feature register, or use neutral wording (\"máy chẩn đoán\").")
+        raw = mdparse.without_todos("\n".join([segment.get("VO"), segment.get("ON-SCREEN"), segment.get("SAFETY"), segment.get("VISUAL")]))
+        clauses = []
+        for clause in re.split(r"[.;!?,\n]+", raw):
+            clause = _normalized(clause).replace(tagline, " ").strip()
+            for mark in brand_marks:
+                clause = mark.sub(" ", clause).strip()
+            clauses.append(clause)
+        text = " | ".join(clauses)
+        if re.search(r"\bcartek\b", text) and not (set(segment.claims) & feature_claims):
+            g.fail(f"{segment.id} shows or names Cartek (beyond the brand line or logo) but cites no cartek-feature claim.", "Cite a cartek-feature claim backed by the feature register, or use neutral wording (\"máy chẩn đoán\"); a logo or the brand line alone is allowed.")
     if re.search(r"\bcartek 2\b", seo_text) and not feature_claims:
         g.fail("The SEO metadata names Cartek 2 but the item has no cartek-feature claim.", "Back the product mention with a registered feature or remove it.")
     covered: set[str] = set()
@@ -607,6 +620,7 @@ def gate_g7(ctx: Context, g4: GateResult) -> GateResult:
             g.block(f"storyboard.md still has {mdparse.todo_count(storyboard)} [TODO] marker(s).", "Complete the shot list.")
         elif not mdparse.parse_table(mdparse.find_section(storyboard, "Shot list")):
             g.fail("storyboard.md has no shots in '## Shot list'.", "List the shots.")
+    _visual_style_findings(ctx, g)
     production = data["production"]
     assets = production["assets_required"]
     if not assets:
@@ -635,6 +649,39 @@ def gate_g7(ctx: Context, g4: GateResult) -> GateResult:
     if not g.problems:
         g.ok(f"Script, {'storyboard, ' if fmt == 'long-form' else ''}{len(assets)} confirmed asset(s), owner and date ready; draft package validates.")
     return g
+
+
+def _visual_style_findings(ctx: Context, g: GateResult) -> None:
+    """Soft checks of the storyboard against config/visual-style.yaml: warnings and an INFO, never FAIL."""
+    storyboard = ctx.texts.get("storyboard", "")
+    if not storyboard or not ctx.visual_style:
+        return
+    use = visual.usage(storyboard, ctx.visual_style)
+    if not use.shots:
+        return
+    if use.unknown_effects:
+        g.warn(f"Storyboard 'Effects' names id(s) not in config/visual-style.yaml: {', '.join(use.unknown_effects)}.", "Use effect ids from config/visual-style.yaml (strategy/visual-identity.md), or add the effect to the library first.")
+    if use.unknown_text_styles:
+        g.warn(f"Storyboard 'Text style' names typography role(s) not in config/visual-style.yaml: {', '.join(use.unknown_text_styles)}.", "Use typography role ids from config/visual-style.yaml (caption, lower_third, callout, dtc_code, live_data_number, end_screen).")
+    effects = visual.effects_index(ctx.visual_style)
+    for eid, shot_ids in use.effects_used.items():
+        limit = effects[eid].get("max_uses_per_video")
+        if isinstance(limit, int) and len(shot_ids) > limit:
+            g.warn(f"Effect '{eid}' is used in {len(shot_ids)} shot(s); the library suggests at most {limit} per video.", f"Reduce '{eid}' or record why this video needs more in '## Sound and effects'.")
+    # The safety-banner check applies only to storyboards that declare effects at all: an old
+    # storyboard without an Effects column gets the INFO line below, not a warning.
+    declares_effects = bool(use.effects_used or use.unknown_effects)
+    safety_segments = [s.id for s in ctx.script.segments if s.get("SAFETY") or s.type == "safety"]
+    missing = [sid for sid in safety_segments if sid not in use.segments_with_safety_banner]
+    if missing and declares_effects:
+        g.warn(f"Segment(s) {', '.join(missing)} carry a safety warning but no storyboard shot for them uses the '{visual.SAFETY_EFFECT}' effect.", f"Add '{visual.SAFETY_EFFECT}' to the Effects column of a shot in each safety segment, so the warning is shown where the risk occurs.")
+    if use.effects_used:
+        summary = ", ".join(f"{eid} ×{len(shot_ids)}" for eid, shot_ids in use.effects_used.items())
+        g.info(f"Effects used ({len(use.effects_used)} id(s) over {len(use.shots)} shot(s)): {summary}.")
+    elif use.shots:
+        g.info("No effects declared in the storyboard 'Effects' column (library: config/visual-style.yaml).")
+    if use.text_styles_used:
+        g.info("Typography roles used: " + ", ".join(f"{rid} ×{len(shot_ids)}" for rid, shot_ids in use.text_styles_used.items()) + ".")
 
 
 def gate_g8(ctx: Context) -> GateResult:

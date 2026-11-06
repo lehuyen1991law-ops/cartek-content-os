@@ -1,0 +1,263 @@
+# Visual style library: typography, colour tokens, sound/visual effects and caption rules
+# for Cartek videos. Read by QC gate G7 (scripts/ctk/qc.py), the production package export
+# (scripts/ctk/export.py -> visual_style) and the storyboard template.
+#
+# REPOSITORY DEFAULT added 2026-11-06. This is an editorial/production ASSUMPTION made by the
+# repository, not a value from the Google Sheet "Cartek: Youtube Release" (the sheet has no
+# typography, colour or effects guidance). The brand team may change any value here; the
+# human-readable rationale is strategy/visual-identity.md.
+#
+# IDs (typography roles, effect ids, colour tokens) are lower-case ASCII with hyphens or
+# underscores and are referenced from storyboard.md columns "Effects" and "Text style".
+# Fonts: a reference is a key of `fonts` below. Font facts (licence, Vietnamese coverage) were
+# checked on 2026-11-06 against the google/fonts repository METADATA.pb files, not glyph by glyph.
+
+version: 1
+added: 2026-11-06
+status: repository-default      # repository assumption; brand team decision pending
+guide: strategy/visual-identity.md
+
+# --- Fonts -----------------------------------------------------------------------------
+# vietnamese_coverage: "confirmed" = the Google Fonts 'vietnamese' subset is declared in the
+# family's METADATA.pb. Precomposed NFC Vietnamese code points were NOT inspected glyph by glyph.
+fonts:
+  be-vietnam-pro:
+    name: "Be Vietnam Pro"
+    role: primary               # captions, lower thirds, callouts, end screen
+    licence: "SIL Open Font License 1.1 (OFL)"
+    source: "https://fonts.google.com/specimen/Be+Vietnam+Pro"
+    evidence: "https://raw.githubusercontent.com/google/fonts/main/ofl/bevietnampro/METADATA.pb"
+    vietnamese_coverage: confirmed
+    coverage_note: "Google Fonts subsets latin, latin-ext, vietnamese (METADATA.pb). Glyph table not inspected; no design-history claim is made."
+    weights_used: [500, 600, 700]
+  inter:
+    name: "Inter"
+    role: primary-fallback
+    licence: "SIL Open Font License 1.1 (OFL)"
+    source: "https://fonts.google.com/specimen/Inter"
+    evidence: "https://raw.githubusercontent.com/google/fonts/main/ofl/inter/METADATA.pb"
+    vietnamese_coverage: confirmed
+    coverage_note: "Google Fonts 'vietnamese' subset declared; tabular figures (tnum) available for numeric tables. Glyph table not inspected."
+    weights_used: [500, 600, 700]
+  jetbrains-mono:
+    name: "JetBrains Mono"
+    role: mono                  # DTC codes, live-data numbers
+    licence: "SIL Open Font License 1.1 (OFL)"
+    source: "https://fonts.google.com/specimen/JetBrains+Mono"
+    evidence: "https://raw.githubusercontent.com/google/fonts/main/ofl/jetbrainsmono/METADATA.pb"
+    vietnamese_coverage: confirmed
+    coverage_note: "Confirmed only from the Google Fonts subset metadata; the upstream README does not mention Vietnamese. Clear 0/O and 1/l/I shapes (P0300 is never read as PO3OO)."
+    weights_used: [500, 700]
+  roboto-mono:
+    name: "Roboto Mono"
+    role: mono-fallback
+    licence: "SIL Open Font License 1.1 (OFL) in google/fonts; older upstream releases Apache 2.0"
+    source: "https://fonts.google.com/specimen/Roboto+Mono"
+    evidence: "https://raw.githubusercontent.com/google/fonts/main/ofl/robotomono/METADATA.pb"
+    vietnamese_coverage: confirmed
+    coverage_note: "Google Fonts 'vietnamese' subset declared. Glyph table not inspected."
+    weights_used: [500, 700]
+
+# Text rendering rules that apply to every role.
+text_rules:
+  - "Write Vietnamese with precomposed NFC diacritics (ầ, ễ, ự...). Never fake diacritics with combining marks or stacked characters in the editor."
+  - "Sentence case for on-screen text and titles; proper nouns and codes stay as written (Cartek 2, Toyota, P0300) — strategy/brand-voice.md."
+  - "Codes and numbers on screen are copied exactly from script.md (ON-SCREEN / VISUAL) and the claim register; never retype a code from memory."
+  - "Keep every text element inside the title-safe area (see safe_area of each role); phones crop and YouTube UI covers the bottom edge."
+
+# --- Typography roles -------------------------------------------------------------------
+# size_px_1080p: pixel size on a 1920x1080 frame (scale proportionally for 9:16 Shorts at
+# 1080x1920). Sizes and limits are planning assumptions; validate on a phone before locking.
+typography:
+  roles:
+    caption:
+      label_vi: "Phụ đề / caption"
+      font: be-vietnam-pro
+      weight: 500
+      size_px_1080p: 44
+      colour: text
+      max_lines: 2
+      max_chars_per_line: 38
+      safe_area: "Centered, bottom edge at least 120 px above the frame bottom (YouTube progress bar and phone UI); inside the 5 % title-safe margin."
+      notes: "Burned-in subtitles use this role. One idea per line. Fallback font: inter."
+    lower_third:
+      label_vi: "Tên và chức danh (lower third)"
+      font: be-vietnam-pro
+      weight: 700
+      size_px_1080p: 48
+      colour: text
+      max_lines: 2
+      max_chars_per_line: 32
+      safe_area: "Lower-left, inside the 5 % title-safe margin; never overlapping captions (show one or the other)."
+      notes: "Line 1 name at 700; line 2 title/garage at 500, 32 px. Use effect lower-third."
+    callout:
+      label_vi: "Tiêu đề / nhấn mạnh trên hình"
+      font: be-vietnam-pro
+      weight: 600
+      size_px_1080p: 56
+      colour: text
+      max_lines: 2
+      max_chars_per_line: 24
+      safe_area: "Upper third or center; never over the scan-tool screen area being shown."
+      notes: "Short on-screen headlines such as 'Xóa lỗi ≠ sửa lỗi' or step markers 'Bước 2/4'."
+    dtc_code:
+      label_vi: "Mã lỗi (DTC) trên hình"
+      font: jetbrains-mono
+      weight: 700
+      size_px_1080p: 72
+      colour: accent_code
+      max_lines: 1
+      max_chars_per_line: 16
+      safe_area: "Center or upper-right; clear of the real scan-tool screen so the two readings never contradict."
+      notes: "Codes written exactly as in script.md and the claim register (P0300, not p0300 or P 0300). Fallback font: roboto-mono."
+    live_data_number:
+      label_vi: "Số liệu dữ liệu trực tiếp"
+      font: jetbrains-mono
+      weight: 500
+      size_px_1080p: 48
+      colour: text
+      max_lines: 3
+      max_chars_per_line: 28
+      safe_area: "Side panel, inside the title-safe margin; align numbers right (monospace keeps columns stable)."
+      notes: "Only values actually read on the tool during the recording; never typed-in example values (CLAUDE.md: no invented diagnostic data). Inter with tnum is an accepted alternative."
+    end_screen:
+      label_vi: "Màn hình kết thúc"
+      font: be-vietnam-pro
+      weight: 600
+      size_px_1080p: 40
+      colour: text
+      max_lines: 2
+      max_chars_per_line: 36
+      safe_area: "Leave the YouTube end-screen element zones free (video and subscribe elements occupy the right half); brand line and logo on the left."
+      notes: "Carries the brand line 'Cartek - Check your car' and the logo; no capability statement about Cartek 2."
+
+# --- Colour tokens ----------------------------------------------------------------------
+# PLACEHOLDERS: values chosen for contrast on a dark workshop frame. The brand team replaces
+# them with the official palette; roles above reference tokens, not hex values.
+colours:
+  background: {hex: "#101418", label_vi: "Nền tối cho bảng chữ", placeholder: true}
+  text: {hex: "#F5F7FA", label_vi: "Chữ chính", placeholder: true}
+  accent_safety: {hex: "#E0A100", label_vi: "Cảnh báo an toàn (vàng hổ phách; đỏ #C62828 cho nguy hiểm cao)", placeholder: true}
+  accent_code: {hex: "#4FC3F7", label_vi: "Mã lỗi và số liệu", placeholder: true}
+
+# --- Effects library ----------------------------------------------------------------------
+# kind: sfx | vfx | transition | lower-third. max_uses_per_video: null = no fixed limit.
+# storyboard.md column "Effects" lists ids, comma-separated (e.g. "code-popup, sfx-ui-beep").
+effects:
+  - id: hard-cut
+    kind: transition
+    name_vi: "Cắt thẳng"
+    description: "Straight cut between shots; the default transition."
+    when_to_use: "Everywhere unless another transition is listed."
+    max_uses_per_video: null
+    never_use: "Never add a sound to a plain cut."
+  - id: soft-dissolve
+    kind: transition
+    name_vi: "Mờ chồng nhẹ"
+    description: "Short cross-dissolve (about 12 frames) between two scenes."
+    when_to_use: "Change of location or time (workshop to desk, before/after a test)."
+    max_uses_per_video: 6
+    never_use: "Not between consecutive scan-tool screens; it blurs the readings."
+  - id: code-popup
+    kind: vfx
+    name_vi: "Mã lỗi hiện lên"
+    description: "A DTC appears in a panel (typography role dtc_code) with the Vietnamese meaning below it in caption size."
+    when_to_use: "The first time each code is named in narration, and in the recap."
+    max_uses_per_video: null
+    never_use: "Never show a code that no claim in item.yaml defines; in a shot that shows a real tool screen, never show a code that screen did not display (an explanatory animation with no tool screen may show claim-defined codes)."
+  - id: highlight-circle
+    kind: vfx
+    name_vi: "Khoanh tròn trên màn hình máy"
+    description: "Animated circle around one value or menu item on the scan-tool screen capture."
+    when_to_use: "Directing the eye to one reading or menu entry while the narration names it."
+    max_uses_per_video: null
+    never_use: "Never draw on a value the narration does not mention; never cover the value itself."
+  - id: highlight-arrow
+    kind: vfx
+    name_vi: "Mũi tên chỉ trên màn hình máy"
+    description: "Animated arrow pointing at a connector, part or screen element."
+    when_to_use: "Physical parts in the engine bay and connector pins; menu paths with several steps."
+    max_uses_per_video: null
+    never_use: "Never point at a part the script does not identify by name."
+  - id: zoom-punch
+    kind: vfx
+    name_vi: "Zoom nhấn"
+    description: "Quick 5-10 % push-in on the current shot for emphasis."
+    when_to_use: "One key sentence per segment at most (the takeaway, a surprising reading)."
+    max_uses_per_video: 6
+    never_use: "Never on safety warnings (the safety banner carries them) and never twice in a row."
+  - id: lower-third
+    kind: lower-third
+    name_vi: "Lower third tên / chức danh"
+    description: "Name and title panel (typography role lower_third) sliding in from the left."
+    when_to_use: "First on-camera appearance of a presenter or guest; again after a long demo."
+    max_uses_per_video: 4
+    never_use: "Never while captions are on screen; never with a title the person did not confirm."
+  - id: safety-banner
+    kind: vfx
+    name_vi: "Băng cảnh báo an toàn"
+    description: "Full-width banner in accent_safety (amber; red for high-risk systems) with a warning icon and the SAFETY text from script.md, held for the whole spoken warning."
+    when_to_use: "In every shot of a segment that has a SAFETY line or TYPE safety; G7 warns when such a segment has no shot using it."
+    max_uses_per_video: null
+    never_use: "Never shorten or paraphrase the SAFETY line; never pair it with alarm or siren sounds (use sfx-low-thud or silence)."
+  - id: freeze-frame-snapshot
+    kind: vfx
+    name_vi: "Đóng băng khung hình (snapshot)"
+    description: "The frame freezes for about 1 s with a thin white border and a soft camera-shutter sound, then resumes."
+    when_to_use: "Showing stored data such as freeze frame data, or marking the moment a reading is captured."
+    max_uses_per_video: 4
+    never_use: "Never to imply the tool took a snapshot it did not take."
+  - id: checklist-tick
+    kind: vfx
+    name_vi: "Dấu tích danh sách"
+    description: "A checklist line gets an animated tick (typography role callout for the line)."
+    when_to_use: "Recaps and step-by-step procedures as each step is completed."
+    max_uses_per_video: null
+    never_use: "Never tick a step the video did not actually show."
+  - id: sfx-whoosh
+    kind: sfx
+    name_vi: "Tiếng lướt nhẹ"
+    description: "Light, short whoosh (under 0.4 s, about -18 dBFS)."
+    when_to_use: "With code-popup, lower-third and checklist-tick entries."
+    max_uses_per_video: 12
+    never_use: "Never over a spoken word; never the loud cinematic variant."
+  - id: sfx-ui-click
+    kind: sfx
+    name_vi: "Tiếng click giao diện"
+    description: "Soft UI click (about -20 dBFS)."
+    when_to_use: "Menu navigation shown on the scan-tool screen when the tool itself is silent."
+    max_uses_per_video: 12
+    never_use: "Never on top of the tool's own real sounds."
+  - id: sfx-ui-beep
+    kind: sfx
+    name_vi: "Tiếng bíp giao diện"
+    description: "Short single beep (about -20 dBFS)."
+    when_to_use: "A reading or code appears (with code-popup or highlight-circle)."
+    max_uses_per_video: 8
+    never_use: "Never repeated beeps, never rising-pitch alarm tones."
+  - id: sfx-low-thud
+    kind: sfx
+    name_vi: "Tiếng trầm cảnh báo"
+    description: "Single low, soft thud (about -16 dBFS)."
+    when_to_use: "Entry of the safety banner, or a 'common mistake' reveal."
+    max_uses_per_video: 6
+    never_use: "Never layered into a drone or rumble; it is a cue, not a threat."
+
+# Sound rules for the whole video (brand voice: 'calm about faults').
+sound_rules:
+  - "No alarmist horror sound design, no sirens, no fake engine-failure or crash sounds. Warning lamps and codes are information, not disasters."
+  - "Sound effects never cover narration: an SFX starts after the word ends or sits in a pause."
+  - "Music is ducked under the voice-over (about -18 LU below the voice) and fades out under safety warnings."
+  - "The real sounds of the vehicle and the tool are kept; nothing is dubbed in to make a fault sound worse."
+  - "Only effects listed in this library are used; a new effect is added here first (G7 warns on unknown ids)."
+
+# --- Captions / subtitles ----------------------------------------------------------------
+captions:
+  mandatory: true
+  delivery: "burned-in (typography role caption) or uploaded as a subtitle track; one of the two in every video"
+  rules:
+    - "Subtitles are mandatory for every video (burned-in or uploaded)."
+    - "One idea per line; a line break follows the spoken phrase, not the screen width."
+    - "At most 2 lines on screen at a time."
+    - "Codes, acronyms and numbers are written exactly as in script.md (P0300, OBD2, MIL)."
+    - "Captions match the final recorded voice-over, not the draft script (publication.upload_checklist)."

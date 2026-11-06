@@ -11,7 +11,7 @@ One folder per video: `long-form/<ID>-<slug>/` or `shorts/<ID>-<slug>/`. Create 
 | `research.md` | automotive-researcher, technical-fact-checker | Findings, standard vs manufacturer-specific, codes vs causes, fact-check log |
 | `script.md` | youtube-scriptwriter / shorts-content-specialist | Hooks, outline, segments with VO and visuals, retention notes |
 | `seo.md` | youtube-seo-specialist | Search intent, keyword evidence, title rationale, publishing checklist |
-| `storyboard.md` | producer | Shot list (required for long-form) |
+| `storyboard.md` | producer | Shot list (required for long-form) with `Effects` and `Text style` columns using IDs from [config/visual-style.yaml](../config/visual-style.yaml); sound/effects and typography notes ([guide](../strategy/visual-identity.md)) |
 | `qc-report.md` | `scripts/qc_content.py` | Generated gate results; do not edit |
 | `exports/production-package.json` | `scripts/qc_content.py approve` | Approved handoff package (committed) |
 | `exports/production-package.draft.json` | `scripts/export_package.py --draft` | Preview only (git-ignored) |

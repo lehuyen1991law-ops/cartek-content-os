@@ -127,17 +127,17 @@ python3 scripts/qc_content.py runtime <ID>
 ### 7. PRODUCTION_PACKAGE (Gói sản xuất)
 
 - **Entry:** script, claims and SEO are final.
-- **Work:** shot list, assets, demo setup, owner and date, visibility plan; preview the handoff package.
+- **Work:** shot list with effects and text styles, sound and typography notes, assets, demo setup, owner and date, visibility plan; preview the handoff package. Visual rules: [strategy/visual-identity.md](../strategy/visual-identity.md) and the IDs in [config/visual-style.yaml](../config/visual-style.yaml).
 - **Skill:** producer/editor (human), helped by [youtube-scriptwriter](../skills/youtube-scriptwriter/SKILL.md) for visuals.
-- **Outputs:** `storyboard.md` (required for long-form); `item.yaml` → `production.assets_required`, `production.demo_setup`, `production.footage_links`, `target_publish_date`, `publication.visibility_plan`.
-- **Exit:** storyboard/shot list and assets ready; draft export validates.
+- **Outputs:** `storyboard.md` (required for long-form): shot list with `Effects` and `Text style` columns, "Sound and effects" and "Typography" sections; `item.yaml` → `production.assets_required`, `production.demo_setup`, `production.footage_links`, `target_publish_date`, `publication.visibility_plan`.
+- **Exit:** storyboard/shot list (with effects and text styles) and assets ready; draft export validates. G7 warns, without failing, on effect or role IDs missing from the library and on a `SAFETY:` segment with no `safety-banner` shot.
 - **Feeds:** G7, G8.
 
 ```bash
 python3 scripts/export_package.py <ID> --draft
 ```
 
-The draft is written to `exports/production-package.draft.json` with `package_status: DRAFT_NOT_APPROVED` and its blocking issues. It must not be used for production.
+The draft is written to `exports/production-package.draft.json` with `package_status: DRAFT_NOT_APPROVED` and its blocking issues. It must not be used for production. Its `visual_style` section lists the fonts, typography roles and effects the storyboard uses, with their library descriptions and the caption rules.
 
 ### 8. QC (Kiểm duyệt chất lượng)
 
@@ -163,7 +163,7 @@ Approval needs all of these on the **current content fingerprint** ([config/qc-p
 5. When `safety.flags` is not empty: a `technical` review by a **human** with `qualified: true` and PASS for G3 and G5. With `human_technical_review: always` this applies to every item.
 6. A human `editorial` review with decision PASS.
 
-The **full** fingerprint covers `item.yaml` (except `status`, `history`, `reviews`, `publication`, `owner`, `target_publish_date`, `corrections`, `internal_notes`) and the visible text of the five deliverables. `qc` and `editorial` reviews and the automated run are bound to it. `technical` reviews are bound to the **technical** fingerprint, which also leaves out `seo`, `production`, `seo.md` and `storyboard.md`, so SEO and production work after the technical review does not void it. Any change inside a review's scope voids that review.
+The **full** fingerprint covers `item.yaml` (except `status`, `history`, `reviews`, `publication`, `owner`, `target_publish_date`, `corrections`, `internal_notes`) and the visible text of the five deliverables. `qc` and `editorial` reviews and the automated run are bound to it. `technical` reviews are bound to the **technical** fingerprint, which also leaves out `seo`, `production`, `seo.md` and `storyboard.md`, so SEO and production work after the technical review does not void it. Any change inside a review's scope voids that review. `storyboard.md` is in both scopes, so adding effects or text styles to the shot list voids every review of that item. Configuration files such as `config/visual-style.yaml` are not fingerprinted: a library change does not void reviews, but release packages that copy library values must be re-exported (`validate_content.py` reports the difference).
 
 ### 9. APPROVED (Đã duyệt) — guarded
 

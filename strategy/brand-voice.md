@@ -2,7 +2,7 @@
 
 How Cartek sounds on screen and in writing: tone, Vietnamese style, calls to action, words to avoid, and a technical glossary.
 
-Related: [audience personas](audience-personas.md) · [editorial guidelines](editorial-guidelines.md) · [script production workflow](../workflows/script-production.md)
+Related: [audience personas](audience-personas.md) · [editorial guidelines](editorial-guidelines.md) · [visual identity](visual-identity.md) (how the voice looks on screen: typography, effects, captions) · [script production workflow](../workflows/script-production.md)
 
 ## From the sheet (source)
 

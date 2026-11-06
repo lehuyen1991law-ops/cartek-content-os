@@ -31,7 +31,7 @@ stages:
   - id: PRODUCTION_PACKAGE
     label_vi: "Gói sản xuất"
     sheet_status: "Đang thực hiện"
-    exit_criteria: "Storyboard/shot list and assets ready; draft export validates."
+    exit_criteria: "Storyboard/shot list (with effects and text styles) and assets ready; draft export validates."
   - id: QC
     label_vi: "Kiểm duyệt chất lượng"
     sheet_status: "Đang thực hiện"

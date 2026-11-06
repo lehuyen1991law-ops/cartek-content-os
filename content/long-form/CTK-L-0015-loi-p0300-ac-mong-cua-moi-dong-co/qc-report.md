@@ -4,7 +4,7 @@
 |---|---|
 | Run date | 2026-11-06 |
 | Stage | RESEARCH |
-| Content fingerprint | `sha256:026374211aa3afb371cc2d8a1ab5b1399c418d27289b6aea350a3b7a9ce63fd4` |
+| Content fingerprint | `sha256:680670012afb7a488d0c8f0669ba702c876accec0c1ff34fed48d56b77cb0601` |
 | Automated result | **FAIL** |
 | Approval status | **NOT APPROVABLE** |
 
@@ -15,10 +15,10 @@
 | G1 | Source data and metadata validation | **PASS** | Provenance: CTK-L-0015 from 'Content Direction'!F12. |
 | G2 | Audience and topic relevance | **BLOCKED** | brief.md still has 16 [TODO] marker(s). |
 | G3 | Research completeness and factual accuracy | **BLOCKED** | C01 is unverified: "P0300 cho biết ECU đã phát hiện bỏ máy ngẫu nhiên hoặc ở nhiều xi-lanh (Random/Multiple C…" |
-| G4 | Script coherence, clarity and retention quality | **PASS** | Estimated runtime 05:32 within target 05:00-08:00. |
+| G4 | Script coherence, clarity and retention quality | **PASS** | Estimated runtime 07:41 within target 05:00-08:00. |
 | G5 | Automotive technical and safety review | **BLOCKED** | C07 (safety) is unverified: technical approval is blocked. |
 | G6 | SEO package completeness | **FAIL** | 0 title candidate(s) in item.yaml; at least 3 required. |
-| G7 | Production handoff readiness | **FAIL** | No production assets are listed. |
+| G7 | Production handoff readiness | **FAIL** | No responsible person (owner). |
 | G8 | Publishing metadata validation | **FAIL** | No target publish date. |
 
 ## Gate details
@@ -51,13 +51,14 @@ Evidence:
 - [BLOCKED] C03 is unverified: "Freeze frame là bản ghi điều kiện vận hành tại thời điểm ECU phát hiện lỗi, gồm mã lỗi gâ…"
 - [BLOCKED] C04 is unverified: "Lệnh xóa lỗi từ máy chẩn đoán xóa toàn bộ thông tin chẩn đoán liên quan khí thải: mã pend…"
 - [BLOCKED] C05 is unverified: "Xóa mã lỗi không sửa được nguyên nhân bỏ máy: nếu nguyên nhân còn, ECU sẽ phát hiện lại v…"
-- [BLOCKED] C06 is unverified: "Trên xe được chứng nhận theo quy định OBD II của California (xe EPA đời 2017 trở lên cũng…"
+- [BLOCKED] C06 is unverified: "Trên xe được chứng nhận theo quy định OBD-II của California (xe EPA đời 2017 trở lên cũng…"
 - [BLOCKED] C07 is unverified: "Khi đèn check engine nhấp nháy, nên giảm tải, hạn chế chạy xe và kiểm tra sớm, vì tiếp tụ…"
 - [BLOCKED] C08 is unverified: "Nguyên nhân khả dĩ của P0300 gồm các nhóm đánh lửa, nhiên liệu, rò rỉ khí nạp/chân không …"
 - [BLOCKED] C09 is unverified: "Với nhóm đánh lửa và nhiên liệu, kiểm tra theo quy trình của hãng cho xe cụ thể (ví dụ ki…"
 - [BLOCKED] C10 is unverified: "Với nhóm rò rỉ khí nạp, có thể xác nhận bằng thử khói (smoke test) kết hợp đọc fuel trim;…"
-- [BLOCKED] C11 is unverified: "Quy định OBD II của California (13 CCR 1968.2) áp dụng cho xe du lịch, xe tải nhẹ và xe t…"
-- [BLOCKED] C12 is unverified: "Trên xe theo quy định OBD II của California (áp dụng dần cho đời 2010-2012 trở lên), mã l…"
+- [BLOCKED] C11 is unverified: "Quy định OBD-II của California (13 CCR 1968.2) áp dụng cho xe du lịch, xe tải nhẹ và xe t…"
+- [BLOCKED] C12 is unverified: "Trên xe theo quy định OBD-II của California (áp dụng dần cho đời 2010-2012 trở lên), mã l…"
+- [BLOCKED] C13 is unverified: "Trên xe theo quy định OBD-II của California từ đời 2005, khi hơn 90% số lần bỏ máy dồn và…"
 
 Corrections:
 
@@ -67,7 +68,7 @@ Corrections:
 
 Evidence:
 
-- [PASS] Estimated runtime 05:32 within target 05:00-08:00.
+- [PASS] Estimated runtime 07:41 within target 05:00-08:00.
 - [PASS] 11 segments with narration and visuals; hook first, CTA last.
 - [INFO] Clarity, coherence and retention quality also need an independent judgment review (role qc).
 
@@ -114,17 +115,15 @@ Corrections:
 
 Evidence:
 
-- [BLOCKED] storyboard.md still has 4 [TODO] marker(s).
-- [FAIL] No production assets are listed.
-- [FAIL] Demo segments exist but production.demo_setup lacks the tool and vehicle/location.
+- [INFO] Effects used (13 id(s) over 34 shot(s)): checklist-tick ×4, code-popup ×3, freeze-frame-snapshot ×3, hard-cut ×29, highlight-arrow ×4, highlight-circle ×6, lower-third ×1, safety-banner ×15, sfx-low-thud ×3, sfx-ui-beep ×4, sfx-whoosh ×7, soft-dissolve ×5, zoom-punch ×4.
+- [INFO] Typography roles used: callout ×25, caption ×5, dtc_code ×5, end_screen ×1, live_data_number ×7, lower_third ×1.
+- [BLOCKED] Assets not yet available: Máy chẩn đoán OBD2 đọc và hiển thị được freeze frame, danh sách mã pending/confirmed/permanent, Xe thử có P0300 thật đang lưu trong ECU và freeze frame đọc được, Đồng hồ đo áp suất nhiên liệu kèm bộ nối phù hợp xe thử, Máy thử khói (smoke machine), Đồng hồ đo áp suất nén, Dụng cụ tháo và hoán đổi bô-bin, găng tay, Hộp bugi mới (chưa mở) làm đạo cụ cho cảnh "ba cái sai", Bình chữa cháy trong tầm tay và trong khung hình khi đo áp suất nhiên liệu, Camera chính, đèn LED mềm, micro cài áo, Xưởng có chỗ nổ máy thông thoáng hoặc ống hút khí xả, Người dẫn (kỹ thuật viên) và tên/chức danh đã xác nhận cho lower third, Đồ họa và lower third theo config/visual-style.yaml, File phụ đề tiếng Việt làm từ lời thoại thu thật.
 - [FAIL] No responsible person (owner).
 - [FAIL] No target publish date.
 
 Corrections:
 
-- Complete the shot list.
-- List tools, vehicles, graphics and footage in production.assets_required.
-- Record tool, tool version, vehicle and location.
+- Confirm availability and set status to available or confirmed.
 - Set item.yaml -> owner (Người phụ trách).
 - Set item.yaml -> target_publish_date.
 
@@ -133,13 +132,11 @@ Corrections:
 Evidence:
 
 - [FAIL] No target publish date.
-- [FAIL] No visibility plan.
 - [BLOCKED] 8 of 8 publishing checklist item(s) in seo.md are not ticked.
 
 Corrections:
 
 - Set item.yaml -> target_publish_date.
-- Set publication.visibility_plan (public, scheduled, unlisted or private).
 - Complete each item and tick it ([x]) before approval.
 
 ## Approval requirements

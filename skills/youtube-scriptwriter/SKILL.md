@@ -59,7 +59,8 @@ Turn the brief and the verified research into a script that a presenter can read
    - Every technical statement maps to a claim in `CLAIMS:`. If a needed statement has no claim, ask the researcher. Never add facts in the script alone.
    - Mentioning code clearing requires an explicit caveat in the narration, for example "lỗi sẽ sáng lại nếu nguyên nhân chưa được xử lý". Never imply that clearing a code or turning off the lamp repairs the car.
    - No guarantees, no "100%", no "tất cả các dòng xe" unless a verified claim says exactly that.
-   - Cartek 2 is shown only doing what the feature register lists as verified.
+   - Cartek 2 is shown only doing what the feature register lists as verified. The logo, the brand name and the end screen ("Logo Cartek", "màn hình kết thúc Cartek") may appear in `VISUAL:`/`ON-SCREEN:` without a claim; any wording about what the tool does needs one (G5).
+   - Visuals follow [strategy/visual-identity.md](../../strategy/visual-identity.md): name the effect you expect (e.g. "code-popup P0300", "safety-banner") so the producer can map it to the storyboard's `Effects` column.
 6. Demonstrations: describe the shot in `VISUAL:`, put silent demo time in `DEMO-SECONDS:`, and make sure `production.demo_setup` names the tool, version, vehicle or location.
 7. Safety: when `safety.flags` is set, add a `TYPE: safety` segment or a `SAFETY:` line where the risk occurs. Do not present hazardous procedures as do-it-yourself steps for car owners.
 8. CTA: adapt the sheet's long-form CTA to the persona (comment for advice, like, subscribe, notifications) and end with "Cartek - Check your car".

@@ -10,7 +10,7 @@ from __future__ import annotations
 
 from typing import Any
 
-from . import mdparse
+from . import mdparse, visual
 from .context import Context, within_target
 from .items import today
 
@@ -107,6 +107,9 @@ def build_package(ctx: Context, approved: bool, blocking: list[str], approval_re
             for s in segments
         ],
         "storyboard_shots": storyboard,
+        # Library values are copied from config/visual-style.yaml, which is not fingerprinted:
+        # after a library change, re-export release packages (validate_content reports the drift).
+        "visual_style": visual.package_section(ctx.texts.get("storyboard", ""), ctx.visual_style),
         "on_screen_text": [{"segment_id": s["id"], "text": s["on_screen_text"]} for s in segments if s["on_screen_text"]],
         "broll_and_animation": [{"segment_id": s["id"], "instruction": s["broll"]} for s in segments if s["broll"]],
         "assets": (data.get("production") or {}).get("assets_required", []),

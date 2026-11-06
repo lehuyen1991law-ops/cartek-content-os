@@ -22,7 +22,7 @@ SKILLS = (
     "content-qc-inspector",
 )
 WORKFLOWS = ("idea-to-publish", "research", "script-production", "technical-review", "seo-optimization", "publishing", "post-publish-analysis", "sheet-import")
-STRATEGY = ("channel-positioning", "content-pillars", "audience-personas", "competitor-analysis", "editorial-guidelines", "brand-voice", "product-facts")
+STRATEGY = ("channel-positioning", "content-pillars", "audience-personas", "competitor-analysis", "editorial-guidelines", "brand-voice", "visual-identity", "product-facts")
 SECRET_PATTERNS = (
     r"ghp_[A-Za-z0-9]{20,}",
     r"github_pat_[A-Za-z0-9_]{20,}",

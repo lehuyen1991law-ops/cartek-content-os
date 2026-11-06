@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import Any
 
 from . import fileio, mdparse
@@ -31,6 +31,7 @@ class Context:
     target: dict[str, Any]
     fingerprint: str
     technical_fingerprint: str = ""
+    visual_style: dict[str, Any] = field(default_factory=dict)  # config/visual-style.yaml
 
     @property
     def data(self) -> dict[str, Any]:
@@ -125,4 +126,5 @@ def build_context(repo: Repo, item: Item) -> Context:
         target=runtime_target(repo, item),
         fingerprint=item.fingerprint(),
         technical_fingerprint=item.fingerprint("technical"),
+        visual_style=config.get("visual-style") or {},
     )

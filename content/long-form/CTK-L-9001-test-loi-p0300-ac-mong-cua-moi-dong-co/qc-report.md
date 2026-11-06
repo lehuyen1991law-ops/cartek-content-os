@@ -4,7 +4,7 @@
 
 | Field | Value |
 |---|---|
-| Run date | 2026-11-05 |
+| Run date | 2026-11-06 |
 | Stage | RESEARCH |
 | Content fingerprint | `sha256:a26703010edd21af78e40fb9efd2f424c13a84001eeee8c71ab6f9a43003ee9e` |
 | Automated result | **FAIL** |
@@ -18,7 +18,7 @@
 | G2 | Audience and topic relevance | **PASS** | Brief complete for primary audience Thợ sửa chữa ô tô. |
 | G3 | Research completeness and factual accuracy | **BLOCKED** | research.md still has 5 [TODO] marker(s). |
 | G4 | Script coherence, clarity and retention quality | **BLOCKED** | script.md still has 11 [TODO] marker(s). |
-| G5 | Automotive technical and safety review | **BLOCKED** | The script is not finished; the technical and safety review needs the final narration. |
+| G5 | Automotive technical and safety review | **FAIL** | S06 mentions clearing codes/resetting the lamp without saying, there or in the next segment, that it does not fix the cause. |
 | G6 | SEO package completeness | **BLOCKED** | seo.md still has 3 [TODO] marker(s). |
 | G7 | Production handoff readiness | **FAIL** | Demo segments exist but production.demo_setup lacks the tool and vehicle/location. |
 | G8 | Publishing metadata validation | **FAIL** | No target publish date. |
@@ -69,12 +69,13 @@ Corrections:
 
 - Finish the script (skill: youtube-scriptwriter).
 
-### G5 — Automotive technical and safety review: BLOCKED
+### G5 — Automotive technical and safety review: FAIL
 
 Evidence:
 
 - [BLOCKED] The script is not finished; the technical and safety review needs the final narration.
 - [BLOCKED] research.md is not finished; technical accuracy cannot be reviewed yet.
+- [FAIL] S06 mentions clearing codes/resetting the lamp without saying, there or in the next segment, that it does not fix the cause.
 - [INFO] Safety flags fuel-system, hot-or-moving-parts: a qualified human technical review is required before approval.
 - [BLOCKED] C05 (diagnostic-procedure) is unverified: technical approval is blocked.
 - [BLOCKED] C06 (safety) is unverified: technical approval is blocked.
@@ -84,6 +85,7 @@ Corrections:
 
 - Finish script.md first (G4), then re-run QC.
 - Finish the research first (G3).
+- Add the caveat where clearing is mentioned: clearing removes the code and the lamp; the fault returns if the cause is not repaired.
 - Verify the procedure/safety statement with OEM or standard sources, or remove it.
 
 ### G6 — SEO package completeness: BLOCKED
@@ -104,6 +106,7 @@ Evidence:
 
 - [BLOCKED] Script gate G4 is BLOCKED; the production handoff needs a finished script.
 - [BLOCKED] storyboard.md still has 5 [TODO] marker(s).
+- [INFO] No effects declared in the storyboard 'Effects' column (library: config/visual-style.yaml).
 - [BLOCKED] Assets not yet available: Máy chẩn đoán dùng để quay demo (trung tính; Cartek 2 chỉ khi tính năng được xác minh), Xe thử có mã P0300 thật, Đồ họa sơ đồ xi-lanh, bảng dữ liệu đóng băng, sơ đồ cây nguyên nhân, Kỹ thuật viên có chuyên môn duyệt nội dung an toàn.
 - [FAIL] Demo segments exist but production.demo_setup lacks the tool and vehicle/location.
 - [FAIL] No responsible person (owner).
@@ -142,6 +145,7 @@ Corrections:
 | Not a test item | no | Test items (IDs 9001-9999) can never be approved for release. |
 | Independent qc review (G2, G4, G6, G7) by agent or human | no | no review for G2, G4, G6, G7 |
 | Independent technical review (G3, G5) by agent or human | no | no review for G3, G5 |
+| No open FAIL or BLOCKED verdict in any current review | yes | none |
 | Qualified human technical review of G3 and G5 (safety flags: fuel-system, hot-or-moving-parts) | no | none on the current content |
 | Human editorial sign-off | no | none on the current content |
 

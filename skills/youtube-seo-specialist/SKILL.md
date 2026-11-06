@@ -111,5 +111,5 @@ seo:
 
 ## Hand-off
 
-- Stage PRODUCTION_PACKAGE: storyboard, assets and the draft export (`python3 scripts/export_package.py <ID> --draft`).
+- Stage PRODUCTION_PACKAGE: storyboard (with effects and text styles from `config/visual-style.yaml`), assets and the draft export (`python3 scripts/export_package.py <ID> --draft`).
 - Then the independent [content-qc-inspector](../content-qc-inspector/SKILL.md) at stage QC.

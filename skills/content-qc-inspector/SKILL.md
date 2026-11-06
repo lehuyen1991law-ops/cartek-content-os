@@ -26,6 +26,7 @@ Independence rule: if you (this agent session) wrote, researched or edited any d
 | [strategy/](../../strategy/channel-positioning.md) documents | Positioning, pillars, personas, brand voice, editorial guidelines |
 | [workflows/idea-to-publish.md](../../workflows/idea-to-publish.md) | Stage exit criteria |
 | [config/qc-policy.yaml](../../config/qc-policy.yaml) | Gate list and approval rules |
+| [config/visual-style.yaml](../../config/visual-style.yaml), [strategy/visual-identity.md](../../strategy/visual-identity.md) | Effect IDs, typography roles and caption rules the storyboard must follow (G7) |
 | [scripts/ctk/qc.py](../../scripts/ctk/qc.py) | Exact automated checks and result semantics |
 | [templates/review.yaml](../../templates/review.yaml) | Review record format |
 
@@ -53,7 +54,7 @@ Your judgment PASS can never override an automated FAIL or BLOCKED on the same g
    - **G2, audience and topic relevance**: topic fits a Cartek pillar and the channel positioning; persona choice justified by the persona research; depth and vocabulary fit the persona; the problem is real for that persona; the takeaway is achievable in the format; the angle is grounded in the competitor notes.
    - **G4, script**: the hook pays off its rationale early; the order is logical and every segment advances the takeaway; narration is natural spoken Vietnamese with terms explained once; visuals are specific enough to shoot; retention devices exist and pay off; recap matches the takeaway; the CTA fits the persona and ends with "Cartek - Check your car"; spot-check that technical sentences cite claims.
    - **G6, SEO**: the title is truthful and within limits; the description opens with problem and takeaway; keyword evidence is recorded; tags are relevant; chapters match the current timing; thumbnails do not misrepresent; no performance promises.
-   - **G7, production handoff**: a crew could shoot from script plus storyboard; assets confirmed; demo setup recorded; on-set safety noted; the draft package is complete apart from approval.
+   - **G7, production handoff**: a crew could shoot from script plus storyboard; assets confirmed; demo setup recorded; on-set safety noted; the draft package is complete apart from approval. Visual style: the storyboard's `Effects` and `Text style` columns use IDs from `config/visual-style.yaml`, every segment with a `SAFETY:` line has a `safety-banner` shot, no alarmist sound design, captions planned (burned-in or uploaded). The automated gate only warns on these; your judgment decides whether a warning is acceptable.
 4. Write the review file outside the repository from [templates/review.yaml](../../templates/review.yaml), then record it:
    ```bash
    python3 scripts/qc_content.py review <ID> --file /tmp/<ID>-qc.yaml

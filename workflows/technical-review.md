@@ -41,7 +41,7 @@ python3 scripts/qc_content.py run <ID>
 2. **Codes.** Every DTC in narration, on-screen text or SEO text needs a claim whose text contains the code. Codes in manufacturer-controlled ranges (`^P1`, `^P3[0-3]`, `^[BCU][12]`) need `vehicle.scope: specific` with the brand named.
 3. **Codes vs causes.** The script must not present a code as a confirmed root cause. Candidate causes need the test that confirms them.
 4. **Clearing codes.** Clearing a code or resetting the warning lamp never repairs the fault. Any narration that mentions clearing needs a caveat that the cause remains and the fault can return.
-5. **Cartek 2 features.** Each `cartek-feature` claim points (`feature_id`) to a `verified` entry in [data/reference/cartek-2-feature-register.yaml](../data/reference/cartek-2-feature-register.yaml). The register is empty on 2026-11-05, so such claims stay BLOCKED until the product team confirms features ([strategy/product-facts.md](../strategy/product-facts.md)).
+5. **Cartek 2 features.** Each `cartek-feature` claim points (`feature_id`) to a `verified` entry in [data/reference/cartek-2-feature-register.yaml](../data/reference/cartek-2-feature-register.yaml). The register is empty on 2026-11-05, so such claims stay BLOCKED until the product team confirms features ([strategy/product-facts.md](../strategy/product-facts.md)). Naming Cartek in a segment needs such a claim, except the brand line and brand marks (the logo, the brand name as a channel, the end screen; [config/qc-policy.yaml](../config/qc-policy.yaml) → `brand_mark_mentions`), which say nothing about what the tool can do.
 6. **Safety.** Decide flags and dismissals (next section). For flagged items, make sure the script has a `TYPE: safety` segment or `SAFETY:` lines where the risk occurs.
 7. **Wording.** Read the warnings G5 reports for absolute or all-vehicle wording ("100%", "chắc chắn", "tất cả các dòng xe", "không cần thợ") and confirm a verified claim supports each, or have it rewritten.
 8. Re-run QC. Record a PASS only when G3 and G5 are PASS.
@@ -121,6 +121,7 @@ A review counts toward approval only while the content is unchanged. When a late
 - Absolute or all-vehicle wording: warnings the reviewer must resolve.
 - Narration mentions clearing codes without a caveat: FAIL.
 - A DTC in public text without a claim containing it: FAIL. A manufacturer-controlled code without a specific vehicle: FAIL.
+- Cartek named or shown in a segment (VO, ON-SCREEN, SAFETY, VISUAL) without a `cartek-feature` claim: FAIL, except the brand line and the brand marks listed in the policy (logo, end screen).
 - A detected safety topic neither flagged nor dismissed, or an unknown flag: FAIL.
 - Safety flags without a safety segment or `SAFETY:` line: FAIL.
 - `safety` or `diagnostic-procedure` claims still `unverified` or `disputed`: BLOCKED.

@@ -6,8 +6,9 @@
      - Thiếu bằng chứng -> giữ claim ở trạng thái "unverified": QC sẽ chặn duyệt kỹ thuật. -->
 
 > **Trạng thái nghiên cứu (2026-11-06):** đã đọc 2 nguồn quy định (SRC01: CARB 13 CCR 1968.2 bản trên LII;
-> SRC02: 40 CFR 86.1806-17 trên eCFR). C03-C07, C11, C12 có nguồn. C01, C02 (định nghĩa mã) và C08-C10 (quy trình
-> kiểm tra) chưa có nguồn thuộc loại được chấp nhận: cần SAE J2012 / tài liệu hãng / giáo trình. Cả 12 claim đều `unverified`.
+> SRC02: 40 CFR 86.1806-17 trên eCFR). C03-C06, C11-C13 có nguồn; C07 có nguồn một phần (quy định không đưa lời khuyên
+> cho người lái/thợ). C01, C02 (định nghĩa mã) và C08-C10 (quy trình kiểm tra) chưa có nguồn thuộc loại được chấp nhận:
+> cần SAE J2012 / tài liệu hãng / giáo trình. Cả 13 claim đều `unverified`.
 
 ## Research question (Câu hỏi nghiên cứu)
 
@@ -22,9 +23,11 @@ Nguồn: SRC01 = Cal. Code Regs. tit. 13, § 1968.2 (CARB, văn bản trên LII 
 1. **Ý nghĩa P0300.** P0300 cho biết ECU phát hiện bỏ máy ngẫu nhiên/nhiều xi-lanh và không chỉ ra nguyên nhân [C01].
    Chưa có nguồn chấp nhận được. Bối cảnh từ SRC01 (e)(3.1.3): quy định yêu cầu một mã riêng cho bỏ máy nhiều xi-lanh,
    nhưng không nêu số mã.
-2. **P0301-P0312.** Bỏ máy ở một xi-lanh xác định [C02]. Chưa có nguồn chấp nhận được. Bối cảnh từ SRC01 (e)(3.1.2)-(3.1.3):
-   hệ thống phải xác định xi-lanh bỏ máy; từ đời 2005, nếu hơn 90% số lần bỏ máy nằm ở một xi-lanh, hãng được phép lưu mã
-   của xi-lanh đó thay cho mã nhiều xi-lanh. Nghĩa là P0300 và P030x có thể xuất hiện khác nhau tùy chiến lược của hãng.
+2. **P0301-P0312.** Bỏ máy ở một xi-lanh xác định [C02]. Chưa có nguồn chấp nhận được. Quy tắc thay mã là claim riêng
+   [C13] (obd-standard, SRC01 (e)(3.1.2)-(3.1.3)): hệ thống phải xác định xi-lanh bỏ máy; trên xe theo quy định này từ đời
+   2005, nếu hơn 90% số lần bỏ máy nằm ở một xi-lanh, hãng được phép lưu mã của xi-lanh đó thay cho mã nhiều xi-lanh. Nghĩa
+   là P0300 và P0301-P0312 có thể xuất hiện khác nhau tùy chiến lược của hãng. Quy định không đánh số xi-lanh: thứ tự
+   xi-lanh theo tài liệu hãng cho từng động cơ (suy luận từ việc quy định không quy định; cần tài liệu hãng xác nhận).
 3. **Freeze frame.** Ghi mã lỗi gây ra bản ghi và các thông số như tải tính toán, nhiệt độ nước làm mát, tốc độ động cơ,
    tốc độ xe; trên xe có trang bị còn có trạng thái hệ thống nhiên liệu, fuel trim, áp suất đường ống nạp, lưu lượng khí nạp
    [C03] (SRC01 (g)(4.3.1)(B), (g)(4.2.1)). Mã bỏ máy được ưu tiên: freeze frame của lỗi khác (trừ hệ thống nhiên liệu) bị
@@ -49,7 +52,7 @@ Nguồn: SRC01 = Cal. Code Regs. tit. 13, § 1968.2 (CARB, văn bản trên LII 
 
 | Topic | OBD-II / EOBD standard | Manufacturer-specific | Claim |
 |---|---|---|---|
-| Định nghĩa P0300, P0301-P0312 | Mã generic `P0xxx` (SAE J2012 / ISO 15031-6; chưa đọc). Quy định yêu cầu mã theo xi-lanh và mã nhiều xi-lanh (SRC01 (e)(3.1)) | Thứ tự đánh số xi-lanh; khi nào lưu mã xi-lanh thay cho mã nhiều xi-lanh (ngưỡng 90%, SRC01 (e)(3.1.3)) | C01, C02 |
+| Định nghĩa P0300, P0301-P0312 | Mã generic `P0xxx` (SAE J2012 / ISO 15031-6; chưa đọc). Quy định yêu cầu mã theo xi-lanh và mã nhiều xi-lanh (SRC01 (e)(3.1)) | Thứ tự đánh số xi-lanh; khi nào lưu mã xi-lanh thay cho mã nhiều xi-lanh (ngưỡng 90%, SRC01 (e)(3.1.3)) | C01, C02, C13 |
 | Freeze frame | Nội dung tối thiểu theo SRC01 (g)(4.3.1), truy cập theo SAE J1979 / J1979-2 | Thông số chỉ có "nếu xe có trang bị"; dữ liệu bỏ máy mở rộng qua chẩn đoán hãng | C03 |
 | Xóa mã | Xóa toàn bộ thông tin chẩn đoán liên quan khí thải (SRC01 (g)(4.10)) | Chức năng reset/học lại của hãng (ngoài phạm vi) | C04, C05 |
 | Mã permanent | Không xóa bằng máy chẩn đoán; lưu dần từ đời 2010-2012 (SRC01 (d)(2.2.5), (g)(4.4.6)) | Điều kiện monitor chạy lại do hãng hiệu chỉnh | C12 |
@@ -62,7 +65,7 @@ Nguồn: SRC01 = Cal. Code Regs. tit. 13, § 1968.2 (CARB, văn bản trên LII 
      Mỗi nguyên nhân khả dĩ cần một phép kiểm tra để xác nhận. -->
 | Symptom / code | Candidate cause | Confirming test | Claim |
 |---|---|---|---|
-| P0300 (± P030x) | Đánh lửa (bugi, bô-bin, dây bugi) | Kiểm tra theo quy trình hãng; hoán đổi bô-bin giữa hai xi-lanh để xem bỏ máy có đi theo không | C08, C09 (unverified, chưa có nguồn) |
+| P0300 (± P030x) | Đánh lửa (bugi, bô-bin, dây bugi) | Kiểm tra theo quy trình hãng; hoán đổi bô-bin giữa hai xi-lanh để xem bỏ máy có đi theo không (ghi trong C09; không nói phép thử này "hay dùng" khi chưa có nguồn) | C08, C09 (unverified, chưa có nguồn) |
 | P0300 (± P030x) | Nhiên liệu (áp suất, kim phun) | Đo áp suất nhiên liệu và kiểm tra kim phun theo quy trình và thông số của hãng | C08, C09 (unverified, chưa có nguồn) |
 | P0300 + fuel trim lệch | Rò rỉ khí nạp / chân không | Thử khói (smoke test) kết hợp đọc fuel trim | C08, C10 (unverified, chưa có nguồn) |
 | P0300 (± P030x) | Cơ khí (độ nén, xu-páp) | Đo áp suất nén hoặc thử độ lọt khí (leak-down) | C08, C10 (unverified, chưa có nguồn) |
@@ -101,7 +104,8 @@ hay dữ liệu trực tiếp, cần product team xác nhận tính năng trong 
 - C01, C02: định nghĩa P0300 và P0301-P0312 cần SAE J2012 / ISO 15031-6 (trả phí) hoặc tài liệu sửa chữa hãng công khai. Quy định (SRC01) chỉ là bối cảnh và không thuộc loại nguồn được chấp nhận cho `dtc-definition`.
 - C05: quy định mô tả việc phát hiện lại, không nói về sửa chữa; "xóa mã không sửa được lỗi" là suy luận, fact-checker cần chấp nhận hoặc bổ sung nguồn hãng.
 - C07: hành động khuyến nghị khi MIL nhấp nháy cần sách hướng dẫn sử dụng hoặc tài liệu hãng.
-- C08, C09, C10: nhóm nguyên nhân và quy trình kiểm tra cần tài liệu hãng hoặc giáo trình; xe demo chưa được chọn nên chưa có tài liệu hãng cụ thể.
+- C08, C09, C10: nhóm nguyên nhân và quy trình kiểm tra cần tài liệu hãng hoặc giáo trình; xe demo chưa được chọn nên chưa có tài liệu hãng cụ thể. Kịch bản chỉ nói fuel trim lệch gợi ý nhóm rò khí nạp (C10); chưa có nguồn nối fuel trim với nhóm nhiên liệu nên không nói.
+- C13: nửa sau (thứ tự xi-lanh do hãng quy định) là suy luận từ việc SRC01 không đánh số xi-lanh; cần tài liệu hãng xác nhận.
 - C11: chưa đọc quy định OBD nào áp dụng cho xe tại Việt Nam; nửa sau của claim là suy luận từ phạm vi của SRC01/SRC02.
 - SRC01 là văn bản do LII đăng lại (bản sửa đổi đến Register 2022); fact-checker nên đối chiếu với bản chính thức của CARB/OAL nếu cần. Bản CARB 2006 (https://ww2.arb.ca.gov/sites/default/files/barcu/regact/obdii06/19682clean.pdf) đã tải nhưng không dùng vì là bản cũ.
 - Safety notes chưa có nguồn chấp nhận được cho các bước an toàn khi đo áp suất nhiên liệu.

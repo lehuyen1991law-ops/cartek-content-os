@@ -44,7 +44,11 @@ Illustrative material for [SKILL.md](SKILL.md) and [shorts-content-specialist](.
 - **CLAIMS:**
 ```
 
-Why this passes the automatic checks: the hook mentions clearing and the narration states the fault returns (caveat marker "lỗi … sáng lại"); P0300 appears in claim C01's text; the CTA contains the brand line. Whether it is *good* is judged by the content-qc-inspector.
+Why this passes the automatic checks: the hook mentions clearing and the narration states the fault returns (caveat marker "lỗi … sáng lại"); P0300 appears in claim C01's text; the CTA contains the brand line, and "logo Cartek" in its VISUAL is a brand mark, not a capability claim (`config/qc-policy.yaml` → `brand_mark_mentions`). Whether it is *good* is judged by the content-qc-inspector.
+
+## From VISUAL to the storyboard
+
+The producer turns each `VISUAL:` into shots and tags them with effect IDs and typography roles from [config/visual-style.yaml](../../config/visual-style.yaml) ([strategy/visual-identity.md](../../strategy/visual-identity.md)). Writing the intended effect into `VISUAL:` helps: "Màn hình máy chẩn đoán, khoanh tròn (highlight-circle) giá trị bỏ máy; mã P0300 hiện lên (code-popup)". A `SAFETY:` line implies the `safety-banner` effect on that segment's shots; G7 warns when the storyboard omits it.
 
 ## Retention devices (craft heuristics, not guaranteed outcomes)
 

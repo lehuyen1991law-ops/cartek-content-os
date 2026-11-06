@@ -40,7 +40,7 @@ The points below are interpretations of the competitor notes in the sheet. They 
 
 | Gap noted in the sheet | How Cartek answers it |
 |---|---|
-| Four of five competitors are noted for low video quality ('Đối thủ'!B6, D6, E6, F6). | Plan every video with a storyboard and shot list. Use clean audio, readable screen captures of diagnostic data and stable framing. |
+| Four of five competitors are noted for low video quality ('Đối thủ'!B6, D6, E6, F6). | Plan every video with a storyboard and shot list. Use clean audio, readable screen captures of diagnostic data and stable framing. Typography, effects and caption rules: [visual identity](visual-identity.md). |
 | Irregular upload schedule (Ecuboot, 'Đối thủ'!B6). | Publish on a cadence the team can sustain. Track it on the [content board](../reports/content-board.md). The sheet sets no cadence, so none is fixed here. |
 | Content limited to product features (OBD Viet Nam, 'Đối thủ'!C6). | Lead with diagnostic knowledge that is useful with any scan tool. Show Cartek 2 only where it is the right tool and its features are verified. |
 | Strong competitors are noted for depth and academic quality (Kênh kiến thức ô tô, 'Đối thủ'!E5). | Match depth with traceable sources: standards, OEM service information and recorded tests. |

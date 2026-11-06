@@ -13,7 +13,7 @@ from . import fileio
 
 DEFAULT_ROOT = Path(__file__).resolve().parents[2]
 
-CONFIG_FILES = ("sources", "taxonomy", "workflow", "qc-policy", "platform-limits", "production")
+CONFIG_FILES = ("sources", "taxonomy", "workflow", "qc-policy", "platform-limits", "production", "visual-style")
 
 
 class Repo:

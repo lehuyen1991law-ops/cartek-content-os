@@ -27,7 +27,7 @@ python3 scripts/export_package.py <ID>
 
    The command refuses test items, unapproved items and stale approvals. Production consumers must reject any package whose `package_status` is not `APPROVED` ([schemas/production-package.schema.json](../schemas/production-package.schema.json)).
 
-2. **Produce the video** from the package: narration, shot list, on-screen text, B-roll, assets, timing.
+2. **Produce the video** from the package: narration, shot list, on-screen text, B-roll, assets, timing, and `visual_style` (fonts, typography roles, effects with their "never use" notes, mandatory captions; see [strategy/visual-identity.md](../strategy/visual-identity.md)).
 3. **Upload by hand in YouTube Studio.** Copy the values from the release package (`exports/production-package.json` → `seo`):
    - Title: `seo.title`.
    - Description: `seo.description_with_chapters` (the description followed by one chapter line per chapter, "00:00 Mở đầu"). YouTube builds chapters from those lines; gate G6 already checked that the whole text fits 5,000 characters.

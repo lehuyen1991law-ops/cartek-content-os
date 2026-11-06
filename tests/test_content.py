@@ -195,7 +195,7 @@ class TestExport(ContentTestCase):
         code, out = run("export_package", self.repo.root, "CTK-L-0015", "--stdout", "--draft")
         self.assertEqual(code, 0)
         package = fileio.loads_yaml(out)
-        for key in ("script", "voiceover", "shot_list", "on_screen_text", "broll_and_animation", "timing", "seo", "technical_claims", "sources", "assets"):
+        for key in ("script", "voiceover", "shot_list", "storyboard_shots", "visual_style", "on_screen_text", "broll_and_animation", "timing", "seo", "technical_claims", "sources", "assets"):
             self.assertIn(key, package)
         self.assertEqual(len(package["script"]["segments"]), 7)
         self.assertGreater(package["timing"]["estimated_total_seconds"], 300)
