@@ -4,7 +4,7 @@
 |---|---|
 | Run date | 2026-11-06 |
 | Stage | RESEARCH |
-| Content fingerprint | `sha256:d51328ddfa3be68caf7e1583f400f1bbebad7d1ec36f44bb78a390e4253348fb` |
+| Content fingerprint | `sha256:13a01f0f8c877503c0d11bdaea1834b0fb1e35e5ac16442f67628271f13d049e` |
 | Automated result | **FAIL** |
 | Approval status | **NOT APPROVABLE** |
 
@@ -15,8 +15,8 @@
 | G1 | Source data and metadata validation | **PASS** | Provenance: CTK-L-0015 from 'Content Direction'!F12. |
 | G2 | Audience and topic relevance | **BLOCKED** | brief.md still has 16 [TODO] marker(s). |
 | G3 | Research completeness and factual accuracy | **BLOCKED** | C01 is unverified: "P0300 cho biết ECU đã phát hiện bỏ máy ngẫu nhiên hoặc ở nhiều xi-lanh (Random/Multiple C…" |
-| G4 | Script coherence, clarity and retention quality | **BLOCKED** | script.md still has 29 [TODO] marker(s). |
-| G5 | Automotive technical and safety review | **FAIL** | Safety flags (fuel-system, hot-or-moving-parts) but the script has no spoken safety warning. |
+| G4 | Script coherence, clarity and retention quality | **FAIL** | Estimated runtime 04:04 is outside the target 05:00-08:00 (sheet 'Content Direction'!B3 "5-8 phút"). |
+| G5 | Automotive technical and safety review | **FAIL** | S02 mentions clearing codes/resetting the lamp without saying, there or in the next segment, that it does not fix the cause. |
 | G6 | SEO package completeness | **FAIL** | 0 title candidate(s) in item.yaml; at least 3 required. |
 | G7 | Production handoff readiness | **FAIL** | No production assets are listed. |
 | G8 | Publishing metadata validation | **FAIL** | No target publish date. |
@@ -63,26 +63,23 @@ Corrections:
 
 - Verify it with an accepted source, or mark it removed and take it out of the script (skill: technical-fact-checker).
 
-### G4 — Script coherence, clarity and retention quality: BLOCKED
+### G4 — Script coherence, clarity and retention quality: FAIL
 
 Evidence:
 
-- [BLOCKED] script.md still has 29 [TODO] marker(s).
-- [INFO] Runtime estimate so far: 00:06 (narration incomplete).
-- [WARN] No retention notes.
+- [FAIL] Estimated runtime 04:04 is outside the target 05:00-08:00 (sheet 'Content Direction'!B3 "5-8 phút").
 - [INFO] Clarity, coherence and retention quality also need an independent judgment review (role qc).
 
 Corrections:
 
-- Finish the script (skill: youtube-scriptwriter).
-- List open loops, pattern changes and payoffs under '## Retention notes'.
+- Cut or expand narration, adjust DEMO-SECONDS, or record production.runtime_exception with a rationale.
 
 ### G5 — Automotive technical and safety review: FAIL
 
 Evidence:
 
-- [BLOCKED] The script is not finished; the technical and safety review needs the final narration.
-- [FAIL] Safety flags (fuel-system, hot-or-moving-parts) but the script has no spoken safety warning.
+- [FAIL] S02 mentions clearing codes/resetting the lamp without saying, there or in the next segment, that it does not fix the cause.
+- [FAIL] S09 shows or names Cartek (beyond the brand line) but cites no cartek-feature claim.
 - [INFO] Safety flags fuel-system, hot-or-moving-parts: a qualified human technical review is required before approval.
 - [BLOCKED] C07 (safety) is unverified: technical approval is blocked.
 - [BLOCKED] C08 (diagnostic-procedure) is unverified: technical approval is blocked.
@@ -92,8 +89,8 @@ Evidence:
 
 Corrections:
 
-- Finish script.md first (G4), then re-run QC.
-- Add a **SAFETY:** line (read in the voice-over) where the risk occurs, or a TYPE safety segment with narration.
+- Add the caveat where clearing is mentioned: clearing removes the code and the lamp; the fault returns if the cause is not repaired.
+- Cite a cartek-feature claim backed by the feature register, or use neutral wording ("máy chẩn đoán").
 - Verify the procedure/safety statement with OEM or standard sources, or remove it.
 
 ### G6 — SEO package completeness: FAIL
@@ -106,7 +103,7 @@ Evidence:
 - [FAIL] No rationale for the recommended title.
 - [FAIL] No description.
 - [FAIL] 0 tag(s); at least 3 required.
-- [BLOCKED] Chapters cannot be set yet: they need the timing of the finished narration.
+- [FAIL] Chapters: 0 chapter(s); YouTube needs at least 3.
 - [FAIL] 0 thumbnail concept(s); at least 2 required.
 
 Corrections:
@@ -117,14 +114,14 @@ Corrections:
 - Fill seo.title_rationale.
 - Write seo.description.
 - Add tags from the keyword notes.
-- Finish script.md, then build chapters from `python3 scripts/qc_content.py runtime <ID>`.
+- Build chapters from `python3 scripts/qc_content.py runtime <ID>` timings.
 - Add thumbnail concepts with on-image text.
 
 ### G7 — Production handoff readiness: FAIL
 
 Evidence:
 
-- [BLOCKED] Script gate G4 is BLOCKED; the production handoff needs a finished script.
+- [BLOCKED] Script gate G4 is FAIL; the production handoff needs a finished script.
 - [BLOCKED] storyboard.md still has 4 [TODO] marker(s).
 - [FAIL] No production assets are listed.
 - [FAIL] Demo segments exist but production.demo_setup lacks the tool and vehicle/location.
@@ -161,6 +158,7 @@ Corrections:
 | Automated gates G1-G8 all PASS on the current content | no | not PASS: G2, G3, G4, G5, G6, G7, G8 |
 | Independent qc review (G2, G4, G6, G7) by agent or human | no | no review for G2, G4, G6, G7 |
 | Independent technical review (G3, G5) by agent or human | no | no review for G3, G5 |
+| No open FAIL or BLOCKED verdict in any current review | yes | none |
 | Qualified human technical review of G3 and G5 (safety flags: fuel-system, hot-or-moving-parts) | no | none on the current content |
 | Human editorial sign-off | no | none on the current content |
 

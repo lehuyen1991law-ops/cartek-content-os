@@ -1,99 +1,116 @@
 # Long-form script — CTK-L-0015: Lỗi P0300 - Ác Mộng của Mọi Động Cơ?
 
-<!-- Kịch bản long-form. Mục tiêu thời lượng: 5-8 phút (nguồn: sheet 'Content Direction'!B3) (tính từ lời thoại thật, xem workflows/script-production.md).
-     QUY ƯỚC MÁY ĐỌC (QC và export đọc file này):
-     - Giữ nguyên các tiêu đề "##" tiếng Anh: Hook candidates, Selected hook, Outline, Script, Retention notes.
-     - Mỗi đoạn trong "## Script" là một tiêu đề "### Sxx — Tên đoạn" và các dòng nhãn:
-         - **TYPE:** hook | intro | body | demo | safety | recap | cta
-         - **VO:** lời thoại (voice-over) — tiếng Việt, đọc thành tiếng được
-         - **VISUAL:** hình ảnh/thao tác trên màn hình
-         - **ON-SCREEN:** chữ hiện trên màn hình (ngắn)
-         - **B-ROLL:** cảnh phụ/animation
-         - **CLAIMS:** mã claim trong item.yaml mà đoạn này dựa vào, ví dụ C01, C02
-         - **DEMO-SECONDS:** số giây demo không lời (mặc định 0)
-         - **SAFETY:** cảnh báo an toàn (bắt buộc khi item có safety.flags)
-     - Đoạn đầu tiên phải là TYPE hook; đoạn cuối là TYPE cta và chứa "Cartek - Check your car".
-     - Thời lượng = âm tiết VO / tốc độ đọc (config/production.yaml) + DEMO-SECONDS. -->
+<!-- Kịch bản long-form, khán giả: thợ sửa chữa ô tô (technician, advanced). Mục tiêu 5-8 phút.
+     Giọng: thợ nói với thợ, câu ngắn, nói được thành tiếng. Không dùng câu mở bài kiểu "hôm nay chúng ta sẽ cùng nhau...".
+     Mọi câu kỹ thuật dẫn claim trong item.yaml. Không có số liệu dựng: phần demo đọc số liệu thật trên xe thử.
+     Không nêu tính năng Cartek 2 (sổ tính năng đang trống): đoạn demo dùng "máy chẩn đoán". -->
 
 ## Hook candidates (Các phương án hook)
 
-<!-- Ít nhất 3 phương án, mỗi phương án 1-2 câu, nói được trong ~15 giây. -->
-1. [TODO: hook dạng câu hỏi/triệu chứng người xem gặp]
-2. [TODO: hook dạng hậu quả nếu bỏ qua]
-3. [TODO: hook dạng kết quả demo sẽ thấy]
+1. Máy báo P0300, khách hỏi: thay bugi luôn hả anh? Khoan. Mã này chỉ nói máy bỏ máy, không nói vì sao.
+2. Bốn bugi mới, bốn bô-bin mới, một tuần sau P0300 quay lại. Tiền khách mất, lỗi vẫn còn. Sai ở bước nào?
+3. Xóa lỗi là đèn tắt. Nhưng anh em vừa xóa luôn thứ quý nhất để bắt bệnh. Đó là gì?
 
 ## Selected hook (Hook được chọn)
 
-- **HOOK:** [TODO: số thứ tự phương án được chọn và lời thoại cuối cùng]
-- **RATIONALE:** [TODO: vì sao hợp với khán giả chính và ý định tìm kiếm]
+- **HOOK:** Phương án 1, viết lại cho tự nhiên: "Máy báo P0300. Khách đứng cạnh hỏi: thay bugi luôn hả anh? Khoan đã."
+- **RATIONALE:** Đúng tình huống thợ gặp mỗi ngày (nỗi đau "xử lý sự cố phức tạp", 'Khán giả'!C4). Câu hỏi của khách mở ra vòng mở "vậy làm gì trước", được trả lời ở S06. Phương án 2 hấp dẫn nhưng ngầm khẳng định một tình huống chưa có nguồn; phương án 3 hay nhưng đẩy trọng tâm sang chuyện xóa mã.
 
 ## Outline (Dàn ý)
 
-1. [TODO]
-2. [TODO]
-3. [TODO]
+1. Hook: P0300 không nói nguyên nhân (C01)
+2. Lộ trình video: đọc mã, đọc freeze frame, khoanh vùng, thử xác nhận
+3. P0300 và P0301 đến P0312 khác nhau ở đâu (C01, C02)
+4. Đọc và ghi freeze frame trước khi đụng vào bất cứ thứ gì (C03, C04, C05)
+5. Demo trên xe thử: đọc freeze frame thật (C03)
+6. Bốn nhóm nguyên nhân và phép thử xác nhận từng nhóm (C08, C09, C10)
+7. Xóa mã, mã permanent và đèn check engine nhấp nháy (C05, C06, C07, C12)
+8. Tóm tắt và lưu ý thị trường Việt Nam (C08, C11)
+9. Kêu gọi hành động
 
 ## Script (Kịch bản chi tiết)
 
 ### S01 — Hook
 
 - **TYPE:** hook
-- **VO:** [TODO]
-- **VISUAL:** [TODO]
-- **ON-SCREEN:** [TODO]
-- **CLAIMS:**
+- **VO:** Máy báo P0300. Khách đứng cạnh hỏi: thay bugi luôn hả anh? Khoan đã. P0300 chỉ nói một điều: ECU thấy động cơ đang bỏ máy, ngẫu nhiên hoặc ở nhiều xi-lanh. Nó không nói vì sao.
+- **VISUAL:** Cận màn hình máy chẩn đoán hiện P0300; cắt nhanh sang khoang máy đang rung nhẹ, quay từ khoảng cách an toàn.
+- **ON-SCREEN:** P0300 = có bỏ máy. Vì sao? Chưa biết.
+- **CLAIMS:** C01
 
-### S02 — Giới thiệu và lời hứa
+### S02 — Lộ trình
 
 - **TYPE:** intro
-- **VO:** [TODO: người xem sẽ học được gì trong video]
-- **VISUAL:** [TODO]
-- **ON-SCREEN:**
+- **VO:** Thay bừa thì tốn tiền khách mà lỗi vẫn có thể quay lại. Nên video này đi đúng trình tự làm ngoài xưởng: đọc mã, đọc freeze frame, khoanh vùng nhóm nguyên nhân, thử cho ra rồi mới thay đồ. Cuối video có phần xóa mã và đèn check engine nhấp nháy, phần đó anh em đừng bỏ qua.
+- **VISUAL:** Kỹ thuật viên cắm máy chẩn đoán vào cổng OBD2 dưới táp-lô; bốn bước hiện lần lượt.
+- **ON-SCREEN:** Đọc mã → Freeze frame → Khoanh vùng → Thử xác nhận
 - **CLAIMS:**
 
-### S03 — Giải thích
+### S03 — P0300 và P0301 đến P0312
 
 - **TYPE:** body
-- **VO:** [TODO]
-- **VISUAL:** [TODO]
-- **ON-SCREEN:**
-- **B-ROLL:** [TODO]
-- **CLAIMS:** [TODO]
+- **VO:** Nói kỹ hơn chút. P0300 nghĩa là ECU phát hiện bỏ máy ngẫu nhiên, hoặc bỏ máy ở nhiều xi-lanh. Còn P0301 đến P0312 thì chỉ đích danh: hai số cuối là số thứ tự xi-lanh, P0301 là máy số một. Vậy nên nếu xe chỉ báo P0300, đừng vội đoán xi-lanh nào. Cái mã chỉ là triệu chứng, chưa phải bệnh.
+- **VISUAL:** Đồ họa động cơ bốn xi-lanh; P0301 đến P0304 gắn vào từng xi-lanh, P0300 phủ lên cả khối.
+- **ON-SCREEN:** P0300: nhiều xi-lanh / ngẫu nhiên · P0301 = xi-lanh 1
+- **B-ROLL:** Animation đánh số xi-lanh.
+- **CLAIMS:** C01, C02
 
-### S04 — Demo thực tế
+### S04 — Freeze frame trước đã
+
+- **TYPE:** body
+- **VO:** Trước khi làm gì, đọc freeze frame. Đây là bản ghi điều kiện lúc ECU bắt lỗi: tải động cơ, nhiệt độ nước làm mát, vòng tua, tốc độ xe. Xe nào có trang bị thì có thêm trạng thái hệ thống nhiên liệu, fuel trim, áp suất đường ống nạp. Chụp màn hình lại, ghi vào phiếu. Vì chỉ một lệnh xóa mã lỗi là mấy dữ liệu này mất hết, mất luôn trạng thái readiness. Xóa không sửa được gì, chỉ xóa bằng chứng.
+- **VISUAL:** Màn hình freeze frame trên máy chẩn đoán; tay kỹ thuật viên chụp ảnh màn hình và ghi phiếu.
+- **ON-SCREEN:** Đọc và lưu freeze frame TRƯỚC khi xóa
+- **CLAIMS:** C03, C04, C05
+
+### S05 — Demo trên xe thử
 
 - **TYPE:** demo
-- **VO:** [TODO]
-- **VISUAL:** [TODO: thao tác Cartek 2/xe; chỉ dùng tính năng đã xác minh]
-- **ON-SCREEN:**
-- **CLAIMS:** [TODO]
-- **DEMO-SECONDS:** 0
+- **VO:** Đây là freeze frame của xe thử. Anh em nhìn ba thứ trước: lỗi bắt ở vòng tua nào, tải cao hay thấp, máy nóng hay còn nguội. Ba con số này cho biết bỏ máy xảy ra trong điều kiện nào, để lát nữa thử lại đúng điều kiện đó chứ không thử mò.
+- **VISUAL:** Quay màn hình máy chẩn đoán (trung tính, không nêu tên thiết bị) trên xe thử có P0300 thật; đọc đúng số liệu trên màn hình, không dựng số liệu. Khoanh tròn vòng tua, tải, nhiệt độ nước làm mát.
+- **ON-SCREEN:** Vòng tua · Tải · Nhiệt độ nước làm mát
+- **SAFETY:** Khi nổ máy để đọc dữ liệu, tránh xa quạt và dây curoa, làm trong chỗ thông thoáng.
+- **CLAIMS:** C03
+- **DEMO-SECONDS:** 15
 
-### S05 — Lỗi thường gặp khi chẩn đoán
+### S06 — Bốn nhóm, mỗi nhóm một phép thử
 
 - **TYPE:** body
-- **VO:** [TODO]
-- **VISUAL:** [TODO]
-- **ON-SCREEN:**
-- **CLAIMS:** [TODO]
+- **VO:** Giờ mới khoanh vùng. Nguyên nhân bỏ máy nằm trong bốn nhóm: đánh lửa, nhiên liệu, rò khí nạp, và cơ khí. Mỗi nhóm có phép thử riêng để xác nhận. Đánh lửa: kiểm tra bô-bin, bugi theo quy trình của hãng; có thể hoán đổi bô-bin giữa hai máy xem bỏ máy có chạy theo không. Nhiên liệu: đo áp suất nhiên liệu, kiểm tra kim phun, theo thông số của hãng cho đúng xe. Rò khí nạp: thử khói, đối chiếu với fuel trim. Cơ khí: đo áp suất nén, hoặc thử độ lọt khí. Thử ra nhóm nào thì thay đồ nhóm đó.
+- **VISUAL:** Sơ đồ cây bốn nhánh; mỗi nhánh hiện tên phép thử. Cảnh minh họa ngắn từng phép thử trên xe thử.
+- **ON-SCREEN:** Đánh lửa · Nhiên liệu · Rò khí nạp · Cơ khí → thử trước, thay sau
+- **B-ROLL:** Hoán đổi bô-bin; đồng hồ đo áp suất nhiên liệu; máy thử khói; đồng hồ đo áp suất nén.
+- **SAFETY:** Đo áp suất nhiên liệu là đụng vào hệ thống xăng có áp: xả áp đúng quy trình của hãng, để sẵn bình chữa cháy, không có lửa gần. Thử khi động cơ đang chạy thì giữ tay và dây đo tránh xa quạt, dây curoa.
+- **CLAIMS:** C08, C09, C10
 
-### S06 — Tóm tắt
+### S07 — Xóa mã và đèn nhấp nháy
+
+- **TYPE:** safety
+- **VO:** Còn xóa mã thì sao? Xóa mã lỗi chỉ xóa bản ghi. Nguyên nhân còn thì ECU bắt lại, mã quay lại. Xe đời mới theo chuẩn OBD II của Mỹ còn có mã permanent: máy chẩn đoán không xóa được, ngắt điện cũng không, ECU tự xóa khi nó xác nhận lỗi đã hết. Một chuyện nữa: trên xe theo quy định này, đèn check engine nhấp nháy nghĩa là bỏ máy đủ nặng để làm hỏng bộ xúc tác. Có xe được thiết kế chỉ sáng đứng chứ không nháy, nên đèn sáng đứng chưa chắc là nhẹ.
+- **VISUAL:** Đèn check engine trên táp-lô: sáng đứng, rồi nhấp nháy; đồ họa bộ xúc tác.
+- **ON-SCREEN:** Xóa mã lỗi ≠ sửa lỗi · Đèn nháy = bỏ máy nặng
+- **SAFETY:** Đèn check engine nhấp nháy thì giảm tải, hạn chế chạy và đưa xe đi kiểm tra sớm.
+- **CLAIMS:** C05, C06, C07, C12
+
+### S08 — Tóm lại
 
 - **TYPE:** recap
-- **VO:** [TODO]
-- **VISUAL:** [TODO]
-- **ON-SCREEN:** [TODO]
-- **CLAIMS:**
+- **VO:** Tóm lại: P0300 là triệu chứng, không phải bệnh. Đọc mã, lưu freeze frame, khoanh vùng, thử từng nhóm, rồi mới thay đồ. Và kiểm tra theo tài liệu của hãng cho đúng thị trường, đời xe và động cơ, vì quy định OBD II của Mỹ không tự động áp cho xe bán ở Việt Nam.
+- **VISUAL:** Bốn bước dạng danh sách, đánh dấu lần lượt.
+- **ON-SCREEN:** 1. Đọc mã 2. Lưu freeze frame 3. Khoanh vùng 4. Thử rồi mới thay
+- **CLAIMS:** C03, C08, C11
 
-### S07 — Kêu gọi hành động
+### S09 — Kêu gọi hành động
 
 - **TYPE:** cta
-- **VO:** [TODO: lời kêu gọi phù hợp khán giả.] Để lại comment nếu cần tư vấn và hãy bấm like, subscribe, bật nút chuông thông báo để không bỏ lỡ những video hữu ích. Cartek - Check your car
-- **VISUAL:** [TODO: logo/end screen]
+- **VO:** Anh em có ca P0300 nào khó thì để lại comment, kèm đời xe và freeze frame, mình xem cùng. Thấy video có ích thì bấm like, subscribe, bật chuông để không lỡ video sau. Cartek - Check your car.
+- **VISUAL:** Logo Cartek; màn hình kết thúc.
 - **ON-SCREEN:** Cartek - Check your car
 - **CLAIMS:**
 
 ## Retention notes (Giữ chân người xem)
 
-<!-- Ghi các điểm giữ chân: vòng mở (open loop), thay đổi nhịp, lời hứa được trả ở đâu. -->
-- [TODO]
+- Vòng mở ở S01 ("thay bugi luôn hả anh?") được trả lời ở S06: thử trước, thay sau.
+- S02 hứa phần xóa mã và đèn nháy ở cuối, giữ người xem tới S07.
+- Đổi nhịp hình: đồ họa (S03), quay màn hình thật (S05), sơ đồ cây và cảnh thử (S06).
+- S07 có điểm bất ngờ: đèn sáng đứng chưa chắc là nhẹ.
