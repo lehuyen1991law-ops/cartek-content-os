@@ -51,6 +51,15 @@ def main(argv: list[str] | None = None) -> int:
         cfg = repo.config["sources"]
         bundle = fetch.fetch_bundle_csv(cfg["spreadsheet"]["id"], cfg["tabs"])
 
+    if not args.check and not args.force:
+        edited = importer.hand_edited_outputs(repo)
+        if edited:
+            log("Refusing to import: generated files were edited by hand since the last import (nothing was written):")
+            for path in edited:
+                log(f"  - {path}")
+            log("Move your edits into content/ or config/, or re-run with --force to discard them.")
+            return 2
+
     if bundle is not None:
         errors = schema.validate(bundle, repo.schemas_dir / "source-capture.schema.json")
         if errors:
@@ -73,6 +82,11 @@ def main(argv: list[str] | None = None) -> int:
         log("Import outputs are up to date with data/source snapshots.")
         return 1 if result.errors else 0
 
+    if result.errors and not args.force:
+        log("Import has errors; nothing was written (use --force to write anyway):")
+        for issue in result.errors:
+            log(f"  - {issue.tab or ''} {issue.ref or ''} {issue.message}")
+        return 1
     outcome = importer.apply(repo, result, force=args.force)
     if outcome["conflicts"]:
         log("Refusing to overwrite generated files that were edited by hand since the last import:")

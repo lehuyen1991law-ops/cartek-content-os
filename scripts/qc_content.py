@@ -80,8 +80,14 @@ def cmd_run(repo: Repo, args) -> int:
     return 0
 
 
-def validate_review(review: dict) -> list[str]:
+def validate_review(review) -> list[str]:
+    if not isinstance(review, dict):
+        return ["the review file must be a YAML mapping (see templates/review.yaml)"]
     problems = []
+    if "qualified" in review and not isinstance(review["qualified"], bool):
+        problems.append("qualified must be true or false (a YAML boolean), not text")
+    if not isinstance(review.get("gates") or {}, dict):
+        return problems + ["gates must be a mapping of gate -> {result, evidence, corrections}"]
     if not str(review.get("reviewer", "")).strip():
         problems.append("reviewer is empty")
     if review.get("reviewer_type") not in ("agent", "human"):
@@ -95,6 +101,11 @@ def validate_review(review: dict) -> list[str]:
         if gate not in qc.GATES:
             problems.append(f"unknown gate {gate}")
             continue
+        if not isinstance(entry, dict):
+            problems.append(f"{gate}: must be a mapping with result, evidence and corrections")
+            continue
+        if not isinstance(entry.get("corrections") or [], list):
+            problems.append(f"{gate}: corrections must be a list")
         if (entry or {}).get("result") not in GATE_RESULTS:
             problems.append(f"{gate}: result must be PASS, FAIL or BLOCKED")
         if len(str((entry or {}).get("evidence", "")).strip()) < 15:
@@ -103,6 +114,11 @@ def validate_review(review: dict) -> list[str]:
             problems.append(f"{gate}: a FAIL or BLOCKED result needs at least one correction")
     if review.get("decision") not in GATE_RESULTS:
         problems.append("decision must be PASS, FAIL or BLOCKED")
+    elif gates and all(isinstance(e, dict) for e in gates.values()):
+        results = [e.get("result") for e in gates.values()]
+        worst = "FAIL" if "FAIL" in results else "BLOCKED" if "BLOCKED" in results else "PASS"
+        if review.get("decision") != worst:
+            problems.append(f"decision must match the worst gate result ({worst})")
     if review.get("role") == "editorial" and review.get("reviewer_type") != "human":
         problems.append("the editorial sign-off must be a human")
     return problems
@@ -137,7 +153,7 @@ def cmd_review(repo: Repo, args) -> int:
         "reviewer": str(review["reviewer"]).strip(),
         "reviewer_type": review["reviewer_type"],
         "role": review["role"],
-        "qualified": bool(review.get("qualified", False)),
+        "qualified": review.get("qualified") is True,
         "fingerprint": ctx.fingerprint_for(review["role"]),
         "gates": {
             gate: {"result": entry["result"], "evidence": str(entry["evidence"]).strip(), "corrections": [str(c) for c in entry.get("corrections") or []]}
@@ -164,7 +180,18 @@ def cmd_status(repo: Repo, args) -> int:
 
 
 def cmd_approve(repo: Repo, args) -> int:
+    if not str(args.by).strip():
+        print("--by must name the person approving.")
+        return 1
     item, ctx, results, approval_info = evaluate(repo, args.id)
+    if item.stage not in ("QC", "APPROVED", "PUBLISHED", "PERFORMANCE_REVIEW"):
+        print(f"{item.id} is at {item.stage}; move it through the workflow to QC first (scripts/set_status.py).")
+        return 1
+    frozen = (item.data.get("publication") or {}).get("published_video_fingerprint")
+    if item.stage in ("PUBLISHED", "PERFORMANCE_REVIEW") and frozen and frozen != item.fingerprint("video"):
+        print("The published video cannot change: brief, research, script, storyboard or claims differ from what was published. "
+              "Log a correction in item.yaml -> corrections, or plan a new item.")
+        return 1
     if approval_info["status"] != "APPROVABLE":
         print(f"{item.id} cannot be approved:")
         for req in approval_info["requirements"]:

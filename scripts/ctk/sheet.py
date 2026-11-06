@@ -222,11 +222,14 @@ def looks_like_url(value: str) -> bool:
     return parsed.scheme in ("http", "https") and bool(parsed.netloc)
 
 
+_YOUTUBE_VIDEO = re.compile(
+    r"^https://(?:(?:www\.|m\.)?youtube\.com/(?:watch\?(?:.*&)?v=|shorts/|live/)|youtu\.be/)[A-Za-z0-9_-]{6,}(?:[?&#].*)?$"
+)
+
+
 def is_youtube_url(value: str) -> bool:
-    if not looks_like_url(value):
-        return False
-    host = urlparse(value.strip()).netloc.lower()
-    return host.endswith("youtube.com") or host.endswith("youtu.be")
+    """A link to one YouTube video (watch, shorts, live or youtu.be), not a channel or a look-alike host."""
+    return bool(_YOUTUBE_VIDEO.match((value or "").strip()))
 
 
 def parse_date(raw: str, formats: list[str]) -> date | None:
@@ -502,7 +505,8 @@ def parse_direction(tab: TabSnapshot, fmt: str, mapping: dict[str, str], issues:
                     elif value:
                         issues.append(Issue("warning", "stray-cells", f"Unexpected cell {a1(rownum, col)} was not imported.", tab.title, a1(rownum, col)))
                 continue
-            issues.append(Issue("warning", "unmapped-label", f"Row label {label!r} is not mapped and was not imported.", tab.title, a1(rownum, 0)))
+            issues.append(Issue("warning", "unmapped-label", f"Row label {label!r} is not mapped and was not imported; ideas below it are not attached to the previous group.", tab.title, a1(rownum, 0)))
+            current = None
             continue
 
         unexpected = [c for c in (1, 2) if not tu.is_blank(tab.cell(rownum, c))]
@@ -581,6 +585,10 @@ def parse_tracker(
         rownum = r_index + 1
         row = tab.rows[r_index]
         cleaned = {name: tu.clean(row[col] if col < len(row) else "") for col, name in columns.items()}
+        for col, name in columns.items():
+            link = (tab.hyperlinks or {}).get(a1(rownum, col))
+            if name == "publish_url" and link and not looks_like_url(cleaned.get(name, "")):
+                cleaned[name] = link
         extras = {extra_columns[c]: tu.clean(row[c]) for c in extra_columns if c < len(row) and not tu.is_blank(row[c])}
         meaningful = {k: v for k, v in cleaned.items() if v and tu.key(v) not in placeholders}
         if all(tu.is_blank(v) for v in row):
@@ -681,8 +689,14 @@ def _tracker_record(tab, fmt, rownum, last_col, cleaned, meaningful, extras, gro
             issues.append(Issue("warning", "invalid-url", f"Row {rownum}: publish link {url!r} is not a URL.", tab.title, ref))
 
     stage_hint = spec.get("stage")
+    if stage_hint == "PUBLISHED" and publish_date and publish_date > date.today().isoformat():
+        flags.append("future-publish-date")
+        issues.append(Issue("warning", "future-publish-date", f"Row {rownum} is marked 'Đã xuất bản' with a future date {publish_date}; not treated as published.", tab.title, ref))
+        publish_date_evidence = None
+    else:
+        publish_date_evidence = publish_date
     if stage_hint == "PUBLISHED":
-        missing = [name for name, value in (("publish_date", publish_date), ("publish_url", publish_url)) if not value]
+        missing = [name for name, value in (("publish_date", publish_date_evidence), ("publish_url", publish_url if publish_url and is_youtube_url(publish_url) else None)) if not value]
         if missing:
             stage_hint = None
             flags.append("published-without-evidence")

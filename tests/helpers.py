@@ -90,6 +90,8 @@ def edit_snapshot(repo: Repo, title: str, edit) -> None:
 # ---------------------------------------------------------------------------
 # Synthetic "complete" long-form item (passes every automated gate)
 # ---------------------------------------------------------------------------
+_seo_template = (REPO_ROOT / "templates" / "seo-package.md").read_text(encoding="utf-8")
+TEMPLATE_CHECKLIST = "\n".join(line for line in _seo_template[_seo_template.index("## Publishing checklist"):].splitlines() if line.startswith("- [ ]"))
 FILLER = "Đây là lời thoại mẫu tổng hợp chỉ dùng cho kiểm thử tự động của hệ thống."  # 17 syllables
 
 
@@ -139,7 +141,7 @@ def write_complete_fixture(repo: Repo, content_id: str = "CTK-L-0015") -> Path:
     (ws / "script.md").write_text("\n".join(script) + "\n", encoding="utf-8")
     (ws / "seo.md").write_text(
         "# SEO (SYNTHETIC TEST FIXTURE)\n\n## Search intent\n\nSynthetic.\n\n## Keyword notes\n\nSynthetic.\n\n"
-        "## Title rationale\n\nSynthetic.\n\n## Publishing checklist\n\n- [x] Synthetic item one\n- [x] Synthetic item two\n",
+        "## Title rationale\n\nSynthetic.\n\n## Publishing checklist\n\n" + TEMPLATE_CHECKLIST.replace("- [ ]", "- [x]") + "\n",
         encoding="utf-8",
     )
     (ws / "storyboard.md").write_text(
@@ -173,6 +175,8 @@ def write_complete_fixture(repo: Repo, content_id: str = "CTK-L-0015") -> Path:
     data["production"]["assets_required"] = [{"item": "Synthetic asset", "type": "tool", "status": "confirmed", "notes": ""}]
     data["production"]["demo_setup"] = {"tool": "Cartek 2", "tool_version": "test", "vehicle": "Synthetic test vehicle", "location": "Test bay"}
     data["publication"]["visibility_plan"] = "scheduled"
+    data["status"]["stage"] = "QC"
+    item.add_history("QC", "unit-test", "Synthetic fixture handed to QC.")
     item.save()
     return ws
 

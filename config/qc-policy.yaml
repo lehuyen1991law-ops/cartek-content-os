@@ -57,11 +57,13 @@ brand_tagline: "Cartek - Check your car"
 # --- G5 ------------------------------------------------------------------------------
 # Wording that implies clearing a code repairs the vehicle: always FAIL.
 banned_patterns:
-  - pattern: 'xoa (ma loi|ma|loi) (la|thi|de|cho) (xong|het|sua|khac phuc|het benh|khoi)'
+  # Matched against text with punctuation and line breaks turned into spaces, so
+  # "Xóa lỗi... là xong!" and "xóa mã lỗi P0300 bằng máy là xe chạy ngon" are caught.
+  - pattern: 'xoa (ma loi|ma|loi|den( bao loi| check engine)?)( [a-z0-9]+){0,6} (la|thi|se|de|cho) (xe )?(xong|het|sua|sua duoc|khac phuc|het benh|khoi|on|het loi|binh thuong|chay ngon|ngon)\b'
     reason: "Implies clearing a fault code repairs the fault."
-  - pattern: '(tat|reset) den (check engine|bao loi|dong co) (la|thi|de) (xong|het|sua|khac phuc|khoi)'
+  - pattern: '(tat|reset) (den|ma|loi)( [a-z0-9]+){0,6} (la|thi|se|de|cho) (xe )?(xong|het|sua|khac phuc|khoi|on|het loi|binh thuong|chay ngon)\b'
     reason: "Implies turning off the warning lamp repairs the fault."
-  - pattern: 'clear(ing)? (the )?(code|codes|dtc|dtcs) (fix|fixes|repair|repairs|solve|solves)'
+  - pattern: 'clear(ing|ed)? (the )?(code|codes|dtc|dtcs|light|lamp)( [a-z0-9]+){0,4} (fix|fixes|fixed|repair|repairs|solve|solves|cure|cures)'
     reason: "Implies clearing a fault code repairs the fault."
 # A banned phrase inside a sentence that also contains one of these markers is treated as
 # myth-debunking ("Nhiều người tưởng xóa lỗi là xong, nhưng...") and reported for review instead.
@@ -91,19 +93,19 @@ manufacturer_specific_dtc_patterns: ['^P1', '^P3[0-3]', '^[BCU][12]']
 # Terms that suggest a hazardous topic. Detected topics must be flagged
 # (safety.flags -> qualified human review) or dismissed with a rationale.
 safety_terms:
-  high-voltage: ['cao ap', 'dien ap cao', 'high voltage', '\bxe dien\b', 'hybrid', '\bpin (xe|cao ap)\b']
-  brakes: ['\bphanh\b', '\babs\b', '\bepb\b', 'ma phanh']
-  steering: ['vo lang', 'tro luc lai', '\beps\b', 'goc lai', 'thuoc lai']
+  high-voltage: ['cao ap', 'dien ap cao', 'high voltage', '\bxe dien\b', 'hybrid', '\bpin (xe|cao ap|lithium)\b', '\b(ev|phev|bev)\b', 'plug in']
+  brakes: ['\bphanh\b', '\babs\b', '\bepb\b', 'ma phanh', '\b(dau|ma|dia|heo|be) thang\b', '\bthang tay\b']
+  steering: ['vo lang', 'tro luc lai', '\beps\b', 'goc lai', 'thuoc lai', 'tay lai', 'rotuyn', 'thanh giang']
   airbag-srs: ['tui khi', '\bsrs\b', 'airbag', 'cang dai']
-  fuel-system: ['ap suat nhien lieu', '(ong|duong) (xang|dau|nhien lieu)', 'bom (xang|nhien lieu)', 'xa ap', 'thao kim phun', 'ro ri (xang|nhien lieu)']
-  lifting: ['kich xe', 'con doi', 'cau nang', 'nang xe', 'chui (vao )?gam']
-  battery-12v: ['ac quy', 'cau binh', 'thao cuc']
-  hot-or-moving-parts: ['nuoc lam mat nong', 'nap ket nuoc', 'quat (ket nuoc|lam mat)', 'day curoa', '(dong co|may) dang (chay|no|hoat dong)']
+  fuel-system: ['ap suat (nhien lieu|xang)', '(ong|duong) (xang|dau|nhien lieu)', 'bom (xang|nhien lieu)', 'xa ap', 'thao kim phun', 'ro ri (xang|nhien lieu)', 'dong ho (do )?ap suat']
+  lifting: ['kich xe', 'con doi', 'cau nang', 'nang xe', 'chui (vao )?gam', 'ke xe', 'kich nang', 'gam xe']
+  battery-12v: ['ac quy', 'cau binh', 'thao cuc', 'binh dien', 'kich binh']
+  hot-or-moving-parts: ['nuoc lam mat nong', 'nap ket nuoc', 'quat (ket nuoc|lam mat)', 'day curoa', '(dong co|may) dang (chay|no|hoat dong)', '\bno may\b', 'ong xa nong']
   adas: ['\badas\b', 'radar', 'can chinh camera']
 
 # Placeholder wording that must never reach viewers (script narration/on-screen text and SEO
-# fields). Matched like the other patterns (accent-free, lower case). [TODO] is always included.
-draft_markers: ['\[todo', 'cho xac minh', 'ban nhap', '\btbd\b', '\bxxx\b', 'lorem ipsum', '\bplaceholder\b']
+# fields). Matched like the other patterns (accent-free, lower case). Keep '\[todo' in the list.
+draft_markers: ['\[todo', '\btodo\b', '(cho|chua|can) xac minh', 'ban nhap', 'dien sau', '\btbd\b', '\bxxx\b', '\?\?\?', 'lorem ipsum', '\bplaceholder\b']
 
 # --- G6 ------------------------------------------------------------------------------
 min_title_candidates: 3

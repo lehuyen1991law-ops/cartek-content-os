@@ -78,6 +78,9 @@ def main(argv: list[str] | None = None) -> int:
         if item.stage not in ("APPROVED", "PUBLISHED"):
             print(f"{item.id} is at {item.stage}; only APPROVED content can be published.")
             return 1
+        if status.get("on_hold"):
+            print(f"{item.id} is on hold; resume it before recording the publication.")
+            return 1
         ctx = build_context(repo, item)
         approval_info = qc.approval(ctx, qc.run_gates(ctx))
         if approval_info["status"] != "APPROVABLE":
@@ -94,14 +97,25 @@ def main(argv: list[str] | None = None) -> int:
         if published > date.today():
             print("--date is in the future; record the publication after the video is live.")
             return 1
+        approved_on = [h["date"] for h in item.data.get("history") or [] if h.get("stage") == "APPROVED"]
+        if approved_on and published.isoformat() < approved_on[-1]:
+            print(f"--date {published.isoformat()} is before the approval on {approved_on[-1]}; publish only approved content.")
+            return 1
         checklist = item.data["publication"].get("upload_checklist") or []
+        required = [e["item"] for e in (fileio.load_yaml(repo.templates_dir / "item.yaml")["publication"].get("upload_checklist") or [])]
+        missing = [label for label in required if label not in {e.get("item") for e in checklist}]
+        if missing:
+            print("publication.upload_checklist is missing steps from templates/item.yaml:")
+            for label in missing:
+                print(f"  - {label}")
+            return 1
         pending = [entry["item"] for entry in checklist if not entry.get("done")]
         if not checklist or pending:
             print("Finish publication.upload_checklist in item.yaml first (set done: true for each step):")
             for entry in pending or ["(checklist missing: copy it from templates/item.yaml)"]:
                 print(f"  - {entry}")
             return 1
-        item.data["publication"].update({"url": args.url, "published_at": published.isoformat()})
+        item.data["publication"].update({"url": args.url, "published_at": published.isoformat(), "published_video_fingerprint": item.fingerprint("video")})
     if stage == "PERFORMANCE_REVIEW":
         if item.stage not in ("PUBLISHED", "PERFORMANCE_REVIEW"):
             print("Only published items can move to PERFORMANCE_REVIEW.")

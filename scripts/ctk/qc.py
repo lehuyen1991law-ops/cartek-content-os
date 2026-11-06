@@ -19,6 +19,7 @@ from datetime import date
 from typing import Any
 
 from . import export, mdparse, schema
+from .fileio import read_text as fileio_read
 from . import textutil as tu
 from .context import Context, describe_target, within_target
 from .items import DELIVERABLES, today
@@ -82,22 +83,39 @@ class GateResult:
 # Helpers
 # ---------------------------------------------------------------------------
 def _sentences(text: str) -> list[str]:
-    return [s.strip() for s in re.split(r"(?<=[.!?…])\s+|\n+", text) if s.strip()]
+    """Sentences split on end punctuation and blank lines; a single line break does not end one."""
+    return [s.strip() for s in re.split(r"(?<=[.!?…])\s+|\n\s*\n", text) if s.strip()]
 
 
 def _public_script_text(ctx: Context) -> str:
     parts = []
     for segment in ctx.script.segments:
         parts.extend([segment.get("VO"), segment.get("ON-SCREEN"), segment.get("SAFETY")])
-    return "\n".join(p for p in parts if p)
+    return "\n\n".join(p for p in parts if p)
 
 
 def _public_seo_text(ctx: Context) -> str:
     seo = ctx.data.get("seo") or {}
     parts = [seo.get("recommended_title", ""), seo.get("description", ""), seo.get("pinned_comment", "")]
-    parts += list(seo.get("title_candidates") or []) + list(seo.get("tags") or [])
-    parts += [c.get("on_image_text", "") for c in seo.get("thumbnail_concepts") or []]
+    parts += list(seo.get("title_candidates") or []) + list(seo.get("tags") or []) + list(seo.get("hashtags") or [])
+    parts += [c.get("title", "") for c in seo.get("chapters") or []]
+    parts += [f"{c.get('concept', '')}. {c.get('on_image_text', '')}" for c in seo.get("thumbnail_concepts") or []]
     return "\n".join(p for p in parts if p)
+
+
+def _crew_text(ctx: Context) -> str:
+    """What the crew films or prepares: visuals, storyboard, demo setup and assets."""
+    production = ctx.data.get("production") or {}
+    parts = [s.get(f) for s in ctx.script.segments for f in ("VISUAL", "B-ROLL")]
+    parts.append(mdparse.without_todos(ctx.texts.get("storyboard", "")))
+    parts += [f"{a.get('item', '')} {a.get('notes', '')}" for a in production.get("assets_required") or []]
+    parts += [str(v) for v in (production.get("demo_setup") or {}).values() if v]
+    return "\n".join(p for p in parts if p)
+
+
+def _normalized(text: str) -> str:
+    """Accent-free, lower-case text with punctuation and line breaks turned into single spaces."""
+    return re.sub(r"[^0-9a-z]+", " ", tu.match_text(text)).strip()
 
 
 _DTC_RANGE = re.compile(r"\b([PBCU][0-3])([0-9A-F]{3})\s*(?:-|–|—|to|đến|den)\s*([PBCU][0-3])([0-9A-F]{3})\b", re.IGNORECASE)
@@ -107,12 +125,13 @@ def codes_covered(text: str, dtc_pattern: str) -> set[str]:
     """DTCs a claim text covers: single codes plus expanded ranges ("P0301-P0312")."""
     covered = {m.upper() for m in re.findall(dtc_pattern, text, flags=re.IGNORECASE)}
     for match in _DTC_RANGE.finditer(text):
+        # Only short, explicit ranges count (e.g. P0301-P0312); a broad range is not a definition.
         prefix, start, prefix_end, end = (g.upper() for g in match.groups())
         if prefix != prefix_end:
             continue
         base = 10 if (start + end).isdigit() else 16
         low, high = int(start, base), int(end, base)
-        if 0 <= high - low <= 512:
+        if 0 <= high - low <= 20:
             width = "03d" if base == 10 else "03X"
             covered.update(f"{prefix}{format(n, width)}" for n in range(low, high + 1))
     return covered
@@ -386,6 +405,11 @@ def gate_g4(ctx: Context) -> GateResult:
         if last.type == "cta" and tu.match_text(tagline) not in tu.match_text(last.get("VO") + " " + last.get("ON-SCREEN")):
             g.fail(f"The CTA does not include the brand line '{tagline}'.", f"Add '{tagline}' to the CTA voice-over or on-screen text.")
     total = ctx.total_seconds
+    if ctx.target.get("max_seconds") is None and ctx.target.get("min_seconds") is None:
+        g.block(f"No runtime target could be read ({ctx.target['source']}).", "Fix the duration in the sheet and re-import, set config/production.yaml runtime_targets, or record production.runtime_exception.")
+    platform_max = ctx.platform.get("shorts", {}).get("platform_max_seconds")
+    if fmt == "short" and platform_max and total > platform_max:
+        g.fail(f"Estimated runtime {mdparse.format_timestamp(total)} exceeds YouTube's Shorts limit of {platform_max} s; no exception can allow that.", "Cut the Short below the platform limit.")
     if doc.todo_count or not segments:
         g.info(f"Runtime estimate so far: {mdparse.format_timestamp(total)} (narration incomplete).")
     elif not within_target(total, ctx.target):
@@ -415,26 +439,46 @@ def gate_g5(ctx: Context) -> GateResult:
         g.block("The script is not finished; the technical and safety review needs the final narration.", "Finish script.md first (G4), then re-run QC.")
     if not ctx.texts["research"] or mdparse.todo_count(ctx.texts["research"]):
         g.block("research.md is not finished; technical accuracy cannot be reviewed yet.", "Finish the research first (G3).")
-    public = mdparse.without_todos(_public_script_text(ctx) + "\n" + _public_seo_text(ctx))
+    public = mdparse.without_todos(_public_script_text(ctx) + "\n\n" + _public_seo_text(ctx))
     debunk = [re.compile(p) for p in policy.get("debunk_markers", [])]
     for rule in policy["banned_patterns"]:
         pattern = re.compile(rule["pattern"])
-        for sentence in _sentences(public):
-            plain = tu.match_text(sentence)
-            if pattern.search(plain):
-                if any(marker.search(plain) for marker in debunk):
-                    g.warn(f"Possible myth-debunking use of banned wording: \"{_snippet(sentence)}\"", "Reviewer: confirm the sentence clearly says this is wrong.")
+        # Match across whole blocks: "Xóa lỗi... là xong" must not escape by being split into sentences.
+        for block in re.split(r"\n\s*\n", public):
+            plain = _normalized(block)
+            for match in pattern.finditer(plain):
+                context = plain[max(0, match.start() - 60) : match.end()]
+                if any(marker.search(context) for marker in debunk):
+                    g.warn(f"Possible myth-debunking use of banned wording: \"{_snippet(match.group(0))}\"", "Reviewer: confirm the sentence clearly says this is wrong.")
                 else:
-                    g.fail(f"{rule['reason']} \"{_snippet(sentence)}\"", "Rewrite: clearing a code removes the record/lamp only; the cause must be diagnosed and repaired.")
+                    g.fail(f"{rule['reason']} \"{_snippet(match.group(0))}\"", "Rewrite: clearing a code removes the record/lamp only; the cause must be diagnosed and repaired.")
     for rule in policy["review_patterns"]:
         pattern = re.compile(rule["pattern"])
         for sentence in _sentences(public):
-            if pattern.search(tu.match_text(sentence)):
+            if pattern.search(_normalized(sentence)):
                 g.warn(f"{rule['reason']} \"{_snippet(sentence)}\"", "Reviewer: confirm this wording is supported by a verified claim.")
-    vo_text = tu.match_text(mdparse.without_todos("\n".join(s.get("VO") for s in ctx.script.segments)))
-    if any(re.search(p, vo_text) for p in policy["clear_codes_mentions"]):
-        if not any(re.search(p, vo_text) for p in policy["clear_codes_caveat_markers"]):
-            g.fail("The narration mentions clearing codes/resetting the lamp without saying it does not fix the cause.", "Add a caveat: clearing removes the code and the lamp; the fault returns if the cause is not repaired.")
+    # A clearing mention needs its caveat in the same segment or the next one.
+    mentions = [re.compile(p) for p in policy["clear_codes_mentions"]]
+    caveats = [re.compile(p) for p in policy["clear_codes_caveat_markers"]]
+    blocks = [_normalized(mdparse.without_todos(" ".join([s.get("VO"), s.get("ON-SCREEN"), s.get("SAFETY")]))) for s in ctx.script.segments]
+    for i, (segment, block) in enumerate(zip(ctx.script.segments, blocks)):
+        if any(m.search(block) for m in mentions):
+            window = " ".join(blocks[i : i + 2])
+            if not any(c.search(window) for c in caveats):
+                g.fail(f"{segment.id} mentions clearing codes/resetting the lamp without saying, there or in the next segment, that it does not fix the cause.", "Add the caveat where clearing is mentioned: clearing removes the code and the lamp; the fault returns if the cause is not repaired.")
+    seo_text = _normalized(mdparse.without_todos(_public_seo_text(ctx)))
+    description = _normalized(ctx.data["seo"].get("description") or "")
+    if any(m.search(seo_text) for m in mentions) and not any(c.search(description) for c in caveats):
+        g.fail("The SEO metadata mentions clearing codes but the description does not say clearing does not fix the cause.", "Add the caveat to seo.description.")
+    # Cartek 2 capabilities: any mention of the product (other than the brand line) needs a cartek-feature claim.
+    tagline = _normalized(policy["brand_tagline"])
+    feature_claims = {c["id"] for c in data["claims"] if c["category"] == "cartek-feature" and c["status"] != "removed"}
+    for segment in ctx.script.segments:
+        text = _normalized(mdparse.without_todos(" ".join([segment.get("VO"), segment.get("ON-SCREEN"), segment.get("SAFETY"), segment.get("VISUAL")])))
+        if re.search(r"\bcartek\b", text.replace(tagline, " ")) and not (set(segment.claims) & feature_claims):
+            g.fail(f"{segment.id} shows or names Cartek (beyond the brand line) but cites no cartek-feature claim.", "Cite a cartek-feature claim backed by the feature register, or use neutral wording (\"máy chẩn đoán\").")
+    if re.search(r"\bcartek 2\b", seo_text) and not feature_claims:
+        g.fail("The SEO metadata names Cartek 2 but the item has no cartek-feature claim.", "Back the product mention with a registered feature or remove it.")
     covered: set[str] = set()
     for claim in data["claims"]:
         if claim["status"] != "removed":
@@ -448,9 +492,11 @@ def gate_g5(ctx: Context) -> GateResult:
             g.fail(f"DTC {code} appears in public text or on screen but no claim defines it.", f"Register a claim stating what {code} means, with a standard or OEM source.")
         if any(p.search(code) for p in manufacturer) and (data["vehicle"]["scope"] != "specific" or not data["vehicle"]["brands"]):
             g.fail(f"{code} is a manufacturer-controlled code range but the item is not vehicle-specific.", "Name the make/model/year whose service information defines this code.")
-    corpus = tu.match_text(" ".join([data.get("working_title", ""), *(mdparse.without_todos(ctx.texts[k]) for k in ("brief", "research", "script"))]))
+    corpus = _normalized(" ".join([data.get("working_title", ""), *(mdparse.without_todos(ctx.texts[k]) for k in ("brief", "research", "script")), _crew_text(ctx), _public_seo_text(ctx)]))
     flags = list(data["safety"]["flags"])
     dismissed = {d["flag"] for d in data["safety"]["dismissed"]}
+    if set(data["vehicle"].get("powertrains") or []) & {"hybrid", "phev", "bev"} and "high-voltage" not in flags and "high-voltage" not in dismissed:
+        g.fail("The vehicle has a high-voltage powertrain (hybrid/PHEV/BEV) but high-voltage is neither flagged nor dismissed.", "Flag high-voltage, or dismiss it with a rationale if no high-voltage part is touched.")
     for flag in flags + sorted(dismissed):
         if flag not in ctx.taxonomy["safety_flags"]:
             g.fail(f"Unknown safety flag '{flag}'.", f"Use one of: {', '.join(ctx.taxonomy['safety_flags'])}.")
@@ -459,15 +505,16 @@ def gate_g5(ctx: Context) -> GateResult:
         if hit and flag not in flags and flag not in dismissed:
             g.fail(f"Safety-relevant wording for '{flag}' found (\"{hit}\") but the item neither flags nor dismisses it.", "Add the flag to safety.flags (needs a qualified human technical review) or add safety.dismissed with a rationale.")
     if flags:
-        has_safety_text = any(s.type == "safety" or s.get("SAFETY") for s in ctx.script.segments)
+        has_safety_text = any((s.type == "safety" and s.get("VO")) or s.get("SAFETY") for s in ctx.script.segments)
         if not has_safety_text and ctx.script.segments:
-            g.fail(f"Safety flags ({', '.join(flags)}) but the script has no safety warning.", "Add a TYPE safety segment or a **SAFETY:** line where the risk occurs.")
+            g.fail(f"Safety flags ({', '.join(flags)}) but the script has no spoken safety warning.", "Add a **SAFETY:** line (read in the voice-over) where the risk occurs, or a TYPE safety segment with narration.")
         g.info(f"Safety flags {', '.join(flags)}: a qualified human technical review is required before approval.")
     for claim in data["claims"]:
         if claim["category"] in ("safety", "diagnostic-procedure") and claim["status"] in ("unverified", "disputed"):
             g.block(f"{claim['id']} ({claim['category']}) is {claim['status']}: technical approval is blocked.", "Verify the procedure/safety statement with OEM or standard sources, or remove it.")
     if not g.problems:
-        g.ok("No banned wording; DTCs covered by claims; safety topics flagged or dismissed with rationale.")
+        warned = any(level == "WARN" for level, _, _ in g.findings)
+        g.ok("No automatic failure; DTCs covered by claims; safety topics flagged or dismissed." + (" Warnings above need the reviewer's attention." if warned else ""))
     g.info("Automotive accuracy also needs an independent technical review (role technical).")
     return g
 
@@ -603,6 +650,11 @@ def gate_g8(ctx: Context) -> GateResult:
     if not boxes:
         g.fail("seo.md has no publishing checklist items.", "Restore the checklist from templates/seo-package.md.")
     else:
+        template = mdparse.checkboxes(mdparse.find_section(fileio_read(ctx.repo.templates_dir / "seo-package.md"), "Publishing checklist"))
+        present = {label for _, label in boxes}
+        missing = [label for _, label in template if label not in present]
+        if missing:
+            g.fail(f"seo.md checklist is missing {len(missing)} item(s) from templates/seo-package.md, e.g. \"{missing[0]}\".", "Copy the missing checklist items from the template; do not delete items you have not done.")
         unchecked = [label for done, label in boxes if not done]
         if unchecked:
             g.block(f"{len(unchecked)} of {len(boxes)} publishing checklist item(s) in seo.md are not ticked.", "Complete each item and tick it ([x]) before approval.")
@@ -690,15 +742,34 @@ def approval(ctx: Context, results: dict[str, GateResult]) -> dict[str, Any]:
                 used.append(latest["id"])
         detail = "; ".join(filter(None, [f"no review for {', '.join(missing)}" if missing else "", ", ".join(failed), f"PASS in {', '.join(used)}" if used and not missing and not failed else ""]))
         add(f"Independent {rule['role']} review ({', '.join(rule['gates'])}) by {' or '.join(rule['reviewer_types'])}", not missing and not failed, detail)
+    # Any current judgment review that reports a problem blocks approval until a later review
+    # of the same gate (any role) records PASS. The decision of each role's latest review counts too.
+    judgment = [r for r in reviews if r["reviewer_type"] in ("agent", "human")]
+    open_items = []
+    for gate in GATES:
+        latest = None
+        for review in judgment:
+            if gate in review.get("gates", {}):
+                latest = review
+        if latest and latest["gates"][gate]["result"] != PASS:
+            open_items.append(f"{gate}={latest['gates'][gate]['result']} ({latest['id']}, {latest['role']})")
+    for role in ("qc", "technical", "editorial"):
+        latest_role = [r for r in judgment if r["role"] == role]
+        if latest_role and latest_role[-1]["decision"] != PASS:
+            open_items.append(f"{role} decision {latest_role[-1]['decision']} ({latest_role[-1]['id']})")
+    add("No open FAIL or BLOCKED verdict in any current review", not open_items, "; ".join(open_items) if open_items else "none")
     flags = ctx.data["safety"]["flags"]
+    dismissed = ctx.data["safety"]["dismissed"]
     mode = policy.get("human_technical_review", "safety_flagged")
-    if mode == "always" or (mode == "safety_flagged" and flags):
+    if mode not in ("always", "safety_flagged"):
+        mode = "always"  # unknown value: fail closed
+    if mode == "always" or flags or dismissed:
         latest = None
         for review in reviews:
-            if review["role"] == "technical" and review["reviewer_type"] == "human" and review.get("qualified"):
+            if review["role"] == "technical" and review["reviewer_type"] == "human" and review.get("qualified") is True:
                 latest = review
         ok = bool(latest) and all(latest["gates"].get(g, {}).get("result") == PASS for g in ("G3", "G5"))
-        reason = f"safety flags: {', '.join(flags)}" if flags else "policy: always"
+        reason = f"safety flags: {', '.join(flags)}" if flags else (f"dismissed safety topics: {', '.join(d['flag'] for d in dismissed)}" if dismissed else "policy: always")
         add(f"Qualified human technical review of G3 and G5 ({reason})", ok, latest["id"] if latest else "none on the current content")
     if policy.get("require_human_final_signoff"):
         latest = None

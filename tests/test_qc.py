@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import unittest
+from datetime import date
 
 from helpers import Sandbox, created_id, record_passing_reviews, review_file, run, write_complete_fixture
 
@@ -217,7 +218,7 @@ class TestCompleteFixture(QCTestCase):
             self.assertIn(expected, failures)
 
     def test_unchecked_publishing_checklist_blocks_g8(self):
-        self.edit_file("CTK-L-0015", "seo.md", lambda t: t.replace("- [x] Synthetic item two", "- [ ] Synthetic item two"))
+        self.edit_file("CTK-L-0015", "seo.md", lambda t: t.replace("- [x] Tags total", "- [ ] Tags total"))
         _, results = self.gates()
         self.assertEqual(results["G8"].result, qc.BLOCKED)
 
@@ -258,12 +259,12 @@ class TestReviewerFindings(QCTestCase):
         self.assertTrue(any("clearing" in e for e in self.findings(results, "G5", qc.FAIL)), results["G5"].evidence_lines())
         self.replace_hook_sentence("Mã P0300 xuất hiện. Bạn có thể xóa mã bằng máy chẩn đoán.")
         _, results = self.gates()
-        self.assertTrue(any("without saying it does not fix" in e for e in self.findings(results, "G5", qc.FAIL)))
+        self.assertTrue(any("does not fix the cause" in e for e in self.findings(results, "G5", qc.FAIL)))
 
     def test_todo_prompt_does_not_count_as_caveat(self):
         self.replace_hook_sentence("Mã P0300 xuất hiện. Bạn có thể xóa mã lỗi bằng máy. [TODO: nói rằng xóa mã không sửa nguyên nhân]")
         _, results = self.gates()
-        self.assertTrue(any("without saying it does not fix" in e for e in self.findings(results, "G5", qc.FAIL)))
+        self.assertTrue(any("does not fix the cause" in e for e in self.findings(results, "G5", qc.FAIL)))
 
     def test_claim_ranges_cover_codes_and_visuals_are_scanned(self):
         def add_range_claim(data):
@@ -317,6 +318,76 @@ class TestReviewerFindings(QCTestCase):
         self.assertIn("editorial sign-off PASS is not allowed", out)
 
 
+class TestSecondReviewFindings(QCTestCase):
+    """Regression tests for the seven-dimension repository review."""
+
+    def setUp(self) -> None:
+        super().setUp()
+        write_complete_fixture(self.repo)
+
+    def status(self):
+        ctx, results = self.gates()
+        return qc.approval(ctx, results)
+
+    def test_hazard_in_storyboard_needs_flag_and_voids_technical_review(self):
+        record_passing_reviews(self.repo, "CTK-L-0015", self.box.root)
+        self.edit_file("CTK-L-0015", "storyboard.md", lambda t: t + "| 2 | S02 | Wide | Thợ chui gầm xe trên con đội | | | |\n")
+        _, results = self.gates()
+        self.assertTrue(any("'lifting'" in e for e in self.findings(results, "G5", qc.FAIL)))
+        requirements = {r["requirement"].split(" (")[0]: r["satisfied"] for r in self.status()["requirements"]}
+        self.assertFalse(requirements["Independent technical review"])
+
+    def test_negative_verdict_from_any_role_blocks_approval(self):
+        record_passing_reviews(self.repo, "CTK-L-0015", self.box.root)
+        self.assertEqual(self.status()["status"], "APPROVABLE")
+        path = review_file(self.box.root, "late.yaml", reviewer="content-qc-inspector (agent)", reviewer_type="agent", role="qc",
+                           gates={"G5": {"result": "FAIL", "evidence": "S03 tells viewers to unplug a connector on a live circuit.", "corrections": ["Remove the instruction."]}}, decision="FAIL")
+        code, out = run("qc_content", self.repo.root, "review", "CTK-L-0015", "--file", str(path))
+        self.assertEqual(code, 0, out)
+        self.assertEqual(self.status()["status"], "NOT APPROVABLE")
+
+    def test_decision_must_match_gate_results_and_qualified_must_be_boolean(self):
+        path = review_file(self.box.root, "bad.yaml", reviewer="Kỹ thuật viên", reviewer_type="human", role="technical", qualified="không",
+                           gates={"G3": {"result": "PASS", "evidence": "Checked every claim against its source.", "corrections": []}}, decision="FAIL")
+        code, out = run("qc_content", self.repo.root, "review", "CTK-L-0015", "--file", str(path))
+        self.assertEqual(code, 1)
+        self.assertIn("qualified must be true or false", out)
+        self.assertIn("decision must match", out)
+
+    def test_cartek_mentioned_in_narration_needs_feature_claim(self):
+        self.replace = lambda new: self.edit_file("CTK-L-0015", "script.md", lambda t: t.replace("Mã P0300 xuất hiện trong ví dụ này.", new, 1))
+        self.replace("Mã P0300 xuất hiện. Cartek 2 đọc được dữ liệu đóng băng của mọi xe.")
+        _, results = self.gates()
+        self.assertTrue(any("cartek-feature" in e for e in self.findings(results, "G5", qc.FAIL)))
+
+    def test_clearing_wording_variants_are_banned(self):
+        self.edit_file("CTK-L-0015", "script.md", lambda t: t.replace("Mã P0300 xuất hiện trong ví dụ này.", "Mã P0300 xuất hiện. Xóa lỗi P0300 bằng máy... là xe chạy ngon!", 1))
+        _, results = self.gates()
+        self.assertTrue(any("Implies clearing" in e for e in self.findings(results, "G5", qc.FAIL)))
+
+    def test_dismissing_a_safety_topic_needs_qualified_human(self):
+        self.edit_item("CTK-L-0015", lambda d: d["safety"].update(dismissed=[{"flag": "brakes", "rationale": "Synthetic: brakes only named as an example."}]))
+        record_passing_reviews(self.repo, "CTK-L-0015", self.box.root)
+        self.assertEqual(self.status()["status"], "NOT APPROVABLE")
+
+    def test_tampered_release_package_is_an_error(self):
+        record_passing_reviews(self.repo, "CTK-L-0015", self.box.root)
+        self.assertEqual(run("qc_content", self.repo.root, "approve", "CTK-L-0015", "--by", "Biên tập viên B")[0], 0)
+        package = find_item(self.repo, "CTK-L-0015").path / "exports" / "production-package.json"
+        data = fileio.load_json(package)
+        data["script"]["segments"][0]["narration"] = "Changed after approval."
+        fileio.write_text(package, fileio.dumps_json(data))
+        code, out = run("validate_content", self.repo.root)
+        self.assertEqual(code, 1)
+        self.assertIn("differs from what the approved content produces", out)
+
+    def test_approve_requires_qc_stage(self):
+        self.edit_item("CTK-L-0015", lambda d: d["status"].update(stage="SCRIPT"))
+        record_passing_reviews(self.repo, "CTK-L-0015", self.box.root)
+        code, out = run("qc_content", self.repo.root, "approve", "CTK-L-0015", "--by", "B")
+        self.assertEqual(code, 1, out)
+
+
 class TestLifecycle(QCTestCase):
     def setUp(self) -> None:
         super().setUp()
@@ -329,11 +400,11 @@ class TestLifecycle(QCTestCase):
 
     def test_full_lifecycle_to_performance_review(self):
         self.approve()
-        code, out = run("set_status", self.repo.root, "CTK-L-0015", "--stage", "PUBLISHED", "--url", "https://youtu.be/abc123", "--date", "2026-11-01")
+        code, out = run("set_status", self.repo.root, "CTK-L-0015", "--stage", "PUBLISHED", "--url", "https://youtu.be/abc123", "--date", date.today().isoformat())
         self.assertEqual(code, 1, "the upload checklist is not done yet")
         self.assertIn("upload_checklist", out)
         self.edit_item("CTK-L-0015", lambda d: [entry.update(done=True) for entry in d["publication"]["upload_checklist"]])
-        code, out = run("set_status", self.repo.root, "CTK-L-0015", "--stage", "PUBLISHED", "--url", "https://youtu.be/abc123", "--date", "2026-11-01")
+        code, out = run("set_status", self.repo.root, "CTK-L-0015", "--stage", "PUBLISHED", "--url", "https://youtu.be/abc123", "--date", date.today().isoformat())
         self.assertEqual(code, 0, out)
         self.assertEqual(run("validate_content", self.repo.root)[0], 0)
         code, out = run("set_status", self.repo.root, "CTK-L-0015", "--stage", "PERFORMANCE_REVIEW")
@@ -341,7 +412,7 @@ class TestLifecycle(QCTestCase):
         workspace = find_item(self.repo, "CTK-L-0015").path
         fileio.write_text(workspace / "performance.yaml", fileio.dumps_yaml({
             "content_id": "CTK-L-0015", "video_url": "https://youtu.be/abc123",
-            "snapshots": [{"captured_on": "2026-11-05", "window": "first-7-days", "source": "youtube-studio",
+            "snapshots": [{"captured_on": date.today().isoformat(), "window": "first-7-days", "source": "youtube-studio",
                            "evidence": "SYNTHETIC test value", "entered_by": "unit-test", "metrics": {"views": 1}}],
         }))
         code, out = run("set_status", self.repo.root, "CTK-L-0015", "--stage", "PERFORMANCE_REVIEW")
@@ -353,7 +424,7 @@ class TestLifecycle(QCTestCase):
     def test_post_publish_seo_change_needs_reapproval_and_keeps_stage(self):
         self.approve()
         self.edit_item("CTK-L-0015", lambda d: [entry.update(done=True) for entry in d["publication"]["upload_checklist"]])
-        run("set_status", self.repo.root, "CTK-L-0015", "--stage", "PUBLISHED", "--url", "https://youtu.be/abc123", "--date", "2026-11-01")
+        run("set_status", self.repo.root, "CTK-L-0015", "--stage", "PUBLISHED", "--url", "https://youtu.be/abc123", "--date", date.today().isoformat())
         self.edit_item("CTK-L-0015", lambda d: d["seo"].update(recommended_title="Synthetic P0300 title B"))
         code, out = run("validate_content", self.repo.root)
         self.assertEqual(code, 1, "a changed published item needs re-approval")
@@ -363,17 +434,18 @@ class TestLifecycle(QCTestCase):
         self.assertIn("Re-approved", item.data["history"][-1]["note"])
         self.assertEqual(run("validate_content", self.repo.root)[0], 0)
 
-    def test_technical_review_survives_seo_work_but_qc_review_does_not(self):
+    def test_technical_review_survives_logistics_but_not_public_text(self):
         record_passing_reviews(self.repo, "CTK-L-0015", self.box.root)
-        self.edit_item("CTK-L-0015", lambda d: d["seo"].update(description="Synthetic description about p0300, revised."))
+        self.edit_item("CTK-L-0015", lambda d: d["production"]["assets_required"][0].update(notes="Booked for Monday."))
+        self.edit_file("CTK-L-0015", "seo.md", lambda t: t.replace("## Keyword notes\n\nSynthetic.", "## Keyword notes\n\nSynthetic, revised.", 1))
         ctx, results = self.gates()
         requirements = {r["requirement"].split(" (")[0]: r["satisfied"] for r in qc.approval(ctx, results)["requirements"]}
         self.assertTrue(requirements["Independent technical review"])
         self.assertFalse(requirements["Independent qc review"])
-        self.edit_file("CTK-L-0015", "script.md", lambda t: t.replace("Synthetic visual.", "Changed visual.", 1))
+        self.edit_item("CTK-L-0015", lambda d: d["seo"].update(description="Synthetic description about p0300, revised."))
         ctx, results = self.gates()
         requirements = {r["requirement"].split(" (")[0]: r["satisfied"] for r in qc.approval(ctx, results)["requirements"]}
-        self.assertFalse(requirements["Independent technical review"])
+        self.assertFalse(requirements["Independent technical review"], "public SEO text is technically reviewed")
 
     def test_description_with_chapters_counts_toward_limit(self):
         self.edit_item("CTK-L-0015", lambda d: d["seo"].update(description="x" * 4990))

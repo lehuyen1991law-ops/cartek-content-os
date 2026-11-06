@@ -32,11 +32,25 @@ def utc_now() -> str:
     return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
 
 
+class _StripAuthOnRedirect(urllib.request.HTTPRedirectHandler):
+    """Follow redirects, but drop the Authorization header when the host changes."""
+
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        new = super().redirect_request(req, fp, code, msg, headers, newurl)
+        if new is not None and urllib.parse.urlparse(newurl).netloc != urllib.parse.urlparse(req.full_url).netloc:
+            new.headers.pop("Authorization", None)
+            new.unredirected_hdrs.pop("Authorization", None)
+        return new
+
+
+_NO_TOKEN_REDIRECTS = urllib.request.build_opener(_StripAuthOnRedirect)
+
+
 def _get(url: str, opener: Opener | None, token: str | None = None) -> bytes:
     request = urllib.request.Request(url, method="GET")
     if token:
         request.add_header("Authorization", f"Bearer {token}")
-    open_fn = opener or (lambda req: urllib.request.urlopen(req, timeout=60))  # noqa: S310 - fixed https hosts
+    open_fn = opener or (lambda req: _NO_TOKEN_REDIRECTS.open(req, timeout=60))
     with open_fn(request) as response:
         return response.read()
 

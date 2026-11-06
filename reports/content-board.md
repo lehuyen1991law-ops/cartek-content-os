@@ -6,9 +6,9 @@
 
 | Stage | Long-form | Shorts |
 |---|---|---|
-| Sheet ideas without a workspace | 16 | 12 |
+| Sheet ideas without a workspace | 15 | 12 |
 | IDEA | 0 | 0 |
-| RESEARCH | 0 | 0 |
+| RESEARCH | 1 | 0 |
 | BRIEF | 0 | 0 |
 | SCRIPT | 0 | 0 |
 | TECHNICAL_REVIEW | 0 | 0 |
@@ -23,7 +23,9 @@ On hold: 0. Test items (excluded above): 1.
 
 ## Active workspaces
 
-None.
+| ID | Working title | Pillar | Stage | On hold | Owner | Target date | Automated QC | Approval |
+|---|---|---|---|---|---|---|---|---|
+| [CTK-L-0015](../content/long-form/CTK-L-0015-loi-p0300-ac-mong-cua-moi-dong-co/) | Lỗi P0300 - Ác Mộng của Mọi Động Cơ? | P4 | RESEARCH | no | — | — | FAIL (G2, G3, G4, G5, G6, G7, G8) | NOT APPROVABLE |
 
 ## Test items (never published)
 
@@ -53,7 +55,7 @@ Planning ideas imported from the `Content Direction` and `Short` tabs (`data/nor
 | CTK-L-0012 | P3 Các vấn đề lỗi xe thường gặp | Các lỗi Thường Gặp Trên Xe Đức: Mercedes, BMW | — |
 | CTK-L-0013 | P4 Kiến thức chuyên sâu về hệ thống OBD2 | OBD2: Hành Trình Khám Phá 'Cái Hộp Đen' Kỳ Diệu Trên Xe Của Bạn | — |
 | CTK-L-0014 | P4 Kiến thức chuyên sâu về hệ thống OBD2 | Cắt nghĩa các mã lỗi P_B_C_U trong hệ thống OBD-II trên xe | — |
-| CTK-L-0015 | P4 Kiến thức chuyên sâu về hệ thống OBD2 | Lỗi P0300 - Ác Mộng của Mọi Động Cơ? | test item only |
+| CTK-L-0015 | P4 Kiến thức chuyên sâu về hệ thống OBD2 | Lỗi P0300 - Ác Mộng của Mọi Động Cơ? | yes |
 | CTK-L-0016 | P4 Kiến thức chuyên sâu về hệ thống OBD2 | OBD2 & Cá Nhân Hóa Trải Nghiệm Lái Xe: Điều Chỉnh & Tối Ưu Theo Phong Cách Riêng | — |
 
 ### Shorts

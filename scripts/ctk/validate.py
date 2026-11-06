@@ -12,11 +12,12 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-from . import fileio, importer, mdparse, qc, schema
+from . import export, fileio, importer, mdparse, qc, schema
 from .context import build_context
-from .items import EXPORT_DIR, PERFORMANCE, RELEASE_EXPORT, find_items
+from .items import EXPORT_DIR, PERFORMANCE, RELEASE_EXPORT, find_items, today
 from .registry import Registry
 from .repo import Repo
+from .sheet import TabSnapshot
 from .sheet import is_youtube_url
 
 REQUIRED_TEMPLATES = (
@@ -66,8 +67,11 @@ def check_data(repo: Repo) -> list[Finding]:
         if not path.exists():
             out.append(Finding("error", tab["snapshot"], f"Snapshot for tab '{tab['title']}' is missing: tab is BLOCKED for import."))
             continue
-        for error in schema.validate(fileio.load_json(path), repo.schemas_dir / "source-snapshot.schema.json"):
+        raw = fileio.load_json(path)
+        for error in schema.validate(raw, repo.schemas_dir / "source-snapshot.schema.json"):
             out.append(Finding("error", tab["snapshot"], error))
+        if TabSnapshot.from_dict(raw).content_hash() != raw.get("content_sha256"):
+            out.append(Finding("error", tab["snapshot"], "Raw snapshot was edited by hand (content_sha256 no longer matches its values). Restore it from Git or re-capture the sheet."))
     for path in sorted(repo.normalized_dir.glob("*.json")):
         for error in schema.validate(fileio.load_json(path), repo.schemas_dir / "normalized-data.schema.json"):
             out.append(Finding("error", repo.rel(path), error))
@@ -127,7 +131,10 @@ def _stage_rules(repo: Repo, ctx) -> list[Finding]:
             out.append(Finding("error", where, f"Test item is at {stage}; test items can never be approved or published."))
         approval_info = qc.approval(ctx, qc.run_gates(ctx))
         if approval_info["status"] != "APPROVABLE":
-            legacy = data["provenance"]["origin"] == "sheet-tracker" and stage != "APPROVED"
+            tracker = {r["id"]: r for r in (repo.normalized("tracker") or {}).get("records", [])}
+            source = tracker.get(data["provenance"].get("source_record") or item.id) or {}
+            # Only a video the sheet itself records as published (date + link) may predate this QC system.
+            legacy = data["provenance"]["origin"] == "sheet-tracker" and stage != "APPROVED" and source.get("stage_hint") == "PUBLISHED"
             level = "warning" if legacy else "error"
             missing = "; ".join(r["requirement"] for r in approval_info["requirements"] if not r["satisfied"])
             out.append(Finding(level, where, f"Stage {stage} without a valid approval on the current content ({missing}). Re-run QC and approve again."))
@@ -170,6 +177,10 @@ def _exports_and_performance(repo: Repo, ctx) -> list[Finding]:
     item = ctx.item
     where = repo.rel(item.path)
     release = item.file(EXPORT_DIR) / RELEASE_EXPORT
+    if item.stage in ("APPROVED", "PUBLISHED", "PERFORMANCE_REVIEW") and not release.exists() and not item.is_test:
+        out.append(Finding("error", where, f"Stage {item.stage} but no release package: run python3 scripts/export_package.py {item.id}."))
+    if release.exists() and item.stage not in ("APPROVED", "PUBLISHED", "PERFORMANCE_REVIEW"):
+        out.append(Finding("error", repo.rel(release), f"Release package present but the stage is {item.stage}: delete it and approve again."))
     if release.exists():
         package = fileio.load_json(release)
         for error in schema.validate(package, repo.schemas_dir / "production-package.schema.json"):
@@ -180,6 +191,15 @@ def _exports_and_performance(repo: Repo, ctx) -> list[Finding]:
             out.append(Finding("error", repo.rel(release), "Release package is stale: the content changed after export. Re-run QC, approve, export."))
         if package.get("content_id") != item.id:
             out.append(Finding("error", repo.rel(release), "Release package belongs to another content ID."))
+        # The committed package must be exactly what the exporter builds from the approved content.
+        expected = export.build_package(ctx, approved=True, blocking=[], approval_reviews=(package.get("generated") or {}).get("approval_reviews") or [])
+        for pkg in (expected, package):
+            pkg.get("generated", {}).pop("date", None)
+        if expected != package:
+            out.append(Finding("error", repo.rel(release), "Release package differs from what the approved content produces (edited by hand?). Regenerate it with export_package.py."))
+        known = {r["id"] for r in item.data["reviews"] if ctx.is_current(r)}
+        if not set((package.get("generated") or {}).get("approval_reviews") or []) <= known:
+            out.append(Finding("error", repo.rel(release), "Release package cites reviews that are not current reviews of this item."))
     performance = item.file(PERFORMANCE)
     if performance.exists():
         data = fileio.load_yaml(performance)
@@ -187,6 +207,14 @@ def _exports_and_performance(repo: Repo, ctx) -> list[Finding]:
             out.append(Finding("error", repo.rel(performance), error))
         if isinstance(data, dict) and data.get("content_id") != item.id:
             out.append(Finding("error", repo.rel(performance), "content_id does not match the workspace."))
+        if isinstance(data, dict):
+            if data.get("video_url") != item.data["publication"].get("url"):
+                out.append(Finding("error", repo.rel(performance), "video_url differs from publication.url."))
+            for snap in data.get("snapshots") or []:
+                if not any(v is not None for v in (snap.get("metrics") or {}).values()):
+                    out.append(Finding("error", repo.rel(performance), f"Snapshot {snap.get('captured_on')} has no real metric value."))
+                if str(snap.get("captured_on", "")) > today():
+                    out.append(Finding("error", repo.rel(performance), f"Snapshot date {snap.get('captured_on')} is in the future."))
         if item.stage not in ("PUBLISHED", "PERFORMANCE_REVIEW"):
             out.append(Finding("error", repo.rel(performance), "Performance data exists for an unpublished item."))
     return out

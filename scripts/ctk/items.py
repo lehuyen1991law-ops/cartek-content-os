@@ -33,9 +33,13 @@ DRAFT_EXPORT = "production-package.draft.json"
 # Fields that may change after approval without invalidating the reviewed content.
 FINGERPRINT_EXCLUDED = ("status", "history", "reviews", "publication", "owner", "target_publish_date", "internal_notes", "corrections")
 
-# The technical scope leaves out work that happens after the technical review.
-TECHNICAL_EXCLUDED = ("seo", "production")
-TECHNICAL_FILES = ("brief", "research", "script")
+# The technical scope covers everything a viewer can see or a crew will film (brief,
+# research, script, storyboard, the public SEO block, claims, sources, vehicle, safety,
+# demo setup). It leaves out only seo.md (keyword analysis) and production logistics
+# (asset availability, footage links, runtime exception), so confirming assets or
+# writing keyword notes does not void a technical review.
+TECHNICAL_FILES = ("brief", "research", "script", "storyboard")
+TECHNICAL_PRODUCTION_KEYS = ("demo_setup",)
 REVIEW_SCOPES = {"technical": "technical"}  # role -> scope; every other role reviews the full content
 
 ITEM_HEADER = (
@@ -89,15 +93,18 @@ class Item:
         """Hash of the reviewed content.
 
         ``full``: everything a reader or viewer sees (all deliverables and fields except
-        workflow bookkeeping). ``technical``: only what a technical review judges (brief,
-        research, script, claims, sources, vehicle, safety), so later SEO and production
-        work does not void a technical review.
+        workflow bookkeeping). ``technical``: the same minus seo.md and production
+        logistics (see TECHNICAL_FILES), so asset and keyword work does not void it.
         """
-        excluded = FINGERPRINT_EXCLUDED + (TECHNICAL_EXCLUDED if scope == "technical" else ())
-        record = {k: v for k, v in copy.deepcopy(self.data).items() if k not in excluded}
+        record = {k: v for k, v in copy.deepcopy(self.data).items() if k not in FINGERPRINT_EXCLUDED}
+        if scope in ("technical", "video"):
+            production = record.get("production") or {}
+            record["production"] = {k: production.get(k) for k in TECHNICAL_PRODUCTION_KEYS}
+        if scope == "video":  # what the published video itself contains: no metadata
+            record.pop("seo", None)
         files = {}
         for key, name in DELIVERABLES.items():
-            if scope == "technical" and key not in TECHNICAL_FILES:
+            if scope in ("technical", "video") and key not in TECHNICAL_FILES:
                 continue
             path = self.path / name
             if path.exists():

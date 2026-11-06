@@ -4,7 +4,7 @@
 |---|---|
 | Run date | 2026-11-06 |
 | Stage | RESEARCH |
-| Content fingerprint | `sha256:979c495924836edefe5efa4ef37695fb1404f415fe9a99de0838422b019f3f34` |
+| Content fingerprint | `sha256:d51328ddfa3be68caf7e1583f400f1bbebad7d1ec36f44bb78a390e4253348fb` |
 | Automated result | **FAIL** |
 | Approval status | **NOT APPROVABLE** |
 
@@ -16,7 +16,7 @@
 | G2 | Audience and topic relevance | **BLOCKED** | brief.md still has 16 [TODO] marker(s). |
 | G3 | Research completeness and factual accuracy | **BLOCKED** | C01 is unverified: "P0300 cho biết ECU đã phát hiện bỏ máy ngẫu nhiên hoặc ở nhiều xi-lanh (Random/Multiple C…" |
 | G4 | Script coherence, clarity and retention quality | **BLOCKED** | script.md still has 29 [TODO] marker(s). |
-| G5 | Automotive technical and safety review | **FAIL** | Safety flags (fuel-system, hot-or-moving-parts) but the script has no safety warning. |
+| G5 | Automotive technical and safety review | **FAIL** | Safety flags (fuel-system, hot-or-moving-parts) but the script has no spoken safety warning. |
 | G6 | SEO package completeness | **FAIL** | 0 title candidate(s) in item.yaml; at least 3 required. |
 | G7 | Production handoff readiness | **FAIL** | No production assets are listed. |
 | G8 | Publishing metadata validation | **FAIL** | No target publish date. |
@@ -48,15 +48,16 @@ Evidence:
 
 - [BLOCKED] C01 is unverified: "P0300 cho biết ECU đã phát hiện bỏ máy ngẫu nhiên hoặc ở nhiều xi-lanh (Random/Multiple C…"
 - [BLOCKED] C02 is unverified: "Các mã P0301 đến P0312 cho biết ECU phát hiện bỏ máy ở một xi-lanh cụ thể; hai số cuối là…"
-- [BLOCKED] C03 is unverified: "Freeze frame là bản ghi các thông số động cơ (ví dụ tốc độ động cơ, tải, nhiệt độ nước là…"
-- [BLOCKED] C04 is unverified: "Xóa mã lỗi bằng máy chẩn đoán (Service $04) đồng thời xóa dữ liệu freeze frame và đặt lại…"
+- [BLOCKED] C03 is unverified: "Freeze frame là bản ghi điều kiện vận hành tại thời điểm ECU phát hiện lỗi, gồm mã lỗi gâ…"
+- [BLOCKED] C04 is unverified: "Lệnh xóa lỗi từ máy chẩn đoán xóa toàn bộ thông tin chẩn đoán liên quan khí thải: mã pend…"
 - [BLOCKED] C05 is unverified: "Xóa mã lỗi không sửa được nguyên nhân bỏ máy: nếu nguyên nhân còn, ECU sẽ phát hiện lại v…"
-- [BLOCKED] C06 is unverified: "Trên xe được chứng nhận theo quy định OBD-II của Mỹ, đèn báo lỗi động cơ (MIL) nhấp nháy …"
+- [BLOCKED] C06 is unverified: "Trên xe được chứng nhận theo quy định OBD II của California (xe EPA đời 2017 trở lên cũng…"
 - [BLOCKED] C07 is unverified: "Khi đèn check engine nhấp nháy, nên giảm tải, hạn chế chạy xe và kiểm tra sớm, vì tiếp tụ…"
 - [BLOCKED] C08 is unverified: "Nguyên nhân khả dĩ của P0300 gồm các nhóm đánh lửa, nhiên liệu, rò rỉ khí nạp/chân không …"
 - [BLOCKED] C09 is unverified: "Với nhóm đánh lửa và nhiên liệu, kiểm tra theo quy trình của hãng cho xe cụ thể (ví dụ ki…"
 - [BLOCKED] C10 is unverified: "Với nhóm rò rỉ khí nạp, có thể xác nhận bằng thử khói (smoke test) kết hợp đọc fuel trim;…"
-- [BLOCKED] C11 is unverified: "Quy định OBD-II của CARB/EPA áp dụng cho xe được chứng nhận để bán tại Mỹ; với xe bán tại…"
+- [BLOCKED] C11 is unverified: "Quy định OBD II của California (13 CCR 1968.2) áp dụng cho xe du lịch, xe tải nhẹ và xe t…"
+- [BLOCKED] C12 is unverified: "Trên xe theo quy định OBD II của California (áp dụng dần cho đời 2010-2012 trở lên), mã l…"
 
 Corrections:
 
@@ -81,7 +82,7 @@ Corrections:
 Evidence:
 
 - [BLOCKED] The script is not finished; the technical and safety review needs the final narration.
-- [FAIL] Safety flags (fuel-system, hot-or-moving-parts) but the script has no safety warning.
+- [FAIL] Safety flags (fuel-system, hot-or-moving-parts) but the script has no spoken safety warning.
 - [INFO] Safety flags fuel-system, hot-or-moving-parts: a qualified human technical review is required before approval.
 - [BLOCKED] C07 (safety) is unverified: technical approval is blocked.
 - [BLOCKED] C08 (diagnostic-procedure) is unverified: technical approval is blocked.
@@ -92,7 +93,7 @@ Evidence:
 Corrections:
 
 - Finish script.md first (G4), then re-run QC.
-- Add a TYPE safety segment or a **SAFETY:** line where the risk occurs.
+- Add a **SAFETY:** line (read in the voice-over) where the risk occurs, or a TYPE safety segment with narration.
 - Verify the procedure/safety statement with OEM or standard sources, or remove it.
 
 ### G6 — SEO package completeness: FAIL

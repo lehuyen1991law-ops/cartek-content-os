@@ -487,6 +487,11 @@
               }
             }
           }
+        },
+        "published_video_fingerprint": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$",
+          "description": "Fingerprint of the video content (brief, research, script, storyboard, claims; no SEO) when published; written by set_status.py. Re-approval after publishing may change metadata only."
         }
       }
     },

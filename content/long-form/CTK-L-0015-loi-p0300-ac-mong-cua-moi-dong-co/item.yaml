@@ -49,7 +49,21 @@ safety:
   - fuel-system
   - hot-or-moving-parts
   dismissed: []
-sources: []
+sources:
+- id: SRC01
+  title: Cal. Code Regs. Tit. 13, § 1968.2 - Malfunction and Diagnostic System Requirements-2004 and Subsequent Model-Year Passenger Cars, Light-Duty Trucks, and Medium-Duty Vehicles and Engines
+  publisher: California Air Resources Board (regulation text as published by the Legal Information Institute, Cornell Law School)
+  type: regulation
+  url: https://www.law.cornell.edu/regulations/california/13-CCR-1968.2
+  accessed: '2026-11-06'
+  notes: 'Read on 2026-11-06 (LII page; history notes list amendments through Register 2022, No. 47/48). Sections read: (b) Applicability; (c) definition of ''Permanent fault code''; (d)(2.2.5) permanent fault code storage phase-in 2010-2012; (d)(2.2.7) storing and erasing freeze frame; (d)(2.5)-(2.5.2) erasing a permanent fault code; (e)(3.1)-(3.2.1) misfire monitoring requirement, cylinder-specific and multiple-cylinder fault codes, catalyst-damage misfire criteria; (e)(3.4.1)(A)-(E) MIL blinking once per second, confirmed codes, fuel-shutoff exemption, continuous-MIL alternative; (e)(3.4.4) misfire freeze frame; (g)(4.2.1) data stream signals; (g)(4.3.1) freeze frame contents; (g)(4.4.6) permanent fault codes; (g)(4.10.1)-(4.10.2) erasure of emission-related diagnostic information. Section (e) covers gasoline/spark-ignited engines. California regulation; not a Vietnamese requirement.'
+- id: SRC02
+  title: 40 CFR 86.1806-17 Onboard diagnostics
+  publisher: U.S. Environmental Protection Agency (Electronic Code of Federal Regulations, current edition)
+  type: regulation
+  url: https://www.ecfr.gov/api/renderer/v1/content/enhanced/current/title-40?part=86&section=86.1806-17
+  accessed: '2026-11-06'
+  notes: 'Read the introductory text and paragraph (a), including (a)(3): model year 2017 and later vehicles must have OBD systems and must comply with the 2013 California OBD-II requirements (13 CCR 1968.2, approved 2013-07-31, incorporated by reference); the purpose and applicability statements of 1968.2(a) and (b) do not apply. Remaining paragraphs not relied on.'
 claims:
 - id: C01
   text: P0300 cho biết ECU đã phát hiện bỏ máy ngẫu nhiên hoặc ở nhiều xi-lanh (Random/Multiple Cylinder Misfire Detected); bản thân mã này không chỉ ra nguyên nhân gây bỏ máy.
@@ -59,7 +73,7 @@ claims:
   feature_id: null
   verified_by: ''
   verified_on: null
-  notes: 'No source read: WebFetch to ww2.arb.ca.gov and www.law.cornell.edu failed on 2026-11-06 (host not allowed by the session network policy). Needs SAE J2012 / ISO 15031-6 (paywalled) or public OEM service information defining P0300.'
+  notes: 'No accepted source read: needs SAE J2012 / ISO 15031-6 (paywalled) or OEM service information for the code number and title. Context only (regulation is not an accepted type for dtc-definition): SRC01 (e)(3.1.3) requires a separate fault code for multiple-cylinder misfire, and (e)(3.1.2) lets a manufacturer store a general misfire code with approval; it does not give code numbers.'
 - id: C02
   text: Các mã P0301 đến P0312 cho biết ECU phát hiện bỏ máy ở một xi-lanh cụ thể; hai số cuối là số thứ tự xi-lanh, ví dụ P0301 là xi-lanh số 1.
   category: dtc-definition
@@ -68,52 +82,58 @@ claims:
   feature_id: null
   verified_by: ''
   verified_on: null
-  notes: 'No source read: WebFetch to ww2.arb.ca.gov and www.law.cornell.edu failed on 2026-11-06 (host not allowed by the session network policy). Needs SAE J2012 / ISO 15031-6 or OEM service information. Cylinder numbering order is engine-specific (OEM).'
+  notes: 'No accepted source read: needs SAE J2012 / ISO 15031-6 or OEM service information for P0301-P0312. Context only: SRC01 (e)(3.1.2) requires identifying the specific misfiring cylinder; (e)(3.1.3) says that on 2005+ vehicles, if more than 90% of misfires are in one cylinder, the manufacturer may store the cylinder-specific code instead of the multiple-cylinder code. Cylinder numbering is engine-specific (OEM).'
 - id: C03
-  text: Freeze frame là bản ghi các thông số động cơ (ví dụ tốc độ động cơ, tải, nhiệt độ nước làm mát, trạng thái điều khiển nhiên liệu) tại thời điểm ECU lưu mã lỗi, giúp biết lỗi xảy ra trong điều kiện vận hành nào.
+  text: 'Freeze frame là bản ghi điều kiện vận hành tại thời điểm ECU phát hiện lỗi, gồm mã lỗi gây ra bản ghi và các thông số như tải tính toán, nhiệt độ nước làm mát, tốc độ động cơ, tốc độ xe, và trên xe có trang bị: trạng thái hệ thống nhiên liệu, fuel trim, áp suất đường ống nạp, lưu lượng khí nạp.'
   category: obd-standard
-  sources: []
+  sources:
+  - SRC01
   status: unverified
   feature_id: null
   verified_by: ''
   verified_on: null
-  notes: 'No source read: WebFetch to ww2.arb.ca.gov and www.law.cornell.edu failed on 2026-11-06 (host not allowed by the session network policy). Needs SAE J1979 Service $02 description or CARB 13 CCR 1968.2 freeze-frame requirements. The exact parameter list is not yet confirmed; keep the ''ví dụ'' list until a source is read.'
+  notes: 'SRC01 (d)(2.2.7), (g)(4.3.1)(B) with the signal lists in (g)(4.2.1)(A)-(B). Signals ''for all vehicles so equipped'' are only included when the control unit uses them. (e)(3.4.4)(A)(ii): a misfire code replaces freeze frame stored for a non-misfire/non-fuel-system fault. Applies to vehicles certified to this regulation; SAE J1979-2 vehicles follow (d)(2.2.7)(B).'
 - id: C04
-  text: Xóa mã lỗi bằng máy chẩn đoán (Service $04) đồng thời xóa dữ liệu freeze frame và đặt lại trạng thái readiness của các monitor, nên làm mất bằng chứng chẩn đoán.
+  text: 'Lệnh xóa lỗi từ máy chẩn đoán xóa toàn bộ thông tin chẩn đoán liên quan khí thải: mã pending và confirmed, freeze frame, trạng thái readiness và kết quả test, nên làm mất bằng chứng chẩn đoán.'
   category: obd-standard
-  sources: []
+  sources:
+  - SRC01
   status: unverified
   feature_id: null
   verified_by: ''
   verified_on: null
-  notes: 'No source read: WebFetch to ww2.arb.ca.gov and www.law.cornell.edu failed on 2026-11-06 (host not allowed by the session network policy). Needs SAE J1979 Service $04 description or CARB 13 CCR 1968.2 erase requirements.'
+  notes: 'SRC01 (g)(4.10.1)(A)-(E) defines emission-related diagnostic information (readiness status, data stream items incl. MIL status and distance/warm-ups since clear, freeze frame, pending and confirmed codes, test results); (g)(4.10.2) erasure by scan-tool command, with all-control-unit erasure phased in 30/60/100% for MY2019/2020/2021. The regulation names Mode/Service $04 for SAE J1979 ((g)(4.8.2)(A)) and Service $14 for SAE J1979-2. Permanent fault codes are NOT erased by a scan tool: see C12. ''Mất bằng chứng chẩn đoán'' is an editorial inference.'
 - id: C05
   text: 'Xóa mã lỗi không sửa được nguyên nhân bỏ máy: nếu nguyên nhân còn, ECU sẽ phát hiện lại và ghi lại mã khi xe vận hành lại trong điều kiện tương tự.'
   category: obd-standard
-  sources: []
+  sources:
+  - SRC01
   status: unverified
   feature_id: null
   verified_by: ''
   verified_on: null
-  notes: 'No source read: WebFetch to ww2.arb.ca.gov and www.law.cornell.edu failed on 2026-11-06 (host not allowed by the session network policy). Needs CARB 13 CCR 1968.2 / 40 CFR 86.1806 misfire monitoring text or OEM service information. Time to re-detection varies by vehicle and drive cycle; do not state a number.'
+  notes: 'SRC01 (e)(3.1.1) the system shall monitor the engine for misfire; (e)(3.4.1)(A)-(B) pending code then confirmed code when the misfire percentage is exceeded again in following or similar-condition driving cycles; (d)(2.5.2) after codes are cleared, a permanent code is erased only when the monitor itself determines the malfunction is not present. The regulation describes detection, not repair: ''không sửa được'' is an inference the fact-checker must accept. Re-detection time varies; do not state a number.'
 - id: C06
-  text: Trên xe được chứng nhận theo quy định OBD-II của Mỹ, đèn báo lỗi động cơ (MIL) nhấp nháy khi ECU phát hiện mức bỏ máy có thể làm hỏng bộ xúc tác.
+  text: Trên xe được chứng nhận theo quy định OBD II của California (xe EPA đời 2017 trở lên cũng áp dụng quy định này), khi ECU phát hiện mức bỏ máy có thể làm hỏng bộ xúc tác, đèn MIL nhấp nháy mỗi giây một lần trong lúc bỏ máy đang xảy ra; xe có chiến lược cắt nhiên liệu khi bỏ máy được phép chỉ sáng đèn liên tục thay vì nhấp nháy.
   category: obd-standard
-  sources: []
+  sources:
+  - SRC01
+  - SRC02
   status: unverified
   feature_id: null
   verified_by: ''
   verified_on: null
-  notes: 'No source read: WebFetch to ww2.arb.ca.gov and www.law.cornell.edu failed on 2026-11-06 (host not allowed by the session network policy). Unread leads: 40 CFR 86.099-17 (2004 edition, webarchive.library.unt.edu) and older CARB OBD II drafts on arb.ca.gov. Search-result summaries mention blinking once per second and a fuel-shutoff exception; not read, so not used.'
+  notes: 'SRC01 (e)(3.2.1)(A) catalyst-damage misfire percentage per 200-revolution increment; (e)(3.4.1)(A)(ii) blink once per second while misfire occurs; (e)(3.4.1)(B)(iii) continuous MIL if misfire ceases after a confirmed code; (e)(3.4.1)(D) fuel-shutoff exemption; (e)(3.4.1)(E) approved continuous-MIL strategy for extreme misfire. SRC02 (a): MY2017+ EPA vehicles comply with the 2013 California OBD-II requirements. Gasoline/spark-ignited engines (section (e)). Script must not say a steady MIL rules out catalyst-damaging misfire.'
 - id: C07
   text: Khi đèn check engine nhấp nháy, nên giảm tải, hạn chế chạy xe và kiểm tra sớm, vì tiếp tục vận hành khi bỏ máy nặng có thể làm bộ xúc tác quá nhiệt và hư hỏng.
   category: safety
-  sources: []
+  sources:
+  - SRC01
   status: unverified
   feature_id: null
   verified_by: ''
   verified_on: null
-  notes: 'No source read: WebFetch to ww2.arb.ca.gov and www.law.cornell.edu failed on 2026-11-06 (host not allowed by the session network policy). Needs OEM owner''s/service information or regulation text. Wording of the recommended action must follow the source once read.'
+  notes: 'Partly sourced. SRC01 (e)(3.2.1)(A): the catalyst-damage misfire level is the level that would result in a temperature that causes catalyst damage; (e)(3.4.1)(E) refers to operating at low engine speeds and loads to minimize catalyst damage. The regulation gives no instruction to drivers or technicians: the recommended action (''giảm tải, hạn chế chạy xe, kiểm tra sớm'') still needs OEM owner''s/service information.'
 - id: C08
   text: Nguyên nhân khả dĩ của P0300 gồm các nhóm đánh lửa, nhiên liệu, rò rỉ khí nạp/chân không và cơ khí (độ nén); mỗi nhóm cần một phép kiểm tra xác nhận trước khi thay phụ tùng.
   category: diagnostic-procedure
@@ -122,7 +142,7 @@ claims:
   feature_id: null
   verified_by: ''
   verified_on: null
-  notes: 'No source read: WebFetch to ww2.arb.ca.gov and www.law.cornell.edu failed on 2026-11-06 (host not allowed by the session network policy). Needs OEM misfire diagnostic procedure or textbook. Which groups are ''common'' is not claimed.'
+  notes: 'No source read: needs OEM misfire diagnostic procedure or a textbook (SAE/OEM/textbook). The regulation does not list causes. Which groups are ''common'' is not claimed.'
 - id: C09
   text: Với nhóm đánh lửa và nhiên liệu, kiểm tra theo quy trình của hãng cho xe cụ thể (ví dụ kiểm tra bô-bin/bugi, đo áp suất nhiên liệu, kiểm tra kim phun) trước khi kết luận và thay thế.
   category: diagnostic-procedure
@@ -131,7 +151,7 @@ claims:
   feature_id: null
   verified_by: ''
   verified_on: null
-  notes: 'No source read: WebFetch to ww2.arb.ca.gov and www.law.cornell.edu failed on 2026-11-06 (host not allowed by the session network policy). Needs OEM service information for test procedures and specifications. Do not quote pressure or resistance values: they are vehicle-specific.'
+  notes: 'No source read: needs OEM service information for test procedures and specifications. Do not quote pressure or resistance values: they are vehicle-specific.'
 - id: C10
   text: Với nhóm rò rỉ khí nạp, có thể xác nhận bằng thử khói (smoke test) kết hợp đọc fuel trim; với nhóm cơ khí, xác nhận bằng đo áp suất nén hoặc thử độ lọt khí (leak-down).
   category: diagnostic-procedure
@@ -140,16 +160,28 @@ claims:
   feature_id: null
   verified_by: ''
   verified_on: null
-  notes: 'No source read: WebFetch to ww2.arb.ca.gov and www.law.cornell.edu failed on 2026-11-06 (host not allowed by the session network policy). Needs OEM service information or textbook.'
+  notes: 'No source read: needs OEM service information or a textbook for smoke test, fuel-trim interpretation, compression and leak-down procedures.'
 - id: C11
-  text: Quy định OBD-II của CARB/EPA áp dụng cho xe được chứng nhận để bán tại Mỹ; với xe bán tại Việt Nam, cần đối chiếu tài liệu của hãng cho đúng thị trường, đời xe và động cơ.
+  text: Quy định OBD II của California (13 CCR 1968.2) áp dụng cho xe du lịch, xe tải nhẹ và xe tải hạng trung từ đời 2004, và EPA yêu cầu xe đời 2017 trở lên tuân theo bản 2013 của quy định này; các quy định đó không mặc nhiên áp dụng cho xe bán tại Việt Nam, nên cần đối chiếu tài liệu của hãng cho đúng thị trường, đời xe và động cơ.
   category: general-knowledge
-  sources: []
+  sources:
+  - SRC01
+  - SRC02
   status: unverified
   feature_id: null
   verified_by: ''
   verified_on: null
-  notes: 'No source read: WebFetch to ww2.arb.ca.gov and www.law.cornell.edu failed on 2026-11-06 (host not allowed by the session network policy). Needs the applicability clause of 13 CCR 1968.2 / 40 CFR 86.1806 (scope of the US rules).'
+  notes: 'SRC01 (b) Applicability; SRC02 introductory text and (a). The second half (Vietnam) is an inference: no Vietnamese OBD regulation was read. EPA scope is limited to vehicles certified under 40 CFR part 86 subpart S as read in SRC02.'
+- id: C12
+  text: Trên xe theo quy định OBD II của California (áp dụng dần cho đời 2010-2012 trở lên), mã lỗi permanent không xóa được bằng máy chẩn đoán hay bằng cách ngắt điện ECU; ECU chỉ tự xóa mã này khi chính nó xác định lỗi không còn.
+  category: obd-standard
+  sources:
+  - SRC01
+  status: unverified
+  feature_id: null
+  verified_by: ''
+  verified_on: null
+  notes: SRC01 (c) definition; (d)(2.2.5) storage phase-in 50/75/100% for MY2010/2011/2012; (g)(4.4.6)(B)-(C) stored in NVRAM, not erasable by any scan tool command or by disconnecting power; (d)(2.5.1)-(2.5.2) erasure conditions. Reprogramming exceptions in (g)(4.4.6)(D) not covered by this claim.
 seo:
   title_candidates: []
   recommended_title: ''

@@ -14,7 +14,7 @@ from typing import Any
 
 from . import fileio, sheet
 from . import textutil as tu
-from .registry import Registry
+from .registry import Registry, is_test_id
 from .repo import Repo
 from .sheet import Issue, TabSnapshot
 
@@ -42,6 +42,24 @@ class ImportResult:
 # ---------------------------------------------------------------------------
 # Capture ingestion
 # ---------------------------------------------------------------------------
+def _cell_text(snap: TabSnapshot, ref: str) -> Any:
+    match = re.match(r"([A-Z]+)([0-9]+)$", ref)
+    if not match:
+        return None
+    col = 0
+    for ch in match.group(1):
+        col = col * 26 + ord(ch) - 64
+    return snap.cell(int(match.group(2)), col - 1)
+
+
+def hand_edited_outputs(repo: Repo) -> list[str]:
+    """Generated files whose content no longer matches the hash recorded at the last import."""
+    if not repo.manifest_path.exists():
+        return []
+    recorded = fileio.load_json(repo.manifest_path).get("outputs", {})
+    return [rel for rel, info in recorded.items() if repo.path(rel).exists() and fileio.sha256_file(repo.path(rel)) != info.get("sha256")]
+
+
 def ingest_bundle(repo: Repo, bundle: dict[str, Any]) -> list[dict[str, Any]]:
     """Store a capture bundle as per-tab snapshots. Unchanged tabs keep their file."""
     cfg = repo.config["sources"]
@@ -70,7 +88,11 @@ def ingest_bundle(repo: Repo, bundle: dict[str, Any]) -> list[dict[str, Any]]:
         if old is not None:
             for attr in ("hyperlinks", "notes", "data_validation", "grid", "formats_sampled", "sheet_id", "index"):
                 if getattr(new, attr) is None and getattr(old, attr) is not None:
-                    setattr(new, attr, getattr(old, attr))
+                    value = getattr(old, attr)
+                    if attr in ("hyperlinks", "notes"):
+                        # A cell address only keeps its link/note if its text is unchanged (columns may have moved).
+                        value = {ref: v for ref, v in value.items() if _cell_text(old, ref) == _cell_text(new, ref)}
+                    setattr(new, attr, value)
                     if attr in ("hyperlinks", "notes", "data_validation"):
                         new.capture_notes.append(f"{attr} carried over from the {old.captured_at} capture (not readable by {new.capture_method}).")
             if new.content_hash() == old.content_hash():
@@ -274,7 +296,12 @@ def build(repo: Repo) -> ImportResult:
         for record in result["records"]:
             title_key = tu.key(record["title"])
             explicit = _explicit_id(record, codes[fmt])
+            if explicit and is_test_id(explicit):
+                tab_issues.append(Issue("warning", "test-content-id", f"Row {record['source']['row']} names test item {explicit}; test items are never published, ignored.", tab_cfg["title"], f"A{record['source']['row']}"))
+                explicit = None
             if explicit and explicit in registry.entries:
+                if registry.entries[explicit].get("key"):
+                    keys.add(registry.entries[explicit]["key"])
                 record["id"] = explicit
                 record["linked_idea"] = explicit in {i["id"] for i in unique}
                 record["link_method"] = "explicit-id"

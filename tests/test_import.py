@@ -223,6 +223,18 @@ class TestTrackerRecords(ImportTestCase):
         self.assertEqual(record["id"], "CTK-L-0015")
         self.assertEqual(record["link_method"], "explicit-id")
 
+    def test_test_ids_in_the_sheet_are_ignored(self):
+        result = self.add_tracker_rows(["Video thử", "Kiến thức chuyên sâu về hệ thống OBD2", "", "", "", "Mới", "", "CTK-L-9001"])
+        self.assertIn("test-content-id", issue_codes(result))
+        self.assertNotEqual(self.tracker()[0]["id"], "CTK-L-9001")
+
+    def test_hand_edited_snapshot_is_reported(self):
+        from ctk.validate import validate_repo
+        path = self.repo.path("data/source/03-short.json")
+        path.write_text(path.read_text(encoding="utf-8").replace("Cartek - Check your car", "Cartek - Check"), encoding="utf-8")
+        messages = [f.message for f in validate_repo(Repo(self.repo.root)) if f.level == "error"]
+        self.assertTrue(any("edited by hand" in m for m in messages), messages)
+
     def test_record_without_title_is_flagged_not_imported(self):
         result = self.add_tracker_rows(["", "Các vấn đề lỗi xe thường gặp", "", "", "", "Đã xuất bản", "01/10/2026", "", "https://youtu.be/xyz"])
         self.assertIn("record-without-title", issue_codes(result))

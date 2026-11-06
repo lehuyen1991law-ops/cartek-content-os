@@ -8,6 +8,7 @@ Conventions (see templates/long-form-script.md):
 
 from __future__ import annotations
 
+import math
 import re
 from dataclasses import dataclass, field
 from typing import Any
@@ -17,7 +18,7 @@ from . import textutil as tu
 TODO = re.compile(r"\[TODO\b", re.IGNORECASE)
 SEGMENT_FIELDS = ("TYPE", "VO", "VISUAL", "ON-SCREEN", "B-ROLL", "CLAIMS", "DEMO-SECONDS", "SAFETY", "NOTES")
 SEGMENT_TYPES = ("hook", "intro", "body", "demo", "safety", "recap", "cta")
-_FIELD_LINE = re.compile(r"^\s*[-*]\s+\*\*([A-Z][A-Z\-]*)\s*:\*\*\s?(.*)$")
+_FIELD_LINE = re.compile(r"^\s*[-*]\s+\*\*([A-Za-z][A-Za-z\- ]*?)\s*(?::\*\*|\*\*\s*:)\s?(.*)$")
 _SEGMENT_HEAD = re.compile(r"^(S[0-9]{2,3})\b\s*[—–:-]*\s*(.*)$")
 _LIST_ITEM = re.compile(r"^\s*(?:[0-9]+[.)]|[-*])\s+(.*)$")
 _CHECKBOX = re.compile(r"^\s*[-*]\s+\[( |x|X)\]\s+(.*)$")
@@ -87,7 +88,7 @@ def parse_fields(body: str) -> tuple[dict[str, str], list[str]]:
     for line in body.splitlines():
         match = _FIELD_LINE.match(line)
         if match:
-            current = match.group(1)
+            current = match.group(1).strip().upper().replace(" ", "-")
             if current not in SEGMENT_FIELDS and current not in ("HOOK", "RATIONALE"):
                 unknown.append(current)
             fields[current] = match.group(2).strip()
@@ -131,9 +132,16 @@ class Segment:
     @property
     def demo_seconds(self) -> float:
         try:
-            return float(self.get("DEMO-SECONDS") or 0)
+            value = float(self.get("DEMO-SECONDS") or 0)
         except ValueError:
             return -1.0
+        return value if math.isfinite(value) and value <= 3600 else -1.0
+
+    @property
+    def spoken(self) -> str:
+        """What the voice-over says: narration plus the safety warning, which must be spoken."""
+        parts = [self.get("VO"), self.get("SAFETY")]
+        return " ".join(p for p in parts if p and not TODO.search(p))
 
 
 @dataclass
@@ -186,8 +194,7 @@ def estimate_timing(segments: list[Segment], syllables_per_minute: float, transi
     rows = []
     clock = 0.0
     for index, segment in enumerate(segments):
-        vo = segment.get("VO")
-        spoken = "" if TODO.search(vo) else vo
+        spoken = segment.spoken
         syllables = tu.count_syllables(spoken)
         vo_seconds = syllables / syllables_per_minute * 60 if syllables_per_minute else 0
         demo = max(segment.demo_seconds, 0)
