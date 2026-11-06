@@ -25,7 +25,7 @@ On hold: 0. Test items (excluded above): 1.
 
 | ID | Working title | Pillar | Stage | On hold | Owner | Target date | Automated QC | Approval |
 |---|---|---|---|---|---|---|---|---|
-| [CTK-L-0015](../content/long-form/CTK-L-0015-loi-p0300-ac-mong-cua-moi-dong-co/) | Lỗi P0300 - Ác Mộng của Mọi Động Cơ? | P4 | RESEARCH | no | — | — | FAIL (G2, G3, G4, G5, G6, G7, G8) | NOT APPROVABLE |
+| [CTK-L-0015](../content/long-form/CTK-L-0015-loi-p0300-ac-mong-cua-moi-dong-co/) | Lỗi P0300 - Ác Mộng của Mọi Động Cơ? | P4 | RESEARCH | no | — | — | FAIL (G2, G3, G5, G6, G7, G8) | NOT APPROVABLE |
 
 ## Test items (never published)
 

@@ -4,7 +4,7 @@
 |---|---|
 | Run date | 2026-11-06 |
 | Stage | RESEARCH |
-| Content fingerprint | `sha256:13a01f0f8c877503c0d11bdaea1834b0fb1e35e5ac16442f67628271f13d049e` |
+| Content fingerprint | `sha256:026374211aa3afb371cc2d8a1ab5b1399c418d27289b6aea350a3b7a9ce63fd4` |
 | Automated result | **FAIL** |
 | Approval status | **NOT APPROVABLE** |
 
@@ -15,8 +15,8 @@
 | G1 | Source data and metadata validation | **PASS** | Provenance: CTK-L-0015 from 'Content Direction'!F12. |
 | G2 | Audience and topic relevance | **BLOCKED** | brief.md still has 16 [TODO] marker(s). |
 | G3 | Research completeness and factual accuracy | **BLOCKED** | C01 is unverified: "P0300 cho biết ECU đã phát hiện bỏ máy ngẫu nhiên hoặc ở nhiều xi-lanh (Random/Multiple C…" |
-| G4 | Script coherence, clarity and retention quality | **FAIL** | Estimated runtime 04:04 is outside the target 05:00-08:00 (sheet 'Content Direction'!B3 "5-8 phút"). |
-| G5 | Automotive technical and safety review | **FAIL** | S02 mentions clearing codes/resetting the lamp without saying, there or in the next segment, that it does not fix the cause. |
+| G4 | Script coherence, clarity and retention quality | **PASS** | Estimated runtime 05:32 within target 05:00-08:00. |
+| G5 | Automotive technical and safety review | **BLOCKED** | C07 (safety) is unverified: technical approval is blocked. |
 | G6 | SEO package completeness | **FAIL** | 0 title candidate(s) in item.yaml; at least 3 required. |
 | G7 | Production handoff readiness | **FAIL** | No production assets are listed. |
 | G8 | Publishing metadata validation | **FAIL** | No target publish date. |
@@ -63,23 +63,18 @@ Corrections:
 
 - Verify it with an accepted source, or mark it removed and take it out of the script (skill: technical-fact-checker).
 
-### G4 — Script coherence, clarity and retention quality: FAIL
+### G4 — Script coherence, clarity and retention quality: PASS
 
 Evidence:
 
-- [FAIL] Estimated runtime 04:04 is outside the target 05:00-08:00 (sheet 'Content Direction'!B3 "5-8 phút").
+- [PASS] Estimated runtime 05:32 within target 05:00-08:00.
+- [PASS] 11 segments with narration and visuals; hook first, CTA last.
 - [INFO] Clarity, coherence and retention quality also need an independent judgment review (role qc).
 
-Corrections:
-
-- Cut or expand narration, adjust DEMO-SECONDS, or record production.runtime_exception with a rationale.
-
-### G5 — Automotive technical and safety review: FAIL
+### G5 — Automotive technical and safety review: BLOCKED
 
 Evidence:
 
-- [FAIL] S02 mentions clearing codes/resetting the lamp without saying, there or in the next segment, that it does not fix the cause.
-- [FAIL] S09 shows or names Cartek (beyond the brand line) but cites no cartek-feature claim.
 - [INFO] Safety flags fuel-system, hot-or-moving-parts: a qualified human technical review is required before approval.
 - [BLOCKED] C07 (safety) is unverified: technical approval is blocked.
 - [BLOCKED] C08 (diagnostic-procedure) is unverified: technical approval is blocked.
@@ -89,8 +84,6 @@ Evidence:
 
 Corrections:
 
-- Add the caveat where clearing is mentioned: clearing removes the code and the lamp; the fault returns if the cause is not repaired.
-- Cite a cartek-feature claim backed by the feature register, or use neutral wording ("máy chẩn đoán").
 - Verify the procedure/safety statement with OEM or standard sources, or remove it.
 
 ### G6 — SEO package completeness: FAIL
@@ -121,7 +114,6 @@ Corrections:
 
 Evidence:
 
-- [BLOCKED] Script gate G4 is FAIL; the production handoff needs a finished script.
 - [BLOCKED] storyboard.md still has 4 [TODO] marker(s).
 - [FAIL] No production assets are listed.
 - [FAIL] Demo segments exist but production.demo_setup lacks the tool and vehicle/location.
@@ -130,7 +122,6 @@ Evidence:
 
 Corrections:
 
-- Resolve G4 first.
 - Complete the shot list.
 - List tools, vehicles, graphics and footage in production.assets_required.
 - Record tool, tool version, vehicle and location.
@@ -155,7 +146,7 @@ Corrections:
 
 | Requirement | Met | Detail |
 |---|---|---|
-| Automated gates G1-G8 all PASS on the current content | no | not PASS: G2, G3, G4, G5, G6, G7, G8 |
+| Automated gates G1-G8 all PASS on the current content | no | not PASS: G2, G3, G5, G6, G7, G8 |
 | Independent qc review (G2, G4, G6, G7) by agent or human | no | no review for G2, G4, G6, G7 |
 | Independent technical review (G3, G5) by agent or human | no | no review for G3, G5 |
 | No open FAIL or BLOCKED verdict in any current review | yes | none |
