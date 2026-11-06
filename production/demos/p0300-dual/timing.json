@@ -1,0 +1,71 @@
+{
+  "generated": "2026-11-06",
+  "method": {
+    "syllables": "scripts/ctk/textutil.count_syllables on VO + SAFETY of each segment (digits and short acronyms count per character: P0300 = 5)",
+    "durations": "edge-tts render per segment (voice vi-VN-NamMinhNeural, rate -5%, spelled-out codes per pronunciation.md), leading/trailing TTS silence trimmed to 50 ms, segments joined with 0.5 s gaps, measured with ffprobe; seconds",
+    "segment_seconds_are_raw": "per-segment values are the raw edge-tts clip lengths before silence trimming (each includes about 0.3 s lead and 0.8 s tail)"
+  },
+  "limits": {
+    "long_syllables_max": 560,
+    "long_total_seconds_max": 176,
+    "short_syllables_max": 175,
+    "short_total_seconds_max": 56
+  },
+  "long": {
+    "syllables_total": 510,
+    "segments": [
+      {"segment": "S01", "planned_start": 0, "planned_end": 7, "syllables": 17, "seconds_raw": 7.49},
+      {"segment": "S02", "planned_start": 7, "planned_end": 25, "syllables": 51, "seconds_raw": 17.86},
+      {"segment": "S03", "planned_start": 25, "planned_end": 50, "syllables": 79, "seconds_raw": 24.72},
+      {"segment": "S04", "planned_start": 50, "planned_end": 75, "syllables": 73, "seconds_raw": 25.08},
+      {"segment": "S05", "planned_start": 75, "planned_end": 105, "syllables": 76, "seconds_raw": 25.2},
+      {"segment": "S06", "planned_start": 105, "planned_end": 135, "syllables": 77, "seconds_raw": 30.1},
+      {"segment": "S07", "planned_start": 135, "planned_end": 160, "syllables": 77, "seconds_raw": 27.77},
+      {"segment": "S08", "planned_start": 160, "planned_end": 172, "syllables": 39, "seconds_raw": 13.42},
+      {"segment": "S09", "planned_start": 172, "planned_end": 180, "syllables": 21, "seconds_raw": 9.43}
+    ],
+    "vo_seconds_raw_total": 181.07,
+    "vo_seconds_trimmed_total": 171.1,
+    "gap_seconds": 0.5,
+    "gaps": 8,
+    "measured_total_with_gaps_seconds": 175.1,
+    "measured_pace_syllables_per_minute": 178.8,
+    "fits_limit": true
+  },
+  "short": {
+    "syllables_total": 159,
+    "segments": [
+      {"segment": "S01", "planned_start": 0, "planned_end": 3, "syllables": 13, "seconds_raw": 4.08},
+      {"segment": "S02", "planned_start": 3, "planned_end": 12, "syllables": 27, "seconds_raw": 8.71},
+      {"segment": "S03", "planned_start": 12, "planned_end": 24, "syllables": 29, "seconds_raw": 10.3},
+      {"segment": "S04", "planned_start": 24, "planned_end": 42, "syllables": 46, "seconds_raw": 16.92},
+      {"segment": "S05", "planned_start": 42, "planned_end": 53, "syllables": 33, "seconds_raw": 10.73},
+      {"segment": "S06", "planned_start": 53, "planned_end": 59, "syllables": 11, "seconds_raw": 5.14}
+    ],
+    "vo_seconds_raw_total": 55.88,
+    "vo_seconds_trimmed_total": 49.41,
+    "gap_seconds": 0.5,
+    "gaps": 5,
+    "measured_total_with_gaps_seconds": 51.91,
+    "measured_pace_syllables_per_minute": 193.1,
+    "fits_limit": true
+  },
+  "hook25_variants": {
+    "segments": ["S01", "S02"],
+    "syllables": 68,
+    "variants": [
+      {"voice": "vi-VN-NamMinhNeural", "rate": "-5%", "vo_seconds_raw": 25.35, "vo_seconds_trimmed": 22.97, "total_with_gap_seconds": 23.47},
+      {"voice": "vi-VN-NamMinhNeural", "rate": "+0%", "vo_seconds_raw": 24.07, "vo_seconds_trimmed": 21.84, "total_with_gap_seconds": 22.34},
+      {"voice": "vi-VN-HoaiMyNeural", "rate": "-5%", "vo_seconds_raw": 25.12, "vo_seconds_trimmed": 23.24, "total_with_gap_seconds": 23.74},
+      {"voice": "vi-VN-HoaiMyNeural", "rate": "+0%", "vo_seconds_raw": 23.88, "vo_seconds_trimmed": 22.08, "total_with_gap_seconds": 22.58}
+    ]
+  },
+  "iterations": [
+    {"long_syllables": 602, "note": "first draft, over the 560 syllable budget; not rendered"},
+    {"long_syllables": 551, "measured_total_with_gaps_seconds": 194.38, "note": "over 176 s; S04, S07, S09 cut"},
+    {"long_syllables": 506, "measured_total_with_gaps_seconds": 181.42, "note": "still over; colon lists rewritten with commas, CTA merged into one sentence"},
+    {"long_syllables": 510, "measured_total_with_gaps_seconds": 175.1, "note": "final"},
+    {"short_syllables": 158, "measured_total_with_gaps_seconds": 51.89, "note": "first render; S05 first sentence rewritten for claim coverage"},
+    {"short_syllables": 159, "measured_total_with_gaps_seconds": 51.91, "note": "final"}
+  ]
+}
